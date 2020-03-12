@@ -42,14 +42,12 @@
             <th scope="row">{{ loop.index }}</th>
             <td>Kelas {{ kelas.ruang }}</td>
             <td>
-              <a href="#"
-                >Klik untuk melihat data guru di kelas {{ kelas.ruang }}
+              <a href="{{ url_for('server.guru_kelas', id=kelas.id) }}"
+                >Guru yang mengajar di kelas {{ kelas.ruang }}
               </a>
             </td>
             <td>
-              <a href="#"
-                >Klik untuk melihat data murid di kelas {{ kelas.ruang }}
-              </a>
+              <a href="#">Murid kelas {{ kelas.ruang }} </a>
             </td>
             <td>
               <a

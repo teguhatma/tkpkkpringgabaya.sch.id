@@ -80,7 +80,7 @@ class GuruModel(db.Model):
     jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
     tahun_masuk = db.Column(db.String(24), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(64))
+    password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
 
@@ -115,14 +115,13 @@ class PegawaiModel(db.Model):
     )
     tempat_lahir = db.Column(db.String(24), nullable=False)
     tanggal_lahir = db.Column(db.String(24), nullable=False)
-    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", "Pegawai", name="jabatan"))
     foto = db.Column(db.LargeBinary(__fotosize__))
     nama_foto = db.Column(db.String(64), unique=True)
     pendidikan_terakhir = db.Column(db.String(24), nullable=False)
     jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
     tahun_masuk = db.Column(db.String(24), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(64))
+    password_hash = db.Column(db.String(120))
 
     @property
     def password(self):

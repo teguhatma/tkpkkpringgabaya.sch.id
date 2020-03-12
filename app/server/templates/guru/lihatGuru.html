@@ -1,0 +1,150 @@
+{% extends 'components/main.html' %} {% block content %}
+{% include "components/successInfo.html" %}
+<div class="container emp-profile">
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-img">
+          <img src="{{ url_for('server.foto_guru', filename=guru.nama_foto)}}" alt="{{ guru.nama_foto }}" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h5>
+            {{ guru.nama }}
+          </h5>
+          <h6>
+            {{ guru.nik }}
+          </h6>
+          <h6>
+            {{ guru.jabatan }}
+          </h6>
+          <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Data diri</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+                aria-selected="false">Pendidikan</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="profile-work">
+          <p>Account</p>
+          <a href="{{ url_for('server.ubah_guru', id=guru.id) }}">Edit your profile</a><br />
+          <a href="{{ url_for('server.akun_guru', id=guru.id) }}">Password</a><br />
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Jenis Kelamin</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.jenis_kelamin }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Tempat/ Tanggal lahir</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.tempat_lahir }},{{ guru.tanggal_lahir }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Agama</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.agama }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Kelurahan</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.kelurahan }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Kecamatan</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.kecamatan }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Kabupaten</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.kabupaten }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Provinsi</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.provinsi }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Alamat</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.alamat }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Pendidikan terakhir</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.pendidikan_terakhir}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Golongan</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.golongan }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Tahun masuk</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.tahun_masuk}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ guru.email }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

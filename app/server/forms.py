@@ -12,7 +12,7 @@ from wtforms import (
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, EqualTo
-from app.models import GuruModel, KelasModel, daftar_kelas
+from app.models import GuruModel, KelasModel, daftar_kelas, PegawaiModel
 
 
 class TambahGuruForm(FlaskForm):
@@ -75,6 +75,11 @@ class TambahGuruForm(FlaskForm):
         if email is not None:
             raise ValueError("Email sudah terdaftar.")
 
+    def validate_jabatan(self, jabatan):
+        jabatan = GuruModel.query.filter_by(jabatan=self.jabatan.data).first()
+        if jabatan is not None:
+            raise ValueError("Kepala sekolah diperbolehkan hanya satu.")
+
 
 class TambahKelasForm(FlaskForm):
     ruang = StringField(
@@ -89,3 +94,163 @@ class TambahKelasForm(FlaskForm):
         if ruang is not None:
             raise ValueError("Ruang kelas sudah ada.")
 
+
+class RubahGuruForm(FlaskForm):
+    nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
+    alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    nik = StringField("NIK anda", validators=[DataRequired(), Length(1, 24)])
+    kelurahan = StringField("Kelurahan anda", validators=[Length(1, 24)])
+    email = EmailField("Email anda", validators=[DataRequired(), Length(1, 64)])
+    kecamatan = StringField("Kecamatan anda", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten anda", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi anda", validators=[Length(1, 24)])
+    agama = SelectField(
+        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+    )
+    tempat_lahir = StringField(
+        "Tempat lahir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    tanggal_lahir = StringField(
+        "Tanggal lahir",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    jabatan = SelectField(
+        choices=[(g, g) for g in GuruModel.jabatan.property.columns[0].type.enums]
+    )
+    foto = FileField("Foto diri anda")
+    foto_ijazah = FileField("Scan ijazah anda")
+    pendidikan_terakhir = StringField(
+        "Pendidikan terakhir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    jenis_kelamin = SelectField(
+        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+    )
+    tahun_masuk = StringField(
+        "Tahun masuk anda",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    golongan = SelectField(
+        choices=[(g, g) for g in GuruModel.golongan.property.columns[0].type.enums]
+    )
+    kelas = QuerySelectField(
+        "Kelas",
+        query_factory=daftar_kelas,
+        get_label="ruang",
+        get_pk=lambda a: a.id,
+        blank_text="Pilih kelas",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
+    email_hidden = StringField("Email hidden", render_kw={"type": "hidden"})
+    nik_hidden = StringField("NIK hidden", render_kw={"type": "hidden"})
+    jabatan_hidden = StringField("Jabatan hidden", render_kw={"type": "hidden"})
+    submit = SubmitField("Tambahkan")
+
+    def validate_nik(self, nik):
+        nik = GuruModel.query.filter_by(nik=self.nik_hidden.data).first()
+        for guru in GuruModel.query.all():
+            if guru.nik != nik.nik:
+                if guru.nik == self.nik.data:
+                    raise ValueError("NIK sudah terdaftar.")
+
+    def validate_email(self, nik):
+        email = GuruModel.query.filter_by(email=self.email_hidden.data).first()
+        for guru in GuruModel.query.all():
+            if guru.email != email.email:
+                if guru.email == self.email.data:
+                    raise ValueError("Email sudah terdaftar.")
+
+    def validate_jabatan(self, nik):
+        jabatan = GuruModel.query.filter_by(jabatan=self.jabatan_hidden.data).first()
+        for guru in GuruModel.query.all():
+            if guru.jabatan != jabatan.jabatan:
+                if guru.jabatan == self.jabatan.data:
+                    raise ValueError("Kepala sekolah hanya diperbolehkan satu.")
+
+
+class AkunForm(FlaskForm):
+    password = PasswordField("Password", validators=[DataRequired(), Length(1, 24)])
+    submit = SubmitField("Simpan")
+
+
+class TambahPegawaiForm(FlaskForm):
+    nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
+    alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    kelurahan = StringField("Kelurahan anda", validators=[Length(1, 24)])
+    email = EmailField("Email anda", validators=[DataRequired(), Length(1, 64)])
+    kecamatan = StringField("Kecamatan anda", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten anda", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi anda", validators=[Length(1, 24)])
+    agama = SelectField(
+        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+    )
+    tempat_lahir = StringField(
+        "Tempat lahir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    tanggal_lahir = StringField(
+        "Tanggal lahir",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    foto = FileField("Foto diri anda", validators=[DataRequired()])
+    pendidikan_terakhir = StringField(
+        "Pendidikan terakhir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    jenis_kelamin = SelectField(
+        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+    )
+    tahun_masuk = StringField(
+        "Tahun masuk anda",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    submit = SubmitField("Tambahkan")
+
+    def validate_email(self, nik):
+        email = GuruModel.query.filter_by(email=self.email.data).first()
+        if email is not None:
+            raise ValueError("Email sudah terdaftar.")
+
+
+class RubahPegawaiForm(FlaskForm):
+    nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
+    alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    kelurahan = StringField("Kelurahan anda", validators=[Length(1, 24)])
+    email = EmailField("Email anda", validators=[DataRequired(), Length(1, 64)])
+    kecamatan = StringField("Kecamatan anda", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten anda", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi anda", validators=[Length(1, 24)])
+    agama = SelectField(
+        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+    )
+    tempat_lahir = StringField(
+        "Tempat lahir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    tanggal_lahir = StringField(
+        "Tanggal lahir",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    foto = FileField("Foto diri anda")
+    pendidikan_terakhir = StringField(
+        "Pendidikan terakhir anda", validators=[DataRequired(), Length(1, 24)]
+    )
+    jenis_kelamin = SelectField(
+        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+    )
+    tahun_masuk = StringField(
+        "Tahun masuk anda",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    email_hidden = StringField("Email hidden", render_kw={"type": "hidden"})
+    submit = SubmitField("Tambahkan")
+
+    def validate_email(self, nik):
+        email = PegawaiModel.query.filter_by(email=self.email_hidden.data).first()
+        for pegawai in PegawaiModel.query.all():
+            if pegawai.email != email.email:
+                if pegawai.email == self.email.data:
+                    raise ValueError("Email sudah terdaftar.")

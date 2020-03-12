@@ -9,7 +9,7 @@ from .forms import TambahKelasForm
 @server.route("/dashboard/kelas")
 def data_kelas():
     kelas = KelasModel.query.all()
-    return render_template("dataKelas.html", kelas=kelas, title="Data Kelas")
+    return render_template("kelas/dataKelas.html", kelas=kelas, title="Data Kelas")
 
 
 @server.route("/dashboard/kelas/tambah", methods=["GET", "POST"])
@@ -21,7 +21,7 @@ def tambah_kelas():
         db.session.commit()
         flash("Ruang kelas {} sudah terbuat".format(tambah_kelas.ruang))
         return redirect(url_for("server.data_kelas"))
-    return render_template("tambahKelas.html", title="Menambah Kelas", form=form)
+    return render_template("kelas/tambahKelas.html", title="Menambah Kelas", form=form)
 
 
 @server.route("/dashboard/kelas/hapus/<id>")
