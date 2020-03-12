@@ -1,0 +1,211 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    background-color: #f8f9fa !important;
+}
+
+nav.navbar-top {
+    background: #0404041f !important;
+    height: 30px !important;
+    padding: 0;
+}
+
+.nav-item-top {
+    font-size: 11px;
+    background: coral;
+    color: #000000c2;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+a.item-bawah {
+    color: white !important;
+}
+
+.card-img-berita{
+    height: 90px;
+}
+p.card-text{
+    font-size: 12px;
+}
+h5.card-title{
+    font-size: 12px;
+}
+a.social-share-icon.icon-weibo, a.social-share-icon.icon-wechat, a.social-share-icon.icon-douban, a.social-share-icon.icon-qq, a.social-share-icon.icon-qzone{
+    display: none;
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 500%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+.new-berita{
+    position: absolute;
+    left: 0;
+    top: 1090%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+.new-banget{
+    margin: auto;
+    width: 350px;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+    background: #fff;
+}
+
+.cards{
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.15);
+}
+
+span.border {
+    border: none !important;
+    background-color: #111;
+    color: #fff;
+    font-size: 25px;
+    padding: 18px;
+    letter-spacing: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+span.bawah{
+    background: none;
+    font-size: 12px;
+    color: #f8f9fa;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+div.card{
+    border: none;
+}
+
+
+.navbar-image {
+    /* The image used */
+    background-image: url("../img/gambar.jpg");
+
+    /* Full height */
+    height: 91%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+a.btn-category{
+    background: #4cc499;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 12px;
+    margin-bottom: 5px;
+}
+
+p.title-card{
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+.card-bottom{
+    border-top: 1.2px solid #dee2e6;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.card.berita-terbaru img{
+    height: 200px;
+}
+.berita-title-berita{
+    font-size: 16px;
+}
+.card.berita-terbaru{
+    box-shadow: 0 1px 26px 0 rgba(0,0,0,.1);
+}
+.berita-nama{
+    padding: 50px 60px !important;
+}
+.berita-data{
+    padding: 50px 50px !important;
+    background: #fff;
+}
+.foto.foto-navbar img{
+    height: 100px;
+    width: 100%;
+}
+.deskripsi-foto{
+    text-align: left;
+}
+span.menu{
+    color: #fff;
+    font-weight: bold;
+}
+.kelas-footer{
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: #545b62;
+    letter-spacing: 1px;
+}
+.card-title.nama-elearning{
+    font-size: 14px;
+    color: #545b62;
+    margin-bottom: 1px;
+    letter-spacing: 1px;
+}
+.title-index{
+    color: #545b62;
+    letter-spacing: 1px;
+}
+p.card-text.time{
+    margin-bottom: 1px;
+}
+.card-elearning{
+    background: #f8f9fa;
+}
+.nama-guru{
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #545b62;
+}
+span.menu-deskripsi{
+    color: #adb5bd;
+    font-size: 14px;
+}
+footer{
+    background: #262c2f;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.selected a{
+    color: #535658;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: .8px;
+}
+.btn-primary {
+    margin: 30px;
+    color: #545b62 !important;
+    background-color: rgba(0,0,0,.075) !important;
+    border-color: rgba(0,0,0,.075) !important;
+    font-size: 13px !important;
+    padding: 10px 30px !important;
+    font-weight: bold !important;
+}
+
+.btn-primary:hover{
+    background: coral !important;
+    color: #e9ecef !important;
+}
+.category{
+    margin: 100px;
+}

@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+a.navbar-brand.mr-1, ul.navbar-nav li.nav-item a.nav-link{
+    color: #f8f9fa;
+}
+.navbar-dark .navbar-brand, .text-white{
+    color: #495057;
+}
+ol.breadcrumb{
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.075);
+    background: #fff;
+}
+div#content-wrapper{
+    background: #f8f8f8;
+    font-family: 'Ubuntu', sans-serif;
+}
+.sidebar.navbar-nav{
+    background: #fff;
+}
+.sidebar.navbar-nav li.nav-item a.nav-link{
+    color: #fa897b;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 15px 10px 50px;
+}
+
+.sidebar.navbar-nav li.nav-item a:hover{
+    color: #fa897b;
+    border-left: 5px solid #fa897b;
+    background: #f8f9fa;
+}
+.profile{
+    background: #fff;
+    padding-top: 30px;
+}
+.menu{
+    border-radius: 20px;
+    margin: 10px 30px 10px 30px;
+    padding: 30px 0 30px;;
+}
+.nav-link span{
+    color: #444c52;
+    margin-left: 15px;
+}
+a.btn.btn-warning.lihat-profile{
+    color: #fff;
+    font-size: 12px;
+    padding: 5px 15px;
+    background: #86e3ce;
+    border-color: #86e3ce;
+}
+i.fas.fa-bars{
+    display: none;
+}
+
+.kelas{
+    background: #51cf66;
+}
+.kelas:hover{
+    background: #51cf66;
+}
+.kelas-title{
+    padding: 20px 50px 20px 50px;
+}
+.kelas-content{
+    padding: 10px 50px 10px 50px;
+    text-align: center;
+}
+
+.wali-murid{
+    background: #f06595;
+}
+.wali-murid:hover{
+    background: #f06595;
+}
+.wali-murid-title{
+    padding: 20px 50px 20px 50px;
+}
+.wali-murid-content{
+    padding: 10px 50px 10px 50px;
+    text-align: center;
+}
+
+.nis{
+    background: #ff922b;
+}
+.wnis:hover{
+    background: #ff922b;
+}
+.nis-title{
+    padding: 20px 50px 20px 50px;
+}
+.nis-content{
+    padding: 10px 50px 10px 50px;
+    text-align: center;
+}
+
+@media only screen and (min-width: 768px) {
+    .sidebar {
+      width: 350px !important;
+    }
+    footer.sticky-footer{
+        width: calc(100% - 284px)
+    }
+    .sidebar .nav-item .nav-link span{
+        font-size: 14px;
+    }
+  }
+
+.biodata{
+    margin: 20px 0 20px 0;
+}
+.title-biodata{
+    padding: 15px;
+    background: #17a2b8;
+}
+.group{
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+.group small{
+    margin: 0 0 5px 0;
+}
+.group h5{
+    font-size: 15px;
+}
+.title-biodata-wali{
+    background: pink;
+    padding:15px;
+}
+.content-biodata{
+    background: #fff;
+}
+a.btn-simpan{
+    background: #f8f9fa;
+    padding: 8px 40px;
+}
+a.btn-ubah{
+    padding: 8px 40px;
+    background: #17a2b8;
+}
+div.tahun-pelajaran{
+    padding: 15px;
+    background: #17a2b8;
+}
+div.nilai-semester{
+    padding: 15px;
+    background: #dee2e6;    
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+input.form-control{
+    font-size: 14px;
+}
+label.col-sm-3.col-form-label{
+    font-size: 14px;
+}

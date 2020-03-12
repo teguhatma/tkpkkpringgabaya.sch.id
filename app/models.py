@@ -48,7 +48,7 @@ class GuruModel(db.Model):
     )
     tempat_lahir = db.Column(db.String(24), nullable=False)
     tanggal_lahir = db.Column(db.String(24), nullable=False)
-    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", "Pegawai", name="jabatan"))
+    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", name="jabatan"))
     foto = db.Column(db.LargeBinary(__fotosize__))
     nama_foto = db.Column(db.String(64), unique=True)
     foto_ijazah = db.Column(db.LargeBinary(__fotosize__))
@@ -80,7 +80,7 @@ class GuruModel(db.Model):
     jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
     tahun_masuk = db.Column(db.String(24), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(64), nullable=False)
+    password_hash = db.Column(db.String(64))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
 
@@ -122,7 +122,7 @@ class PegawaiModel(db.Model):
     jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
     tahun_masuk = db.Column(db.String(24), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(64), nullable=False)
+    password_hash = db.Column(db.String(64))
 
     @property
     def password(self):
@@ -166,10 +166,7 @@ class MuridModel(db.Model):
     nama_foto_diri = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
-    kelas = db.relationship("KelasModel", back_populates="murid")
-    nilai = db.relationship("NilaiModel", back_populates="murid")
     wali_murid_id = db.Column(db.Integer, db.ForeignKey("wali_murid.id"))
-    wali_murid = db.relationship("WaliMuridModel", back_populates="murid")
 
     @property
     def password(self):
@@ -207,7 +204,7 @@ class WaliMuridModel(db.Model):
     tanggal_lahir = db.Column(db.String(60), nullable=False)
     pekerjaan = db.Column(db.String(40), nullable=False)
     nomor_telepon = db.Column(db.String(12), nullable=False)
-    murid = db.relationship("MuridModel", back_populates="wali_murid")
+    murid = db.relationship("MuridModel")
 
     def __repr__(self):
         return "Wali Murid {}".format(self.nama)
@@ -245,8 +242,8 @@ class DataSekolahModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     judul = db.Column(db.String(60), unique=True, nullable=False)
     deskripsi = db.Column(db.Text)
-    filename = db.Column(db.String(120), unique=True)
-    file = db.Column(db.LargeBinary(__filesize__))
+    nama_dokumen = db.Column(db.String(120), unique=True)
+    dokumen = db.Column(db.LargeBinary(__filesize__))
     slug = db.Column(db.String(120), unique=True)
     waktu_upload = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
@@ -292,7 +289,6 @@ class ElearningModel(db.Model):
     slug = db.Column(db.String(120), unique=True)
     judul = db.Column(db.String(120), nullable=False)
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
-    kelas = db.relationship("KelasModel", back_populates="elearning")
 
     @staticmethod
     def generate_slug(target, value, oldvalue, initiator):
@@ -326,7 +322,6 @@ class NilaiModel(db.Model):
     )
     tahun_pelajaran = db.Column(db.String(24))
     murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
-    murid = db.relationship("MuridModel", back_populates="nilai")
 
     def __repr__(self):
         return "Nilai {}".format(self.nama)
@@ -342,7 +337,6 @@ class JadwalKelasModel(db.Model):
         db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari")
     )
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
-    kelas = db.relationship("KelasModel", back_populates="jadwal_kelas")
 
     def __repr__(self):
         return "Jadwal Kelas {}".format(self.mata_pelajaran)
@@ -353,9 +347,9 @@ class KelasModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     ruang = db.Column(db.String(5), nullable=False, unique=True)
-    murid = db.relationship("MuridModel", back_populates="kelas")
-    jadwal = db.relationship("JadwalKelasModel", back_populates="kelas")
-    elearning = db.relationship("ElearningModel", back_populates="kelas")
+    murid = db.relationship("MuridModel")
+    jadwal = db.relationship("JadwalKelasModel")
+    elearning = db.relationship("ElearningModel")
     guru = db.relationship("GuruModel", back_populates="kelas")
 
     def __repr__(self):
@@ -368,3 +362,6 @@ event.listen(
 event.listen(BeritaModel.judul, "set", BeritaModel.generate_slug, retval=False)
 event.listen(ElearningModel.judul, "set", ElearningModel.generate_slug, retval=False)
 
+
+def daftar_kelas():
+    return KelasModel.query

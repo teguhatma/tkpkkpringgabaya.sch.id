@@ -1,0 +1,36 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="#">Dashboard</a>
+  </li>
+  <li class="breadcrumb-item">
+    Data
+  </li>
+  <li class="breadcrumb-item">
+    Kelas
+  </li>
+  <li class="breadcrumb-item active">Tambah</li>
+</ol>
+
+<form action="" method="POST">
+  <a
+    href="{{ url_for('server.data_kelas')}}"
+    class="btn btn-primary btn-sm mb-3"
+    >Kembali</a
+  >
+  {{ form.csrf_token() }}
+  <div class="form-group row">
+    {{ form.ruang.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-8">
+      {{ form.ruang(class='form-control form-control-sm', maxlength='1')}} {%
+      for error in form.ruang.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-sm-2">
+      {{ form.submit(class='btn btn-sm btn-info btn-block')}}
+    </div>
+  </div>
+</form>
+{% endblock %}

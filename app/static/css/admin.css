@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+nav.navbar.navbar-expand.navbar-dark.bg-dark.static-top {
+  background: #fff !important;
+  box-shadow: 1px 1px 1px 1px #17a2b8;
+}
+
+a.navbar-brand.mr-1,
+ul.navbar-nav li.nav-item a.nav-link {
+  color: #495057;
+}
+.navbar-dark .navbar-brand,
+.text-white {
+  color: #495057;
+}
+ol.breadcrumb {
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.075);
+  background: #fff;
+}
+div#content-wrapper {
+  background: #ececec;
+  font-family: "Ubuntu", sans-serif;
+}
+.sidebar.navbar-nav {
+  background: #17a2b8;
+}
+.sidebar.navbar-nav li.nav-item a.nav-link {
+  color: #f8f9fa;
+}
+* {
+  font-family: "Roboto", sans-serif;
+}
+img.foto-diri-teacher {
+  width: 400px;
+}
+.fa-trash {
+  color: #ff5092;
+}
