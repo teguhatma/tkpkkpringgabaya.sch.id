@@ -9,6 +9,7 @@ from app.models import (
     DataSekolahModel,
     NilaiModel,
     ProfileSekolahModel,
+    AdminModel,
 )
 from dotenv import load_dotenv
 import os
@@ -41,3 +42,9 @@ def test():
     tests = unittest.TestLoader().discover("tests")
     unittest.TextTestRunner(verbosity=2).run(tests)
 
+
+@app.cli.command()
+def deploy():
+    """ Insert Admin dan Insert Kelas """
+    AdminModel.insert_admin()
+    KelasModel.insert_kelas()

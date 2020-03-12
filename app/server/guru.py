@@ -142,7 +142,7 @@ def ubah_guru(id):
         form.email_hidden.data = ubah.email
         form.jabatan_hidden.data = ubah.jabatan
 
-    return render_template("guru/ubahGuru.html", title="Rubah data guru", form=form)
+    return render_template("guru/ubahGuru.html", title=ubah.nama, form=form)
 
 
 @server.route("/dashboard/guru/lihat/<id>")

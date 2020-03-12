@@ -14,7 +14,7 @@ class AdminModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(24), nullable=False)
-    password_hash = db.Column(db.String(64), nullable=False)
+    password_hash = db.Column(db.String(120), nullable=False)
 
     @property
     def password(self):
@@ -25,6 +25,13 @@ class AdminModel(db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def insert_admin():
+        insert_admin = AdminModel(username="tkpkkadmin")
+        insert_admin.password("tkadminadmin")
+        db.session.add(insert_admin)
+        db.session.commit()
 
     def __repr__(self):
         return "Admin {}".format(self.username)
@@ -141,7 +148,7 @@ class MuridModel(db.Model):
     __tablename__ = "murid"
 
     id = db.Column(db.Integer, primary_key=True)
-    nomor_induk = db.Column(db.String(5), nullable=False)
+    nomor_induk = db.Column(db.String(5), nullable=False, unique=True)
     nama = db.Column(db.String(64), nullable=False)
     nama_panggilan = db.Column(db.String(24), nullable=False)
     anak_ke = db.Column(db.String(2), nullable=False)
@@ -165,7 +172,8 @@ class MuridModel(db.Model):
     nama_foto_diri = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
-    wali_murid_id = db.Column(db.Integer, db.ForeignKey("wali_murid.id"))
+    kelas = db.relationship("KelasModel", back_populates="murid")
+    wali_murid = db.relationship("WaliMuridModel")
 
     @property
     def password(self):
@@ -203,7 +211,7 @@ class WaliMuridModel(db.Model):
     tanggal_lahir = db.Column(db.String(60), nullable=False)
     pekerjaan = db.Column(db.String(40), nullable=False)
     nomor_telepon = db.Column(db.String(12), nullable=False)
-    murid = db.relationship("MuridModel")
+    murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
 
     def __repr__(self):
         return "Wali Murid {}".format(self.nama)
@@ -346,10 +354,21 @@ class KelasModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     ruang = db.Column(db.String(5), nullable=False, unique=True)
-    murid = db.relationship("MuridModel")
+    murid = db.relationship("MuridModel", back_populates="kelas")
     jadwal = db.relationship("JadwalKelasModel")
     elearning = db.relationship("ElearningModel")
     guru = db.relationship("GuruModel", back_populates="kelas")
+
+    @staticmethod
+    def insert_kelas():
+        insert_kelas_a = KelasModel(
+            ruang = 'A'
+        )
+        insert_kelas_b = KelasModel(
+            ruang='B'
+        )
+        db.session.add_all([insert_kelas_a, insert_kelas_b])
+        db.session.commit()
 
     def __repr__(self):
         return "Kelas {}".format(self.ruang)
@@ -364,3 +383,7 @@ event.listen(ElearningModel.judul, "set", ElearningModel.generate_slug, retval=F
 
 def daftar_kelas():
     return KelasModel.query
+
+
+def daftar_wali_murid():
+    return WaliMuridModel.query

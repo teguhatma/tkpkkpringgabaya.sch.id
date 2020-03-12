@@ -10,47 +10,49 @@
         <a href="#">Dashboard</a>
     </li>
     <li class="breadcrumb-item">Data</li>
-    <li class="breadcrumb-item active">Guru</li>
+    <li class="breadcrumb-item active">Murid</li>
 </ol>
 
 <div class="card mb-3">
     <div class="card-header">
         <i class="fas fa-table"></i>
-        Daftar data guru
+        Daftar data murid
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <a href="{{ url_for('server.tambah_guru') }}" class="btn btn-sm btn-primary mb-3"><i
+                <a href="{{ url_for('server.tambah_murid' )}}" class="btn btn-sm btn-primary mb-3"><i
                         class="far fa-plus-square"></i> Tambah Data </a>
                 <thead>
                     <tr>
                         <th>No.</th>
                         <th>Name</th>
-                        <th>Jabatan</th>
+                        <th>Nomor Induk</th>
                         <th>Kelas</th>
+                        <th>Lulus</th>
                         <th>Jenis Kelamin</th>
-                        <th>Golongan</th>
                         <th>Tempat/ Tanggal Lahir</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for guru in data_guru %}
+                    {% for murid in data_murid %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
-                        <td>{{ guru.nama }}</td>
-                        <td>{{ guru.jabatan }}</td>
-                        <td>{{ guru.kelas.ruang }}</td>
-                        <td>{{ guru.jenis_kelamin }}</td>
-                        <td>{{ guru.golongan }}</td>
-                        <td>{{ guru.tempat_lahir }}, {{ guru.tanggal_lahir }}</td>
+                        <td>{{ murid.nama }}</td>
+                        <td>{{ murid.nomor_induk }}</td>
+                        <td>{{ murid.kelas.ruang }}</td>
                         <td>
-                            <a href="{{ url_for('server.lihat_guru', id=guru.id) }}" class="view" title="View"
+                            {% if murid.lulus == True %}Sudah lulus {% else %} Belum lulus {% endif%}
+                        </td>
+                        <td>{{ murid.jenis_kelamin }}</td>
+                        <td>{{ murid.tempat_lahir }}, {{ murid.tanggal_lahir }}</td>
+                        <td>
+                            <a href="{{ url_for('server.lihat_murid', id=murid.id) }}" class="view" title="View"
                                 data-toggle="tooltip"><i class="far fa-eye"></i></a>
-                            <a href="{{ url_for('server.ubah_guru', id=guru.id) }}" class="edit" title="Edit"
+                            <a href="{{ url_for('server.ubah_murid', id=murid.id) }}" class="edit" title="Edit"
                                 data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                            <a href="{{ url_for('server.hapus_guru', id=guru.id)}}" class="delete" title="Delete"
+                            <a href="{{ url_for('server.hapus_murid', id=murid.id)}}" class="delete" title="Delete"
                                 data-toggle="tooltip"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
