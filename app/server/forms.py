@@ -12,7 +12,14 @@ from wtforms import (
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, EqualTo
-from app.models import GuruModel, KelasModel, daftar_kelas, PegawaiModel, MuridModel
+from app.models import (
+    GuruModel,
+    KelasModel,
+    daftar_kelas,
+    PegawaiModel,
+    MuridModel,
+    daftar_murid,
+)
 
 
 class TambahGuruForm(FlaskForm):
@@ -387,3 +394,40 @@ class RubahMuridForm(FlaskForm):
             if murid.nomor_induk != nomor_induk.nomor_induk:
                 if murid.nomor_induk == self.nomor_induk.data:
                     raise ValueError("Nomor induk sudah terdaftar.")
+
+
+class TambahUbahWaliForm(FlaskForm):
+    nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
+    alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
+    kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi", validators=[Length(1, 24)])
+    agama = SelectField(
+        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+    )
+    tempat_lahir = StringField(
+        "Tempat lahir", validators=[DataRequired(), Length(1, 24)]
+    )
+    tanggal_lahir = StringField(
+        "Tanggal lahir",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    pekerjaan = StringField("Pekerjaan", validators=[DataRequired(), Length(1, 24)])
+    jenis_kelamin = SelectField(
+        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+    )
+    nomor_telepon = StringField(
+        "Nomor telepon", validators=[DataRequired()], render_kw={"type": "number"},
+    )
+    murid = QuerySelectField(
+        "Nama Murid",
+        query_factory=daftar_murid,
+        get_label="nama",
+        get_pk=lambda a: a.id,
+        blank_text="Murid",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
+    submit = SubmitField('Tambah')

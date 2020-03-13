@@ -173,7 +173,7 @@ class MuridModel(db.Model):
     password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="murid")
-    wali_murid = db.relationship("WaliMuridModel")
+    wali_murid = db.relationship("WaliMuridModel", back_populates='murid')
 
     @property
     def password(self):
@@ -212,6 +212,7 @@ class WaliMuridModel(db.Model):
     pekerjaan = db.Column(db.String(40), nullable=False)
     nomor_telepon = db.Column(db.String(12), nullable=False)
     murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
+    murid = db.relationship('MuridModel', back_populates='wali_murid')
 
     def __repr__(self):
         return "Wali Murid {}".format(self.nama)
@@ -361,12 +362,8 @@ class KelasModel(db.Model):
 
     @staticmethod
     def insert_kelas():
-        insert_kelas_a = KelasModel(
-            ruang = 'A'
-        )
-        insert_kelas_b = KelasModel(
-            ruang='B'
-        )
+        insert_kelas_a = KelasModel(ruang="A")
+        insert_kelas_b = KelasModel(ruang="B")
         db.session.add_all([insert_kelas_a, insert_kelas_b])
         db.session.commit()
 
@@ -385,5 +382,6 @@ def daftar_kelas():
     return KelasModel.query
 
 
-def daftar_wali_murid():
-    return WaliMuridModel.query
+def daftar_murid():
+    return MuridModel.query.order_by(MuridModel.nama.asc())
+
