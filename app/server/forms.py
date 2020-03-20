@@ -430,4 +430,44 @@ class TambahUbahWaliForm(FlaskForm):
         allow_blank=True,
         validators=[DataRequired()],
     )
-    submit = SubmitField('Tambah')
+    submit = SubmitField("Tambah")
+
+
+class TambahUbahProfileForm(FlaskForm):
+    nama_lembaga = StringField(
+        "Nama Lembaga", validators=[DataRequired(), Length(1, 120)]
+    )
+    kode_pos = StringField("Kode Pos", validators=[DataRequired(), Length(1, 10)])
+    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
+    kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi", validators=[Length(1, 24)])
+    no_statistik = StringField(
+        "No. Statitistik", validators=[DataRequired(), Length(1, 60)]
+    )
+    akte_notaris = StringField(
+        "Akte Notaris", validators=[DataRequired(), Length(1, 60)]
+    )
+    kegiatan_belajar = StringField(
+        "Kegiatan Belajar", validators=[DataRequired(), Length(1, 20)]
+    )
+    tahun_berdiri = StringField(
+        "Tahun Berdiri",
+        validators=[DataRequired()],
+        render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
+    )
+    status_tk = StringField("Status TK", validators=[DataRequired(), Length(1, 10)])
+    no_izin_operasional = StringField(
+        "No. Izin Operasional", validators=[DataRequired(), Length(1, 46)]
+    )
+    no_izin_pendirian = StringField(
+        "No. Izin Pendirian", validators=[DataRequired(), Length(1, 46)]
+    )
+    kurikulum = StringField("Kurikulum", validators=[DataRequired(), Length(1, 10)])
+    no_telepon = StringField(
+        "Nomor Telepon", validators=[DataRequired(), Length(1, 24)]
+    )
+    email = EmailField("Email", validators=[DataRequired(), Length(1, 24)])
+    visi_misi = TextAreaField("Visi dan Misi", validators=[DataRequired()])
+    submit = SubmitField("Tambahkan")
+
