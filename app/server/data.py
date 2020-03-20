@@ -45,18 +45,18 @@ def tambah_data_sekolah():
     )
 
 
-@server.route("/dashboard/data-sekolah/hapus/<id>", methods=["GET", "POST"])
-def hapus_data_sekolah(id):
-    hapus_data_sekolah = DataSekolahModel.query.get(id)
+@server.route("/dashboard/data-sekolah/hapus/<slug>", methods=["GET", "POST"])
+def hapus_data_sekolah(slug):
+    hapus_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
     db.session.delete(hapus_data_sekolah)
     db.session.commit()
     flash("Data sekolah berhasil terhapus", "Berhasil")
     return redirect(url_for("server.data_sekolah"))
 
 
-@server.route("/dashboard/data-sekolah/ubah/<id>", methods=["GET", "POST"])
-def ubah_data_sekolah(id):
-    ubah_data_sekolah = DataSekolahModel.query.get(id)
+@server.route("/dashboard/data-sekolah/ubah/<slug>", methods=["GET", "POST"])
+def ubah_data_sekolah(slug):
+    ubah_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
     form = UbahDataSekolahForm()
     if form.validate_on_submit():
         ubah_data_sekolah.judul = form.judul.data

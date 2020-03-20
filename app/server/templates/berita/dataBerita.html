@@ -1,20 +1,18 @@
 {% extends 'components/main.html' %} {% block content %}
-
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <a href="">Dashboard</a>
   </li>
   <li class="breadcrumb-item">Tabel</li>
-  <li class="breadcrumb-item active">Data Sekolah</li>
+  <li class="breadcrumb-item active">Berita Sekolah</li>
 </ol>
-
-{% include "components/successInfo.html" %}
+{% include 'components/successInfo.html' %}
 
 <div class="card mb-3">
   <div class="card-header">
     <i class="fas fa-table"></i>
-    Tabel Data Sekolah
+    Tabel Data Berita
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -25,43 +23,38 @@
         cellspacing="0"
       >
         <a
-          href="{{ url_for('server.tambah_data_sekolah') }}"
+          href="{{ url_for('server.tambah_berita_sekolah') }}"
           class="btn btn-primary btn-sm mb-3"
-          ><i class="far fa-plus-square"></i> Tambah Data Sekolah</a
+          ><i class="far fa-plus-square"></i>Tambah Berita</a
         >
         <thead>
           <tr>
-            <th>No</th>
+            <th>No.</th>
             <th>Judul</th>
-            <th>Deskripsi</th>
+            <th>Ditampilkan</th>
             <th>Upload Pada</th>
-            <th>Download</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {% for data in data_sekolah %}
+          {% for berita in berita_sekolah %}
           <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td>{{ data.judul }}</td>
-            <td>{{ data.deskripsi }}</td>
-            <td>{{ moment(data.waktu_upload).format('LLLL')}}</td>
+            <td>{{ berita.judul }}</td>
             <td>
-              <a
-                href="{{ url_for('server.dokumen_data_sekolah', filename=data.nama_dokumen) }}"
-                >Download file</a
-              >
+              {% if berita.tampilkan == true %} Iya {% else %} Tidak {% endif %}
             </td>
+            <td>{{ moment(berita.waktu_upload).format('LLLL')}}</td>
             <td>
               <a
-                href="{{ url_for('server.ubah_data_sekolah', slug=data.slug) }}"
+                href="{{ url_for('server.ubah_berita_sekolah', slug=berita.slug) }}"
                 class="edit"
                 title="Edit"
                 data-toggle="tooltip"
                 ><i class="fas fa-pencil-alt"></i
               ></a>
               <a
-                href="{{ url_for('server.hapus_data_sekolah', slug=data.slug) }}"
+                href="{{ url_for('server.hapus_berita_sekolah', slug=berita.slug) }}"
                 class="delete"
                 title="Delete"
                 data-toggle="tooltip"

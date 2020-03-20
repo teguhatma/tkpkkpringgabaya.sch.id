@@ -501,3 +501,16 @@ class UbahDataSekolahForm(FlaskForm):
                 if data.judul != self.judul.data:
                     raise ValueError("Judul sudah terdaftar.")
 
+
+class TambahUbahBeritaForm(FlaskForm):
+    judul = StringField(
+        "Judul berita sekolah", validators=[DataRequired(), Length(1, 120)]
+    )
+    deskripsi = TextAreaField("Deskripsi berita")
+    tampilkan = BooleanField("Tampilkan berita")
+    gambar = FileField("Background")
+    kategori = StringField(
+        "Kategori Berita", validators=[DataRequired(), Length(3, 24)]
+    )
+    submit = SubmitField("Tambahkan")
+
