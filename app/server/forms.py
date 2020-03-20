@@ -19,6 +19,7 @@ from app.models import (
     PegawaiModel,
     MuridModel,
     daftar_murid,
+    DataSekolahModel,
 )
 
 
@@ -470,4 +471,33 @@ class TambahUbahProfileForm(FlaskForm):
     email = EmailField("Email", validators=[DataRequired(), Length(1, 24)])
     visi_misi = TextAreaField("Visi dan Misi", validators=[DataRequired()])
     submit = SubmitField("Tambahkan")
+
+
+class TambahDataSekolahForm(FlaskForm):
+    judul = StringField("Judul", validators=[DataRequired(), Length(1, 60)])
+    deskripsi = TextAreaField("Deskripsi data sekolah")
+    dokumen = FileField("Upload Dokumen", validators=[DataRequired()])
+    submit = SubmitField("Tambahkan")
+
+    def validate_judul(self, judul):
+        judul = DataSekolahModel.query.filter_by(judul=self.judul.data).first()
+        if judul is not None:
+            raise ValueError("Judul data sekolah sudah ada.")
+
+
+class UbahDataSekolahForm(FlaskForm):
+    judul = StringField(
+        "Judul data sekolah", validators=[DataRequired(), Length(1, 60)]
+    )
+    judul_hidden = StringField("judul_hidden", render_kw={"type": "hidden"})
+    deskripsi = TextAreaField("Deskripsi data sekolah")
+    dokumen = FileField("Upload Dokumen")
+    submit = SubmitField("Tambahkan")
+
+    def validate_judul(self, judul):
+        judul = DataSekolahModel.query.filter_by(judul=self.judul_hidden.data).first()
+        for data in DataSekolahModel.query.all():
+            if data.judul == judul.judul:
+                if data.judul != self.judul.data:
+                    raise ValueError("Judul sudah terdaftar.")
 

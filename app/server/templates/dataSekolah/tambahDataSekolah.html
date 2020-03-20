@@ -1,0 +1,32 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<form action="" method="POST" enctype="multipart/form-data">
+  {{ form.csrf_token() }}
+  <div class="form-row">
+    <div class="col-sm-8">
+      {{ form.judul.label(for='judul', class='col-sm-12 col-form-label')}}
+      <div class="col-sm-12">
+        {{ form.judul(id='judul', class='form-control form-control-sm')}} {% for
+        error in form.judul.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-sm-4">
+      {{ form.dokumen.label(for='file', class='col-sm-12 col-form-label')}}
+      <div class="col-sm-12">
+        {{ form.dokumen(class='form-control form-control-sm', id='file',
+        accept='application/pdf, application/docx, application/ppt,
+        application/doc ,application/vnd.ms-excel')}}
+      </div>
+    </div>
+  </div>
+  <div class="form-row mt-4 mx-2">
+    <div class="col-sm-12">
+      {{ form.deskripsi.label(for='deskripsi') }} {{
+      form.deskripsi(class='form-control', rows='5', id='deskripsi')}}
+    </div>
+  </div>
+  {{ form.submit(class='btn btn-info btn-sm mt-3 mx-3')}}
+</form>
+{% endblock %}
