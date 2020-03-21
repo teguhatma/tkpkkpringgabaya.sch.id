@@ -346,6 +346,7 @@ class JadwalKelasModel(db.Model):
         db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari")
     )
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
+    kelas = db.relationship("KelasModel", back_populates="jadwal")
 
     def __repr__(self):
         return "Jadwal Kelas {}".format(self.mata_pelajaran)
@@ -357,7 +358,7 @@ class KelasModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ruang = db.Column(db.String(5), nullable=False, unique=True)
     murid = db.relationship("MuridModel", back_populates="kelas")
-    jadwal = db.relationship("JadwalKelasModel")
+    jadwal = db.relationship("JadwalKelasModel", back_populates="kelas")
     elearning = db.relationship("ElearningModel", back_populates="kelas")
     guru = db.relationship("GuruModel", back_populates="kelas")
 

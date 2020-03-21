@@ -23,7 +23,7 @@
   <div class="form-group row">
     {{ form.ruang.label(class='col-sm-2 col-form-label')}}
     <div class="col-sm-8">
-      {{ form.ruang(class='form-control form-control-sm', maxlength='1')}} {%
+      {{ form.ruang(class='form-control form-control-sm', maxlength='2')}} {%
       for error in form.ruang.errors %}
       <span style="color: red;">{{ error }}</span>
       {% endfor %}

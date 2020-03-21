@@ -20,6 +20,7 @@ from app.models import (
     MuridModel,
     daftar_murid,
     DataSekolahModel,
+    JadwalKelasModel,
 )
 
 
@@ -545,4 +546,24 @@ class UbahElearningForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Tambahkan")
+
+
+class TambahUbahJadwalForm(FlaskForm):
+    mata_pelajaran = StringField(
+        "Mata Pelajaran", validators=[Length(2, 64), DataRequired()]
+    )
+    jam = StringField("Jam Pelajaran", validators=[DataRequired()])
+    hari = SelectField(
+        choices=[(g, g) for g in JadwalKelasModel.hari.property.columns[0].type.enums]
+    )
+    kelas = QuerySelectField(
+        "Kelas",
+        query_factory=daftar_kelas,
+        get_label="ruang",
+        get_pk=lambda a: a.id,
+        blank_text="Pilih kelas",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Simpan")
 

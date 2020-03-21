@@ -53,7 +53,9 @@
     </div>
     <div class="col-md-3">
       {{ form.jabatan.label(for='jabatan')}} {{ form.jabatan(class='form-control
-      form-control-sm', id='jabatan')}}
+      form-control-sm', id='jabatan')}} {% for error in form.jabatan.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
     </div>
     <div class="col-md-2">
       {{ form.agama.label(for='agama')}} {{ form.agama(class='form-control-sm

@@ -1,0 +1,44 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<form action="" enctype="multipart/form-data" method="POST" class="my-4">
+  {{ form.csrf_token() }}
+  <div class="form-group row">
+    {{ form.mata_pelajaran.label(for='mata_pelajaran', class='col-sm-2
+    col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.mata_pelajaran(class='form-control form-control-sm',
+      id="mata_pelajaran")}} {% for error in form.mata_pelajaran.errors %}
+      <span style="color: red">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.kelas.label(for='kelas', class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.kelas(class='form-control form-control-sm', id="kelas")}} {% for
+      error in form.kelas.errors %}
+      <span style="color: red">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.hari.label(for='hari', class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.hari(class='form-control form-control-sm', id="hari")}} {% for
+      error in form.hari.errors %}
+      <span style="color: red">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.jam.label(for='jam', class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.jam(type='time', class='form-control form-control-sm', id="jam")}}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.submit(class='col-sm-2 mx-3 float-right btn btn-sm btn-primary')}}
+  </div>
+</form>
+
+{% endblock %}
