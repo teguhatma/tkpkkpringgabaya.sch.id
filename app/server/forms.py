@@ -514,3 +514,35 @@ class TambahUbahBeritaForm(FlaskForm):
     )
     submit = SubmitField("Tambahkan")
 
+
+class TambahElearningForm(FlaskForm):
+    dokumen = FileField("Upload Dokumen", validators=[DataRequired()])
+    deskripsi = TextAreaField("Deskripsi")
+    judul = StringField("Judul E-learning", validators=[DataRequired(), Length(1, 120)])
+    kelas = QuerySelectField(
+        "Kelas",
+        query_factory=daftar_kelas,
+        get_label="ruang",
+        get_pk=lambda a: a.id,
+        blank_text="Pilih kelas",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Tambahkan")
+
+
+class UbahElearningForm(FlaskForm):
+    dokumen = FileField("Upload Dokumen")
+    deskripsi = TextAreaField("Deskripsi")
+    judul = StringField("Judul E-learning", validators=[DataRequired(), Length(1, 120)])
+    kelas = QuerySelectField(
+        "Kelas",
+        query_factory=daftar_kelas,
+        get_label="ruang",
+        get_pk=lambda a: a.id,
+        blank_text="Pilih kelas",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Tambahkan")
+

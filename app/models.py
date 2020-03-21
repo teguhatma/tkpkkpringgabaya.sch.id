@@ -173,7 +173,7 @@ class MuridModel(db.Model):
     password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="murid")
-    wali_murid = db.relationship("WaliMuridModel", back_populates='murid')
+    wali_murid = db.relationship("WaliMuridModel", back_populates="murid")
 
     @property
     def password(self):
@@ -212,7 +212,7 @@ class WaliMuridModel(db.Model):
     pekerjaan = db.Column(db.String(40), nullable=False)
     nomor_telepon = db.Column(db.String(12), nullable=False)
     murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
-    murid = db.relationship('MuridModel', back_populates='wali_murid')
+    murid = db.relationship("MuridModel", back_populates="wali_murid")
 
     def __repr__(self):
         return "Wali Murid {}".format(self.nama)
@@ -297,6 +297,7 @@ class ElearningModel(db.Model):
     slug = db.Column(db.String(120), unique=True)
     judul = db.Column(db.String(120), nullable=False)
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
+    kelas = db.relationship("KelasModel", back_populates="elearning")
 
     @staticmethod
     def generate_slug(target, value, oldvalue, initiator):
@@ -357,7 +358,7 @@ class KelasModel(db.Model):
     ruang = db.Column(db.String(5), nullable=False, unique=True)
     murid = db.relationship("MuridModel", back_populates="kelas")
     jadwal = db.relationship("JadwalKelasModel")
-    elearning = db.relationship("ElearningModel")
+    elearning = db.relationship("ElearningModel", back_populates="kelas")
     guru = db.relationship("GuruModel", back_populates="kelas")
 
     @staticmethod

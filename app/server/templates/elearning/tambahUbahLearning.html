@@ -1,0 +1,56 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<form action="" method="POST" enctype="multipart/form-data">
+  {{ form.csrf_token() }}
+  <div class="row mb-3">
+    <div class="col-sm-6">
+      <div class="form-row">
+        {{ form.judul.label(class='col-sm-12 col-form-label')}}
+        <div class="col-sm-10">
+          {{ form.judul(class='form-control form-control-sm')}}
+        </div>
+        {% for error in form.judul.errors %}
+        <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-row">
+            {{ form.kelas.label(class='col-sm-12 col-form-label')}}
+            <div class="col-sm-10">
+              {{ form.kelas(class='form-control form-control-sm')}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-row">
+            {{ form.dokumen.label(class='col-sm-12 col-form-label')}}
+            <div class="col-sm-10">
+              {{ form.dokumen(class='form-control form-control-sm')}}
+            </div>
+            {% for error in form.dokumen.errors %}
+            <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form.deskripsi(id='summernote')}}
+  </div>
+  {{ form.submit(class='btn btn-primary btn-sm') }}
+</form>
+<script>
+  $("#summernote").summernote({
+    tabsize: 2,
+    height: 300
+  });
+</script>
+{% endblock %}
