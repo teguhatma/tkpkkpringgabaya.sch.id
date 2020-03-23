@@ -1,4 +1,4 @@
-{% extends 'student/main_student.html' %} {% block content %}
+{% extends 'components/mainMurid.html' %} {% block content %}
 <small class="mx-5">DATA LENGKAP PESERTA DIDIK</small>
 <div class="mx-4 biodata">
   <div class="col-md-12 peserta-didik">
@@ -23,13 +23,6 @@
           </div>
         </div>
         <div class="form-group row">
-          {{ form.nomor_induk.label(for='nomor_induk', class='col-sm-3
-          col-form-label')}}
-          <div class="col-sm-9">
-            {{ form.nomor_induk(class='form-control', id='nomor_induk')}}
-          </div>
-        </div>
-        <div class="form-group row">
           {{ form.anak_ke.label(class='col-sm-3 col-form-label',
           for='anak_ke')}}
           <div class="col-sm-9">
@@ -44,23 +37,11 @@
           </div>
         </div>
         <div class="form-group row">
-          {{ form.email.label(for='email', class='col-sm-3 col-form-label')}}
-          <div class="col-sm-9">
-            {{ form.email(class='form-control', id='email', type='email')}}
-          </div>
-        </div>
-        <div class="form-group row">
           {{ form.nama_ibu_kandung.label(for='nama_ibu_kandung', class='col-sm-3
           col-form-label')}}
           <div class="col-sm-9">
             {{ form.nama_ibu_kandung(class='form-control',
             id='nama_ibu_kandung')}}
-          </div>
-        </div>
-        <div class="form-group row">
-          {{ form.nik.label(class='col-sm-3 col-form-label', for='nik')}}
-          <div class="col-sm-9">
-            {{ form.nik(class='form-control', id='nik', type='number')}}
           </div>
         </div>
         <div class="form-group row">
@@ -77,19 +58,9 @@
           </div>
         </div>
         <div class="form-group row">
-          {{ form.tanggal_lahir.label(for='tanggal_lahir', class='col-sm-3
-          col-form-label')}}
+          {{ form.tanggal_lahir.label(class='col-sm-3 col-form-label')}}
           <div class="col-sm-9">
-            {{ form.tanggal_lahir(class='form-control', id='tanggal_lahir',
-            type='date')}}
-          </div>
-        </div>
-        <div class="form-group row">
-          {{ form.tahun_masuk.label(class='col-sm-3 col-form-label',
-          for='tahun_masuk')}}
-          <div class="col-sm-9">
-            {{ form.tahun_masuk(class='form-control', id='tahun_masuk',
-            type='date')}}
+            {{ form.tanggal_lahir(class='form-control datepicker-here')}}
           </div>
         </div>
         <div class="form-group row">

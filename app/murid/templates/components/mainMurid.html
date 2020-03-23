@@ -104,5 +104,14 @@
         $("#dataTable").DataTable();
       });
     </script>
+    <link
+      href="{{ url_for('static', filename='dist/css/datepicker.min.css')}}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="{{ url_for('static', filename='dist/js/datepicker.min.js')}}"></script>
+
+    <!-- Include English language -->
+    <script src="{{ url_for('static', filename='dist/js/i18n/datepicker.en.js')}}"></script>
   </body>
 </html>

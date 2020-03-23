@@ -1,4 +1,4 @@
-{% extends 'student/main_student.html' %} {% block content %}
+{% extends 'components/mainMurid.html' %} {% block content %}
 <small class="mx-5">DATA LENGKAP PESERTA DIDIK</small>
 <div class="mx-4 biodata">
   <div class="col-md-12 peserta-didik">
@@ -50,11 +50,9 @@
           </div>
         </div>
         <div class="form-group row">
-          {{ form.tanggal_lahir.label(for='tanggal_lahir', class='col-sm-3
-          col-form-label')}}
+          {{ form.tanggal_lahir.label(class='col-sm-3 col-form-label')}}
           <div class="col-sm-9">
-            {{ form.tanggal_lahir(class='form-control', id='tanggal_lahir',
-            type='date')}}
+            {{ form.tanggal_lahir(class='form-control datepicker-here')}}
           </div>
         </div>
         <div class="form-group row">

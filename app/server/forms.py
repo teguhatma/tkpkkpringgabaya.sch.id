@@ -353,7 +353,7 @@ class RubahMuridForm(FlaskForm):
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
     provinsi = StringField("Provinsi", validators=[Length(1, 24)])
     agama = SelectField(
-        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+        choices=[(g, g) for g in MuridModel.agama.property.columns[0].type.enums]
     )
     tempat_lahir = StringField(
         "Tempat lahir", validators=[DataRequired(), Length(1, 24)]
@@ -371,7 +371,9 @@ class RubahMuridForm(FlaskForm):
     )
     foto_diri = FileField("Foto diri")
     jenis_kelamin = SelectField(
-        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+        choices=[
+            (g, g) for g in MuridModel.jenis_kelamin.property.columns[0].type.enums
+        ]
     )
     tahun_pelajaran = StringField(
         "Tahun Pelajaran",
