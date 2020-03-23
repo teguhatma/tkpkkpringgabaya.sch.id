@@ -45,11 +45,53 @@ def murid_profile():
     )
 
 
-@murid.route("/murid/nilai")
+@murid.route("/murid/nilai", methods=["GET", "POST"])
 @login_required
 def murid_nilai():
-    nilai = NilaiModel.query.filter_by(murid_id=current_user.id).all()
-    return render_template("nilaiMurid.html", nilai=nilai, title="Nilai Peserta Didik")
+    number = []
+    for a in NilaiModel.query.order_by(NilaiModel.tahun_pelajaran.asc()).all():
+        number.append(a.tahun_pelajaran)
+    daftar_tahun_nilai = set(number)
+    nilai = []
+    global nilai_selected
+    if request.method == "POST":
+
+        nilai_selected = (
+            NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
+            .filter_by(semester=request.form.get("semester"))
+            .all()
+        )
+        return redirect(url_for("murid.murid_nilai_select"))
+    return render_template(
+        "nilaiMurid.html",
+        nilai=[],
+        title="Nilai Peserta Didik",
+        daftar_tahun_nilai=daftar_tahun_nilai,
+    )
+
+
+@murid.route("/murid/nilai/select", methods=["GET", "POST"])
+@login_required
+def murid_nilai_select():
+    number = []
+    for a in NilaiModel.query.order_by(NilaiModel.tahun_pelajaran.asc()).all():
+        number.append(a.tahun_pelajaran)
+    daftar_tahun_nilai = set(number)
+    global nilai_selected
+    if request.method == "POST":
+
+        nilai_selected = (
+            NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
+            .filter_by(semester=request.form.get("semester"))
+            .all()
+        )
+        return redirect(url_for("murid.murid_nilai_select"))
+    return render_template(
+        "nilaiMurid.html",
+        nilai=nilai_selected,
+        title="Nilai Peserta Didik",
+        daftar_tahun_nilai=daftar_tahun_nilai,
+    )
 
 
 @murid.route("/murid/ganti-password", methods=["GET", "POST"])

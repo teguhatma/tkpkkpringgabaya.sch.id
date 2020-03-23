@@ -1,24 +1,48 @@
 {% extends 'components/mainMurid.html' %} {% block content %}
 <small class="mx-5">NILAI PESERTA DIDIK</small>
-<div class="mx-4 biodata d-flex justify-content-between" id="accordionNilai">
-  {% for nilai in nilai %}
-  <div class="col-md-6 nilai-murid">
-    <div class="tahun-pelajaran">
-      <small>Tahun Pelajaran {{ nilai.tahun}}</small>
+
+<div class="mx-5 my-4">
+  <form method="POST">
+    <div class="form-row">
+      <div class="col-md-5 mb-3">
+        <select name="tahun" class="custom-select custom-select-sm">
+          {% for tahun in daftar_tahun_nilai %}
+          <option value="{{ tahun }}">{{ tahun }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-5 mb-3">
+        <select name="semester" class="custom-select custom-select-sm">
+          <option value="Semester I">Semester I</option>
+          <option value="Semester II">Semester II</option>
+        </select>
+      </div>
+      <div class="col-md-2 mb-3">
+        <button class="btn btn-sm btn-primary btn-block">Button</button>
+      </div>
     </div>
-    <div class="nilai-semester text-center">
-      <small>{{ nilai.semester }}</small>
-    </div>
-    <div class="content-biodata">
-      <div class="form-group my-0">
-        <div class="group">
-          <h5><strong>{{ nilai.kategori}}</strong></h5>
-          <small>- {{nilai.judul}}</small>
-          <p><small>{{nilai.deskripsi}}</small></p>
+  </form>
+</div>
+
+<div class="mx-5 nilai-murid">
+  <div class="row">
+    {% if nilai is not none %} {% for nilai in nilai %}
+    <div class="col-md-6 nilai-murid my-3">
+      <div class="tahun-pelajaran">
+        <small>{{ nilai.jenis_penilaian}}</small>
+      </div>
+      <div class="nilai-semester text-center">
+        <small>{{ nilai.nama }}</small>
+      </div>
+      <div class="content-biodata">
+        <div class="form-group my-0">
+          <div class="group">
+            <p><small>{{nilai.deskripsi}}</small></p>
+          </div>
         </div>
       </div>
     </div>
+    {% endfor %} {% else %} {% endif %}
   </div>
-  {% endfor %}
 </div>
 {% endblock %}

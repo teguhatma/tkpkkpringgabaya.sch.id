@@ -314,7 +314,7 @@ class NilaiModel(db.Model):
     __tablename__ = "nilai"
 
     id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(120), unique=True, nullable=False)
+    nama = db.Column(db.String(120), nullable=False)
     deskripsi = db.Column(db.Text, nullable=False)
     jenis_penilaian = db.Column(
         db.Enum(
@@ -393,3 +393,4 @@ def daftar_murid():
 @login_manager.user_loader
 def murid(id):
     return MuridModel.query.get(id)
+
