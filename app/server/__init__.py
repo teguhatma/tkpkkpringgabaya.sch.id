@@ -14,4 +14,5 @@ from . import (
     berita,
     learning,
     jadwal,
+    nilai,
 )

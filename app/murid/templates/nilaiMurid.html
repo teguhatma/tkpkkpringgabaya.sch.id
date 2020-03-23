@@ -1,0 +1,24 @@
+{% extends 'components/mainMurid.html' %} {% block content %}
+<small class="mx-5">NILAI PESERTA DIDIK</small>
+<div class="mx-4 biodata d-flex justify-content-between" id="accordionNilai">
+  {% for nilai in nilai %}
+  <div class="col-md-6 nilai-murid">
+    <div class="tahun-pelajaran">
+      <small>Tahun Pelajaran {{ nilai.tahun}}</small>
+    </div>
+    <div class="nilai-semester text-center">
+      <small>{{ nilai.semester }}</small>
+    </div>
+    <div class="content-biodata">
+      <div class="form-group my-0">
+        <div class="group">
+          <h5><strong>{{ nilai.kategori}}</strong></h5>
+          <small>- {{nilai.judul}}</small>
+          <p><small>{{nilai.deskripsi}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

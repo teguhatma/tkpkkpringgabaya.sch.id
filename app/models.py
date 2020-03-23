@@ -3,6 +3,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import event
 from slugify import slugify
 from datetime import datetime
+from app import login_manager
+from flask_login import UserMixin
 
 
 __fotosize__ = 4028
@@ -144,7 +146,7 @@ class PegawaiModel(db.Model):
         return "Pegawai {}".format(self.nama)
 
 
-class MuridModel(db.Model):
+class MuridModel(UserMixin, db.Model):
     __tablename__ = "murid"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -364,8 +366,8 @@ class KelasModel(db.Model):
 
     @staticmethod
     def insert_kelas():
-        insert_kelas_a = KelasModel(ruang="A")
-        insert_kelas_b = KelasModel(ruang="B")
+        insert_kelas_a = KelasModel(ruang="A1")
+        insert_kelas_b = KelasModel(ruang="A2")
         db.session.add_all([insert_kelas_a, insert_kelas_b])
         db.session.commit()
 
@@ -387,3 +389,7 @@ def daftar_kelas():
 def daftar_murid():
     return MuridModel.query.order_by(MuridModel.nama.asc())
 
+
+@login_manager.user_loader
+def murid(id):
+    return MuridModel.query.get(id)

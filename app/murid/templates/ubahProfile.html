@@ -1,0 +1,137 @@
+{% extends 'student/main_student.html' %} {% block content %}
+<small class="mx-5">DATA LENGKAP PESERTA DIDIK</small>
+<div class="mx-4 biodata">
+  <div class="col-md-12 peserta-didik">
+    <div class="title-biodata">
+      <small>BIODATA PESERTA DIDIK</small>
+    </div>
+
+    <div class="content-biodata px-3 py-3">
+      <form method="POST" enctype="multipart/form-data" class="ganti-profile">
+        {{ form.csrf_token() }}
+        <div class="form-group row">
+          {{ form.nama.label(for='nama', class='col-sm-3 col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.nama(class='form-control', id='nama')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.nama_panggilan.label(for='nama_panggilan', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.nama_panggilan(id='nama_panggilan', class='form-control')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.nomor_induk.label(for='nomor_induk', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.nomor_induk(class='form-control', id='nomor_induk')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.anak_ke.label(class='col-sm-3 col-form-label',
+          for='anak_ke')}}
+          <div class="col-sm-9">
+            {{ form.anak_ke(class='form-control', id='anak_ke', type='number')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.jenis_kelamin.label(for='jenis_kelamin', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.jenis_kelamin(class='form-control', id='jenis_kelamin')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.email.label(for='email', class='col-sm-3 col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.email(class='form-control', id='email', type='email')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.nama_ibu_kandung.label(for='nama_ibu_kandung', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.nama_ibu_kandung(class='form-control',
+            id='nama_ibu_kandung')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.nik.label(class='col-sm-3 col-form-label', for='nik')}}
+          <div class="col-sm-9">
+            {{ form.nik(class='form-control', id='nik', type='number')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.agama.label(class='col-sm-3 col-form-label', for='agama')}}
+          <div class="col-sm-9">
+            {{ form.agama(class='form-control', id='agama')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.tempat_lahir.label(class='col-sm-3 col-form-label',
+          for='tempat_lahir')}}
+          <div class="col-sm-9">
+            {{ form.tempat_lahir(class='form-control', id='tempat_lahir')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.tanggal_lahir.label(for='tanggal_lahir', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.tanggal_lahir(class='form-control', id='tanggal_lahir',
+            type='date')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.tahun_masuk.label(class='col-sm-3 col-form-label',
+          for='tahun_masuk')}}
+          <div class="col-sm-9">
+            {{ form.tahun_masuk(class='form-control', id='tahun_masuk',
+            type='date')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.kelurahan.label(for='kelurahan', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.kelurahan(class='form-control', id='kelurahan')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.kecamatan.label(for='kecamatan', class='col-sm-3
+          col-form-label')}}
+          <div class="col-sm-9">
+            {{ form.kecamatan(class='form-control', id='kecamatan')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.kabupaten.label(class='col-sm-3 col-form-label',
+          for='kabupaten')}}
+          <div class="col-sm-9">
+            {{ form.kabupaten(class='form-control', id='kabupaten')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.provinsi.label(class='col-sm-3 col-form-label',
+          for='provinsi')}}
+          <div class="col-sm-9">
+            {{ form.provinsi(class='form-control', id='provinsi')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          {{ form.alamat.label(class='col-sm-3 col-form-label', for='alamat')}}
+          <div class="col-sm-9">
+            {{ form.alamat(class='form-control', id='alamat', type='textarea',
+            rows='4')}}
+          </div>
+        </div>
+        <div class="form-group row py-3 px-3">
+          {{ form.submit(class='btn btn-primary btn-block')}}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

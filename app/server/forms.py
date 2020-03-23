@@ -21,6 +21,7 @@ from app.models import (
     daftar_murid,
     DataSekolahModel,
     JadwalKelasModel,
+    NilaiModel,
 )
 
 
@@ -566,4 +567,21 @@ class TambahUbahJadwalForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Simpan")
+
+
+class TambahNilaiMuridForm(FlaskForm):
+    nama = StringField("Nama Penilaian", validators=[DataRequired(), Length(0, 120)])
+    deskripsi = TextAreaField("Deskripsi penilaian", validators=[DataRequired()])
+    jenis_penilaian = SelectField(
+        choices=[
+            (g, g) for g in NilaiModel.jenis_penilaian.property.columns[0].type.enums
+        ]
+    )
+    semester = SelectField(
+        choices=[(g, g) for g in NilaiModel.semester.property.columns[0].type.enums]
+    )
+    tahun_pelajaran = StringField(
+        "Tahun Pelajaran", validators=[DataRequired(), Length(0, 10)]
+    )
+    submit = SubmitField("Tambahkan")
 

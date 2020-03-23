@@ -1,0 +1,63 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<!-- Breadcrumbs-->
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">
+    <a href="#">Dashboard</a>
+  </li>
+  <li class="breadcrumb-item">Data</li>
+  <li class="breadcrumb-item active">Murid</li>
+</ol>
+{% include 'components/successInfo.html' %}
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Daftar data murid
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <a href="" class="btn btn-sm btn-primary mb-3"
+          ><i class="far fa-plus-square"></i> Tambah Data
+        </a>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+            <th>Nomor Induk</th>
+            <th>Kelas</th>
+            <th>Lulus</th>
+            <th>Jenis Kelamin</th>
+            <th>Tempat/ Tanggal Lahir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for murid in nilai_murid %}
+          <tr>
+            <th scope="row">{{ loop.index }}</th>
+            <td>
+              <a href="{{ url_for('server.data_nilai_murid', id=murid.id) }}">
+                {{ murid.nama }}
+              </a>
+            </td>
+            <td>{{ murid.nomor_induk }}</td>
+            <td>{{ murid.kelas.ruang }}</td>
+            <td>
+              {% if murid.lulus == True %}Sudah lulus {% else %} Belum lulus {%
+              endif%}
+            </td>
+            <td>{{ murid.jenis_kelamin }}</td>
+            <td>{{ murid.tempat_lahir }}, {{ murid.tanggal_lahir }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
