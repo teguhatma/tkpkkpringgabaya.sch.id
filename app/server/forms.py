@@ -556,6 +556,7 @@ class TambahUbahJadwalForm(FlaskForm):
         "Mata Pelajaran", validators=[Length(2, 64), DataRequired()]
     )
     jam = StringField("Jam Pelajaran", validators=[DataRequired()])
+    jam_end = StringField("Jam Pelajaran", validators=[DataRequired()])
     hari = SelectField(
         choices=[(g, g) for g in JadwalKelasModel.hari.property.columns[0].type.enums]
     )
@@ -576,7 +577,7 @@ class TambahNilaiMuridForm(FlaskForm):
     deskripsi = TextAreaField("Deskripsi penilaian", validators=[DataRequired()])
     jenis_penilaian = SelectField(
         choices=[
-            (g, g) for g in NilaiModel.jenis_penilaian.property.columns[0].type.enums
+            (g, g) for g in NilaiModel.aspek_penilaian.property.columns[0].type.enums
         ]
     )
     semester = SelectField(
@@ -586,4 +587,3 @@ class TambahNilaiMuridForm(FlaskForm):
         "Tahun Pelajaran", validators=[DataRequired(), Length(0, 10)]
     )
     submit = SubmitField("Tambahkan")
-

@@ -9,7 +9,11 @@ from .forms import TambahUbahJadwalForm
 
 @server.route("/dashboard/jadwal-sekolah")
 def data_jadwal():
-    data_jadwal = JadwalKelasModel.query.order_by(JadwalKelasModel.jam.asc()).all()
+    data_jadwal = (
+        JadwalKelasModel.query.order_by(JadwalKelasModel.hari.asc())
+        .order_by(JadwalKelasModel.jam.asc())
+        .all()
+    )
     return render_template(
         "jadwal/dataJadwal.html", title="Jadwal Kelas", data_jadwal=data_jadwal
     )
@@ -22,6 +26,7 @@ def tambah_jadwal():
         tambah_jadwal = JadwalKelasModel(
             mata_pelajaran=form.mata_pelajaran.data,
             jam=form.jam.data,
+            jam_end=form.jam_end.data,
             hari=form.hari.data,
             kelas_id=form.kelas.data.id,
         )
@@ -51,6 +56,7 @@ def ubah_jadwal(id):
 
         ubah_jadwal.mata_pelajaran = form.mata_pelajaran.data
         ubah_jadwal.jam = form.jam.data
+        ubah_jadwal.jam_end = form.jam_end.data
         ubah_jadwal.hari = form.hari.data
         ubah_jadwal.kelas_id = form.kelas.data.id
 
@@ -62,6 +68,7 @@ def ubah_jadwal(id):
     if request.method == "GET":
         form.mata_pelajaran.data = ubah_jadwal.mata_pelajaran
         form.jam.data = ubah_jadwal.jam
+        form.jam_end.data = ubah_jadwal.jam_end
         form.hari.data = ubah_jadwal.hari
         form.kelas.data = ubah_jadwal.kelas_id
 

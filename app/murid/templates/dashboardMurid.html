@@ -67,7 +67,7 @@
         <th scope="row">{{loop.index}}</th>
         <td>{{jadwal.hari}}</td>
         <td>{{jadwal.mata_pelajaran}}</td>
-        <td>{{jadwal.jam}}</td>
+        <td>{{jadwal.jam}} - {{ jadwal.jam_end }}</td>
       </tr>
       {% endfor %}
     </tbody>

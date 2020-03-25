@@ -176,6 +176,7 @@ class MuridModel(UserMixin, db.Model):
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="murid")
     wali_murid = db.relationship("WaliMuridModel", back_populates="murid")
+    nilai = db.relationship("NilaiModel")
 
     @property
     def password(self):
@@ -311,20 +312,30 @@ class ElearningModel(db.Model):
 
 
 class NilaiModel(db.Model):
-    __tablename__ = "nilai"
+    __tablename__ = "nilai_model"
 
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(120), nullable=False)
+    nilai_penilaian = db.Column(
+        db.Enum(
+            "Belum Berkembang",
+            "Mulai Berkembang",
+            "Berkembang Sesuai Harapan",
+            "Berkembang Sangat Baik",
+            name="nilai_penilaian",
+        ),
+        nullable=False,
+    )
     deskripsi = db.Column(db.Text, nullable=False)
-    jenis_penilaian = db.Column(
+    aspek_penilaian = db.Column(
         db.Enum(
             "Nilai Agama dan Moral",
-            "Fisik",
-            "Kognitif",
+            "Sosial Emosional",
             "Bahasa",
-            "Sosial, Emosi",
+            "Kognitif",
+            "Fisik",
             "Seni",
-            name="kategori",
+            name="aspek_penilaian",
         ),
         nullable=False,
     )
@@ -344,6 +355,7 @@ class JadwalKelasModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     mata_pelajaran = db.Column(db.String(64), nullable=False)
     jam = db.Column(db.String(10), nullable=False)
+    jam_end = db.Column(db.String(10), nullable=False)
     hari = db.Column(
         db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari")
     )
@@ -393,4 +405,3 @@ def daftar_murid():
 @login_manager.user_loader
 def murid(id):
     return MuridModel.query.get(id)
-

@@ -6,7 +6,7 @@ from .forms import LoginForm
 
 
 @auth.route("/login/murid", methods=["GET", "POST"])
-def login_students():
+def login_murid():
     form = LoginForm()
     if form.validate_on_submit():
         murid = MuridModel.query.filter_by(nomor_induk=form.nomor_induk.data).first()
@@ -26,4 +26,3 @@ def login_students():
 def logout():
     logout_user()
     return redirect(url_for("auth.login_students"))
-

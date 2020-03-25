@@ -48,7 +48,7 @@
             <td>{{jadwal.hari}}</td>
             <td>{{ jadwal.kelas.ruang}}</td>
             <td>{{jadwal.mata_pelajaran}}</td>
-            <td>{{jadwal.jam}}</td>
+            <td>{{jadwal.jam}} - {{jadwal.jam_end}}</td>
             <td>
               <a
                 href="{{ url_for('server.ubah_jadwal', id=jadwal.id) }}"

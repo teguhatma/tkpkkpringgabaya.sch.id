@@ -1,0 +1,42 @@
+<nav class="navbar navbar-top">
+  <div class="container d-flex flex-row-reverse">
+    <a
+      class="nav-item nav-link nav-item-top"
+      href="{{ url_for('auth.login_murid') }}"
+      >Login</a
+    >
+  </div>
+</nav>
+
+<nav class="navbar navbar-light">
+  <div class="container d-flex justify-content-between">
+    <a href="{{ url_for('client.index') }}" aclass="navbar item-bawah">Home</a>
+    <div class="navbar-nav d-flex flex-row-reverse">
+      <a class="nav-item item-bawah nav-link px-3">E-Learning</a>
+      <a class="nav-item item-bawah nav-link px-3" href="">
+        Prestasi
+      </a>
+      <a href="" class="nav-item item-bawah nav-link px-3">Guru</a>
+      <a href="" class="nav-item item-bawah nav-link px-3">Profile Sekolah</a>
+      |
+      <a class="nav-item item-bawah nav-link px-4"></a>
+      <a class="nav-item item-bawah nav-link px-4"></a>
+    </div>
+  </div>
+  <div class="caption">
+    <span class="border">TK PKK Pringgabaya</span>
+    <br /><br />
+    <span class="bawah">Jalan Sandubaya Nomor 33 Pringgabaya</span>
+  </div>
+
+  <!-- <div class="new-berita">
+    <div class="new-banget d-flex flex-row">
+      <div class="foto foto-navbar col-md-4 p-0">
+        <img src="" alt="" />
+      </div>
+      <div class="deskripsi deskripsi-foto col-md-8">
+        <span>{{ berita.judul}}</span>
+      </div>
+    </div>
+  </div> -->
+</nav>

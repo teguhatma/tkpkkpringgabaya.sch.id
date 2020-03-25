@@ -16,6 +16,7 @@ python-dotenv = "*"
 flask-moment = "*"
 flask-wtf = "*"
 flask-login = "*"
+flask-share = "*"
 
 [requires]
 python_version = "3.8"
