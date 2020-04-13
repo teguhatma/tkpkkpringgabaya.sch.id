@@ -95,4 +95,3 @@ class MuridGantiProfileWaliForm(FlaskForm):
     kabupaten = StringField("Kabupaten", validators=[DataRequired(), Length(1, 24)])
     provinsi = StringField("Provinsi", validators=[DataRequired(), Length(1, 24)])
     submit = SubmitField("Simpan")
-

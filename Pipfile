@@ -17,6 +17,8 @@ flask-moment = "*"
 flask-wtf = "*"
 flask-login = "*"
 flask-share = "*"
+flask-weasyprint = "*"
+flask-login-multi = "*"
 
 [requires]
 python_version = "3.8"

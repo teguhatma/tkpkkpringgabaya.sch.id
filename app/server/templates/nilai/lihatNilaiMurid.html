@@ -30,11 +30,38 @@
           class="btn btn-primary btn-sm mb-3"
           ><i class="far fa-plus-square"></i> Tambah Nilai</a
         >
+        <a
+          href="{{ url_for('server.print_nilai', id=murid.id) }}"
+          target="_blank"
+          class="btn btn-primary btn-sm mb-3 mx-3"
+          ><i class="far fa-plus-square"></i> Print</a
+        >
+        <div class="my-4">
+          <form method="POST">
+            <div class="form-row">
+              <div class="col-md-5 mb-3">
+                <select name="tahun" class="custom-select custom-select-sm">
+                  {% for tahun in daftar_tahun_nilai %}
+                  <option value="{{ tahun }}">{{ tahun }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-5 mb-3">
+                <select name="semester" class="custom-select custom-select-sm">
+                  <option value="Semester I">Semester I</option>
+                  <option value="Semester II">Semester II</option>
+                </select>
+              </div>
+              <div class="col-md-2 mb-3">
+                <button class="btn btn-sm btn-primary btn-block">Button</button>
+              </div>
+            </div>
+          </form>
+        </div>
         <thead>
           <tr>
             <th>No</th>
-            <th>Jenis Penilaian</th>
-            <th>Nama Penilaian</th>
+            <th>Aspek Penilaian</th>
             <th>Semester</th>
             <th>Tahun Pelajaran</th>
             <th>Deskripsi</th>
@@ -42,14 +69,13 @@
           </tr>
         </thead>
         <tbody>
-          {% for nilai in nilai %}
+          {% if nilai_selected is none %} {% for nilai in nilai %}
           <tr>
             <td>{{ loop.index }}</td>
-            <td>{{ nilai.jenis_penilaian }}</td>
-            <td>{{ nilai.nama }}</td>
+            <td>{{ nilai.aspek_penilaian }}</td>
             <td>{{ nilai.semester}}</td>
             <td>{{ nilai.tahun_pelajaran }}</td>
-            <td>{{ nilai.deskripsi }}</td>
+            <td>{{ nilai.deskripsi | striptags }}</td>
             <td>
               <a
                 href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}"
@@ -67,7 +93,31 @@
               ></a>
             </td>
           </tr>
-          {% endfor %}
+          {% endfor %} {% else %} {% for nilai in nilai_selected %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ nilai.aspek_penilaian }}</td>
+            <td>{{ nilai.semester}}</td>
+            <td>{{ nilai.tahun_pelajaran }}</td>
+            <td>{{ nilai.deskripsi | striptags }}</td>
+            <td>
+              <a
+                href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}"
+                class="edit"
+                title="Edit"
+                data-toggle="tooltip"
+                ><i class="fas fa-pencil-alt"></i
+              ></a>
+              <a
+                href="{{ url_for('server.hapus_nilai_murid', id=nilai.id) }}"
+                class="delete"
+                title="Delete"
+                data-toggle="tooltip"
+                ><i class="fas fa-trash"></i
+              ></a>
+            </td>
+          </tr>
+          {% endfor %} {% endif %}
         </tbody>
       </table>
     </div>

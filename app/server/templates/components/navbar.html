@@ -88,7 +88,8 @@
         aria-expanded="false"
       >
         <i class="fas fa-user-circle fa-fw"></i>
-        {{ current_user.nama }}
+        {% if current_user.username is not none %} {{ current_user.username }}
+        {% else %} {{ current_user.nama }} {% endif %}
       </a>
       <div
         class="dropdown-menu dropdown-menu-right"

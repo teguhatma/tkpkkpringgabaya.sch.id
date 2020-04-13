@@ -59,6 +59,7 @@ def murid_nilai():
         nilai_selected = (
             NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
             .filter_by(semester=request.form.get("semester"))
+            .filter_by(murid_id=current_user.id)
             .all()
         )
         return redirect(url_for("murid.murid_nilai_select"))
@@ -83,6 +84,7 @@ def murid_nilai_select():
         nilai_selected = (
             NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
             .filter_by(semester=request.form.get("semester"))
+            .filter_by(murid_id=current_user.id)
             .all()
         )
         return redirect(url_for("murid.murid_nilai_select"))
@@ -197,4 +199,3 @@ def murid_ganti_profile_wali():
     return render_template(
         "ubahWali.html", title="Profile Wali Peserta Didik", form=form
     )
-

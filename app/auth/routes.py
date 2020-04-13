@@ -1,13 +1,13 @@
-from app.models import MuridModel
+from app.models import MuridModel, AdminModel
 from . import auth
 from flask import request, redirect, url_for, render_template, flash
-from flask_login import current_user, login_user, login_required, logout_user
-from .forms import LoginForm
+from flask_login import login_user, logout_user, login_required
+from .forms import LoginMuridForm, LoginAdminForm
 
 
 @auth.route("/login/murid", methods=["GET", "POST"])
 def login_murid():
-    form = LoginForm()
+    form = LoginMuridForm()
     if form.validate_on_submit():
         murid = MuridModel.query.filter_by(nomor_induk=form.nomor_induk.data).first()
         if murid is not None and murid.verify_password(form.password.data):
@@ -21,8 +21,24 @@ def login_murid():
     return render_template("login.html", title="Sign in", form=form)
 
 
+@auth.route("/login/admin", methods=["GET", "POST"])
+def login_admin():
+    form = LoginAdminForm()
+    if form.validate_on_submit():
+        server = AdminModel.query.filter_by(username=form.username.data).first()
+        if server is not None and server.verify_password(form.password.data):
+            login_user(server)
+            next_page = request.args.get("next")
+            if next_page is None or not next_page.startswith("/"):
+                next_page = url_for("server.data_guru")
+            return redirect(next_page)
+
+        flash("Invalid username and password!")
+    return render_template("loginAdmin.html", title="Sign in", form=form)
+
+
 @auth.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("auth.login_students"))
+    return redirect(url_for("client.index"))

@@ -1,137 +1,132 @@
 {% extends 'components/main.html' %} {% block content %}
 
-<ol class="breadcrumb">
-    <li class="breadcrumb-item">
-        <a href="#">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item">
-        Data
-    </li>
-    <li class="breadcrumb-item">Guru</li>
-    <li class="breadcrumb-item active">Tambah</li>
-</ol>
-
 <form action="" method="POST" enctype="multipart/form-data">
-    {{ form.csrf_token() }}
-    <div class="form-row">
-        <div class="col-md-3">
-            {{ form.nama.label()}} {{ form.nama(class='form-control
+  {{ form.csrf_token() }}
+  <div class="form-row">
+    <div class="col-md-3">
+      {{ form.nama.label()}} {{ form.nama(class='form-control
       form-control-sm')}} {% for error in form.nama.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-2">
-            {{ form.nama_panggilan.label()}} {{ form.nama_panggilan(class='form-control
-      form-control-sm', id='nik')}} {% for error in form.nama_panggilan.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-1">
-            {{ form.nomor_induk.label()}} {{ form.nomor_induk(class='form-control
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      {{ form.nama_panggilan.label()}} {{
+      form.nama_panggilan(class='form-control form-control-sm', id='nik')}} {%
+      for error in form.nama_panggilan.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-1">
+      {{ form.nomor_induk.label()}} {{ form.nomor_induk(class='form-control
       form-control-sm', id='nik')}} {% for error in form.nomor_induk.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-1">
-            {{ form.anak_ke.label()}} {{ form.anak_ke(class='form-control
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-1">
+      {{ form.anak_ke.label()}} {{ form.anak_ke(class='form-control
       form-control-sm')}} {% for error in form.anak_ke.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-2">
-            {{ form.lulus.label()}}
-            {{form.lulus(class='form-control form-control-sm')}}
-        </div>
-        <div class="col-md-2">
-            {{ form.jenis_kelamin.label(for='jenis_kelamin')}} {{
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      {{ form.lulus.label()}} {{form.lulus(class='form-control
+      form-control-sm')}}
+    </div>
+    <div class="col-md-2">
+      {{ form.jenis_kelamin.label(for='jenis_kelamin')}} {{
       form.jenis_kelamin(class='form-control form-control-sm',
       id='jenis_kelamin')}}
-        </div>
     </div>
-    <div class="form-row mt-4">
-        <div class="col-md-2">
-            {{ form.kelas.label(for='kelas')}} {{ form.kelas(class='form-control
-      form-control-sm', id='kelas')}}
-            {% for error in form.kelas.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-2">
-            {{ form.agama.label(for='agama')}} {{ form.agama(class='form-control-sm
+  </div>
+  <div class="form-row mt-4">
+    <div class="col-md-2">
+      {{ form.kelas.label(for='kelas')}} {{ form.kelas(class='form-control
+      form-control-sm', id='kelas')}} {% for error in form.kelas.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      {{ form.agama.label(for='agama')}} {{ form.agama(class='form-control-sm
       form-control', id='agama')}}
-        </div>
-        <div class="col-md-2">
-            {{ form.nama_ibu_kandung.label()}} {{
-      form.nama_ibu_kandung()}}{% for error in form.nama_ibu_kandung.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-3">
-            {{ form.tahun_pelajaran.label()}} {{
-      form.tahun_pelajaran(class='form-control form-control-sm datepicker-here', type='text')}}
-            {% for error in form.tahun_pelajaran.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
     </div>
-    <div class="form-row mt-4">
-        <div class="col-md-3">
-            {{ form.tempat_lahir.label(for='tempat_lahir')}} {{
+    <div class="col-md-2">
+      {{ form.nama_ibu_kandung.label()}} {{
+      form.nama_ibu_kandung(class="form-control form-control-sm")}}{% for error
+      in form.nama_ibu_kandung.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-3">
+      {{ form.tahun_pelajaran.label()}} {{
+      form.tahun_pelajaran(class='form-control form-control-sm datepicker-here',
+      type='text')}} {% for error in form.tahun_pelajaran.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-row mt-4">
+    <div class="col-md-3">
+      {{ form.tempat_lahir.label(for='tempat_lahir')}} {{
       form.tempat_lahir(class='form-control form-control-sm',
       id='tempat_lahir')}} {% for error in form.tempat_lahir.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-3">
-            {{ form.tanggal_lahir.label(for='tanggal_lahir')}} {{
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-3">
+      {{ form.tanggal_lahir.label(for='tanggal_lahir')}} {{
       form.tanggal_lahir(class='form-control form-control-sm datepicker-here',
       type='text', id='tanggal_lahir')}}
-        </div>
-        <div class="col-md-3">
-            {{ form.foto_diri.label()}} {{ form.foto_diri(class='form-control
-      form-control-sm', accept="image/png, image/jpeg,
-      image/jpg")}}
-        </div>
     </div>
-    <div class="form-row mt-4">
-        <div class="col-md-3">
-            {{ form.kelurahan.label(for='kelurahan')}} {{
+    <div class="col-md-3">
+      {{ form.foto_diri.label()}} {{ form.foto_diri(class='form-control
+      form-control-sm', accept="image/png, image/jpeg, image/jpg")}}
+    </div>
+  </div>
+  <div class="form-row mt-4">
+    <div class="col-md-2">
+      {{ form.dusun.label()}} {{ form.dusun(class='form-control
+      form-control-sm')}} {% for error in form.dusun.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      {{ form.kelurahan.label(for='kelurahan')}} {{
       form.kelurahan(class='form-control form-control-sm', id='kelurahan')}} {%
       for error in form.kelurahan.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-3">
-            {{ form.kecamatan.label(for='kecamatan')}} {{
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-2">
+      {{ form.kecamatan.label(for='kecamatan')}} {{
       form.kecamatan(class='form-control form-control-sm', id='kecamatan')}} {%
       for error in form.kecamatan.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-3">
-            {{ form.kabupaten.label(for='kabupaten')}} {{
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-3">
+      {{ form.kabupaten.label(for='kabupaten')}} {{
       form.kabupaten(class='form-control form-control-sm', id='kabupaten')}} {%
       for error in form.kabupaten.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
-        <div class="col-md-3">
-            {{ form.provinsi.label(for='provinsi')}} {{
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+    <div class="col-md-3">
+      {{ form.provinsi.label(for='provinsi')}} {{
       form.provinsi(class='form-control form-control-sm', id='provinsi')}} {%
       for error in form.provinsi.errors %}
-            <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </div>
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
     </div>
-    <div class="form-row mt-4">
-        {{ form.alamat.label(for='alamat')}} {{ form.alamat(type='textarea',
+  </div>
+  <div class="form-row mt-4">
+    {{ form.alamat.label(for='alamat')}} {{ form.alamat(type='textarea',
     id='alamat', class='form-control form-control-sm', rows='5')}} {% for error
     in form.alamat.errors %}
-        <span style="color: red;">{{ erorr }}</span>
-        {% endfor %}
-    </div>
-    <div class="form-row my-4">
-        {{ form.submit(class='btn btn-info btn-small btn-block')}}
-    </div>
+    <span style="color: red;">{{ erorr }}</span>
+    {% endfor %}
+  </div>
+  <div class="form-row my-4">
+    {{ form.submit(class='btn btn-info btn-small btn-block')}}
+  </div>
 </form>
 {% endblock %}

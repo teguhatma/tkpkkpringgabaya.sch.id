@@ -4,7 +4,7 @@ from sqlalchemy import event
 from slugify import slugify
 from datetime import datetime
 from app import login_manager
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 
 
 __fotosize__ = 4028
@@ -34,6 +34,18 @@ class AdminModel(db.Model):
         insert_admin.password("tkadminadmin")
         db.session.add(insert_admin)
         db.session.commit()
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return int(self.id)
 
     def __repr__(self):
         return "Admin {}".format(self.username)
@@ -106,6 +118,18 @@ class GuruModel(db.Model):
     def __repr__(self):
         return "Guru {}".format(self.nama)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return int(self.id)
+
 
 class PegawaiModel(db.Model):
     __tablename__ = "pegawai"
@@ -145,6 +169,18 @@ class PegawaiModel(db.Model):
     def __repr__(self):
         return "Pegawai {}".format(self.nama)
 
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return int(self.id)
+
 
 class MuridModel(UserMixin, db.Model):
     __tablename__ = "murid"
@@ -155,6 +191,7 @@ class MuridModel(UserMixin, db.Model):
     nama_panggilan = db.Column(db.String(24), nullable=False)
     anak_ke = db.Column(db.String(2), nullable=False)
     alamat = db.Column(db.Text, nullable=False)
+    dusun = db.Column(db.String(24))
     kelurahan = db.Column(db.String(24))
     kecamatan = db.Column(db.String(24))
     kabupaten = db.Column(db.String(24))
@@ -190,6 +227,18 @@ class MuridModel(UserMixin, db.Model):
 
     def __repr__(self):
         return "Murid {}".format(self.nama)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return int(self.id)
 
 
 class WaliMuridModel(db.Model):
@@ -315,26 +364,15 @@ class NilaiModel(db.Model):
     __tablename__ = "nilai_model"
 
     id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(120), nullable=False)
-    nilai_penilaian = db.Column(
-        db.Enum(
-            "Belum Berkembang",
-            "Mulai Berkembang",
-            "Berkembang Sesuai Harapan",
-            "Berkembang Sangat Baik",
-            name="nilai_penilaian",
-        ),
-        nullable=False,
-    )
     deskripsi = db.Column(db.Text, nullable=False)
     aspek_penilaian = db.Column(
         db.Enum(
-            "Nilai Agama dan Moral",
-            "Sosial Emosional",
-            "Bahasa",
-            "Kognitif",
-            "Fisik",
-            "Seni",
+            "Perkembangan Nilai Agama dan Moral",
+            "Perkembangan Sosial, Emosional",
+            "Perkembangan Bahasa",
+            "Perkembangan Kognitif",
+            "Perkembangan Fisik Motorik",
+            "Perkembangan Seni",
             name="aspek_penilaian",
         ),
         nullable=False,
@@ -403,5 +441,8 @@ def daftar_murid():
 
 
 @login_manager.user_loader
-def murid(id):
-    return MuridModel.query.get(id)
+def load_user(id, endpoint="server"):
+    if endpoint == "murid":
+        return MuridModel.query.get(id)
+    else:
+        return AdminModel.query.get(id)

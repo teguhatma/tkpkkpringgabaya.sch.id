@@ -45,6 +45,7 @@ def tambah_murid():
             anak_ke=form.anak_ke.data,
             nama=form.nama.data,
             alamat=form.alamat.data,
+            dusun=form.dusun.data,
             kelurahan=form.kelurahan.data,
             kecamatan=form.kecamatan.data,
             kabupaten=form.kabupaten.data,
@@ -79,6 +80,7 @@ def ubah_murid(id):
         murid.anak_ke = form.anak_ke.data
         murid.nama = form.nama.data
         murid.alamat = form.alamat.data
+        murid.dusun = form.dusun.data
         murid.kelurahan = form.kelurahan.data
         murid.kecamatan = form.kecamatan.data
         murid.kabupaten = form.kabupaten.data
@@ -109,6 +111,7 @@ def ubah_murid(id):
         form.anak_ke.data = murid.anak_ke
         form.nama.data = murid.nama
         form.alamat.data = murid.alamat
+        form.dusun.data = murid.dusun
         form.kelurahan.data = murid.kelurahan
         form.kecamatan.data = murid.kecamatan
         form.kabupaten.data = murid.kabupaten
@@ -142,4 +145,3 @@ def kelas_murid(id):
         data_murid=data_murid,
         title="Daftar murid di kelas {}".format(kelas.ruang),
     )
-

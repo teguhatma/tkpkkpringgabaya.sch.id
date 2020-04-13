@@ -93,8 +93,8 @@
   <div class="form-group row">
     {{ form.no_telepon.label(class='col-sm-2 col-form-label')}}
     <div class="col-sm-4">
-      {{ form.no_telepon(class='form-control form-control-sm', type='number')}}
-      {% for error in form.no_telepon.errors %}
+      {{ form.no_telepon(class='form-control form-control-sm')}} {% for error in
+      form.no_telepon.errors %}
       <span style="color: red">{{ error }}</span>
       {% endfor %}
     </div>

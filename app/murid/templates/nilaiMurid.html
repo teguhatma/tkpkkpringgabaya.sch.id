@@ -29,15 +29,12 @@
     {% if nilai is not none %} {% for nilai in nilai %}
     <div class="col-md-6 nilai-murid my-3">
       <div class="tahun-pelajaran">
-        <small>{{ nilai.jenis_penilaian}}</small>
-      </div>
-      <div class="nilai-semester text-center">
-        <small>{{ nilai.nama }}</small>
+        <small>{{ nilai.aspek_penilaian}}</small>
       </div>
       <div class="content-biodata">
         <div class="form-group my-0">
           <div class="group">
-            <p><small>{{nilai.deskripsi}}</small></p>
+            <p><small>{{nilai.deskripsi | safe}}</small></p>
           </div>
         </div>
       </div>

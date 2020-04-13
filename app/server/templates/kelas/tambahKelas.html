@@ -1,18 +1,5 @@
 {% extends 'components/main.html' %} {% block content %}
 
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="#">Dashboard</a>
-  </li>
-  <li class="breadcrumb-item">
-    Data
-  </li>
-  <li class="breadcrumb-item">
-    Kelas
-  </li>
-  <li class="breadcrumb-item active">Tambah</li>
-</ol>
-
 <form action="" method="POST">
   <a
     href="{{ url_for('server.data_kelas')}}"

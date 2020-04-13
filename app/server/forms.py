@@ -22,23 +22,24 @@ from app.models import (
     DataSekolahModel,
     JadwalKelasModel,
     NilaiModel,
+    WaliMuridModel,
 )
 
 
 class TambahGuruForm(FlaskForm):
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
-    nik = StringField("NIK anda", validators=[DataRequired(), Length(1, 24)])
-    kelurahan = StringField("Kelurahan anda", validators=[Length(1, 24)])
-    email = EmailField("Email anda", validators=[DataRequired(), Length(1, 64)])
-    kecamatan = StringField("Kecamatan anda", validators=[Length(1, 24)])
-    kabupaten = StringField("Kabupaten anda", validators=[Length(1, 24)])
-    provinsi = StringField("Provinsi anda", validators=[Length(1, 24)])
+    nik = StringField("NIK", validators=[DataRequired(), Length(1, 24)])
+    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
+    email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
+    kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi", validators=[Length(1, 24)])
     agama = SelectField(
         choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
     )
     tempat_lahir = StringField(
-        "Tempat lahir anda", validators=[DataRequired(), Length(1, 24)]
+        "Tempat lahir", validators=[DataRequired(), Length(1, 24)]
     )
     tanggal_lahir = StringField(
         "Tanggal lahir",
@@ -48,16 +49,16 @@ class TambahGuruForm(FlaskForm):
     jabatan = SelectField(
         choices=[(g, g) for g in GuruModel.jabatan.property.columns[0].type.enums]
     )
-    foto = FileField("Foto diri anda", validators=[DataRequired()])
-    foto_ijazah = FileField("Scan ijazah anda", validators=[DataRequired()])
+    foto = FileField("Foto diri", validators=[DataRequired()])
+    foto_ijazah = FileField("Scan ijazah", validators=[DataRequired()])
     pendidikan_terakhir = StringField(
-        "Pendidikan terakhir anda", validators=[DataRequired(), Length(1, 24)]
+        "Pendidikan terakhir", validators=[DataRequired(), Length(1, 24)]
     )
     jenis_kelamin = SelectField(
         choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
     )
     tahun_masuk = StringField(
-        "Tahun masuk anda",
+        "Tahun masuk TK",
         validators=[DataRequired()],
         render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
     )
@@ -87,7 +88,7 @@ class TambahGuruForm(FlaskForm):
 
     def validate_jabatan(self, jabatan):
         jabatan = GuruModel.query.filter_by(jabatan=self.jabatan.data).first()
-        if jabatan is not None:
+        if jabatan is not None and jabatan.jabatan == "Kepala Sekolah":
             raise ValueError("Kepala sekolah diperbolehkan hanya satu.")
 
 
@@ -108,17 +109,17 @@ class TambahKelasForm(FlaskForm):
 class RubahGuruForm(FlaskForm):
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
-    nik = StringField("NIK anda", validators=[DataRequired(), Length(1, 24)])
-    kelurahan = StringField("Kelurahan anda", validators=[Length(1, 24)])
-    email = EmailField("Email anda", validators=[DataRequired(), Length(1, 64)])
-    kecamatan = StringField("Kecamatan anda", validators=[Length(1, 24)])
-    kabupaten = StringField("Kabupaten anda", validators=[Length(1, 24)])
-    provinsi = StringField("Provinsi anda", validators=[Length(1, 24)])
+    nik = StringField("NIK", validators=[DataRequired(), Length(1, 24)])
+    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
+    email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
+    kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
+    kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
+    provinsi = StringField("Provinsi", validators=[Length(1, 24)])
     agama = SelectField(
         choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
     )
     tempat_lahir = StringField(
-        "Tempat lahir anda", validators=[DataRequired(), Length(1, 24)]
+        "Tempat lahir", validators=[DataRequired(), Length(1, 24)]
     )
     tanggal_lahir = StringField(
         "Tanggal lahir",
@@ -128,16 +129,16 @@ class RubahGuruForm(FlaskForm):
     jabatan = SelectField(
         choices=[(g, g) for g in GuruModel.jabatan.property.columns[0].type.enums]
     )
-    foto = FileField("Foto diri anda")
-    foto_ijazah = FileField("Scan ijazah anda")
+    foto = FileField("Foto diri")
+    foto_ijazah = FileField("Scan ijazah")
     pendidikan_terakhir = StringField(
-        "Pendidikan terakhir anda", validators=[DataRequired(), Length(1, 24)]
+        "Pendidikan terakhir", validators=[DataRequired(), Length(1, 24)]
     )
     jenis_kelamin = SelectField(
         choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
     )
     tahun_masuk = StringField(
-        "Tahun masuk anda",
+        "Tahun masuk TK",
         validators=[DataRequired()],
         render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
     )
@@ -282,6 +283,7 @@ class TambahMuridForm(FlaskForm):
     )
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    dusun = StringField("Dusun", validators=[Length(1, 24)])
     kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
     kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
@@ -348,6 +350,7 @@ class RubahMuridForm(FlaskForm):
     )
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
+    dusun = StringField("Dusun", validators=[Length(1, 24)])
     kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
     kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
@@ -409,7 +412,7 @@ class TambahUbahWaliForm(FlaskForm):
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
     provinsi = StringField("Provinsi", validators=[Length(1, 24)])
     agama = SelectField(
-        choices=[(g, g) for g in GuruModel.agama.property.columns[0].type.enums]
+        choices=[(g, g) for g in WaliMuridModel.agama.property.columns[0].type.enums]
     )
     tempat_lahir = StringField(
         "Tempat lahir", validators=[DataRequired(), Length(1, 24)]
@@ -421,13 +424,15 @@ class TambahUbahWaliForm(FlaskForm):
     )
     pekerjaan = StringField("Pekerjaan", validators=[DataRequired(), Length(1, 24)])
     jenis_kelamin = SelectField(
-        choices=[(g, g) for g in GuruModel.jenis_kelamin.property.columns[0].type.enums]
+        choices=[
+            (g, g) for g in WaliMuridModel.jenis_kelamin.property.columns[0].type.enums
+        ]
     )
     nomor_telepon = StringField(
         "Nomor telepon", validators=[DataRequired()], render_kw={"type": "number"},
     )
     murid = QuerySelectField(
-        "Nama Murid",
+        "Nama Anak",
         query_factory=daftar_murid,
         get_label="nama",
         get_pk=lambda a: a.id,
@@ -451,7 +456,7 @@ class TambahUbahProfileForm(FlaskForm):
         "No. Statitistik", validators=[DataRequired(), Length(1, 60)]
     )
     akte_notaris = StringField(
-        "Akte Notaris", validators=[DataRequired(), Length(1, 60)]
+        "Akte Notaris", validators=[DataRequired(), Length(0, 60)]
     )
     kegiatan_belajar = StringField(
         "Kegiatan Belajar", validators=[DataRequired(), Length(1, 20)]
@@ -470,7 +475,7 @@ class TambahUbahProfileForm(FlaskForm):
     )
     kurikulum = StringField("Kurikulum", validators=[DataRequired(), Length(1, 10)])
     no_telepon = StringField(
-        "Nomor Telepon", validators=[DataRequired(), Length(1, 24)]
+        "Nomor Telepon", validators=[DataRequired(), Length(0, 24)]
     )
     email = EmailField("Email", validators=[DataRequired(), Length(1, 24)])
     visi_misi = TextAreaField("Visi dan Misi", validators=[DataRequired()])
@@ -573,9 +578,8 @@ class TambahUbahJadwalForm(FlaskForm):
 
 
 class TambahNilaiMuridForm(FlaskForm):
-    nama = StringField("Nama Penilaian", validators=[DataRequired(), Length(0, 120)])
     deskripsi = TextAreaField("Deskripsi penilaian", validators=[DataRequired()])
-    jenis_penilaian = SelectField(
+    aspek_penilaian = SelectField(
         choices=[
             (g, g) for g in NilaiModel.aspek_penilaian.property.columns[0].type.enums
         ]

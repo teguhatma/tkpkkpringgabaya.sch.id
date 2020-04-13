@@ -3,22 +3,15 @@
 <form action="" method="POST" enctype="multipart/form-data">
   {{ form.csrf_token() }}
   <div class="form-row">
-    <div class="col-md-2">
-      {{ form.jenis_penilaian.label()}} {{
-      form.jenis_penilaian(class='form-control')}}
-    </div>
     <div class="col-md-5">
-      {{ form.nama.label()}} {{ form.nama(class='form-control',
-      placeholder='Masukkan mata pelajaran')}} {% for error in form.nama.errors
-      %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
+      {{ form.aspek_penilaian.label()}} {{
+      form.aspek_penilaian(class='form-control')}}
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       {{ form.semester.label(for='semester')}} {{
       form.semester(class='form-control', id='semester')}}
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       {{ form.tahun_pelajaran.label()}} {{
       form.tahun_pelajaran(class='form-control', placeholder='2018/ 2019')}}
     </div>
@@ -26,8 +19,8 @@
   <div class="form-row mt-4">
     <div class="col-md-12">
       {{ form.deskripsi.label()}} {{ form.deskripsi(class='form-control',
-      placeholder='Deskripsi', rows='5')}}{% for error in form.deskripsi.errors
-      %}
+      id="summernote", placeholder='Deskripsi', rows='5')}}{% for error in
+      form.deskripsi.errors %}
       <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
@@ -36,4 +29,11 @@
     {{ form.submit(class='btn btn-info btn-small btn-block')}}
   </div>
 </form>
+
+<script>
+  $("#summernote").summernote({
+    tabsize: 2,
+    height: 300
+  });
+</script>
 {% endblock %}

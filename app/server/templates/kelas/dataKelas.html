@@ -16,14 +16,21 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-        <a href="{{ url_for('server.tambah_kelas')}}" class="btn btn-primary btn-sm mb-3"><i
-            class="far fa-plus-square"></i> Tambah Data</a>
+      <table
+        class="table table-bordered"
+        id="dataTable"
+        width="100%"
+        cellspacing="0"
+      >
+        <a
+          href="{{ url_for('server.tambah_kelas')}}"
+          class="btn btn-primary btn-sm mb-3"
+          ><i class="far fa-plus-square"></i> Tambah Data</a
+        >
         <thead>
           <tr>
             <th>No</th>
             <th>Ruang Kelas</th>
-            <th>Data Guru di Kelas</th>
             <th>Data Murid di Kelas</th>
             <th>Action</th>
           </tr>
@@ -34,15 +41,17 @@
             <th scope="row">{{ loop.index }}</th>
             <td>Kelas {{ kelas.ruang }}</td>
             <td>
-              <a href="{{ url_for('server.guru_kelas', id=kelas.id) }}">Guru yang mengajar di kelas {{ kelas.ruang }}
+              <a href="{{ url_for('server.kelas_murid', id=kelas.id) }}"
+                >Murid kelas {{ kelas.ruang }}
               </a>
             </td>
             <td>
-              <a href="{{ url_for('server.kelas_murid', id=kelas.id) }}">Murid kelas {{ kelas.ruang }} </a>
-            </td>
-            <td>
-              <a href="{{ url_for('server.hapus_kelas', id=kelas.id)}}" class="delete" title="Delete"><i
-                  class="fas fa-trash"></i></a>
+              <a
+                href="{{ url_for('server.hapus_kelas', id=kelas.id)}}"
+                class="delete"
+                title="Delete"
+                ><i class="fas fa-trash"></i
+              ></a>
             </td>
           </tr>
           {% endfor %}

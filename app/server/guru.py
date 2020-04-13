@@ -31,7 +31,7 @@ def ijazah_guru(filename):
 
 @server.route("/dashboard/guru")
 def data_guru():
-    data_guru = GuruModel.query.all()
+    data_guru = GuruModel.query.order_by(GuruModel.jabatan.asc()).all()
     return render_template("guru/dataGuru.html", title="Data guru", data_guru=data_guru)
 
 
@@ -160,15 +160,3 @@ def hapus_guru(id):
     db.session.commit()
     flash("Data {} sudah berhasil dihapus".format(hapus_guru.nama), "Berhasil")
     return redirect(url_for("server.data_guru"))
-
-
-@server.route("/dashboard/guru/kelas/<id>")
-def guru_kelas(id):
-    kelas = KelasModel.query.get(id)
-    data_guru = GuruModel.query.filter_by(kelas_id=id).all()
-    return render_template(
-        "guru/dataGuru.html",
-        data_guru=data_guru,
-        title="Daftar guru kelas {}".format(kelas.ruang),
-    )
-

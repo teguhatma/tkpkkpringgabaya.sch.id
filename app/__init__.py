@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from config import config
 from flask_moment import Moment
+
 from flask_login import LoginManager
 from flask_share import Share
 
@@ -20,8 +21,8 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
     moment.init_app(app)
-    login_manager.init_app(app)
     share.init_app(app)
+    login_manager.init_app(app)
 
     from .server import server
     from .auth import auth
