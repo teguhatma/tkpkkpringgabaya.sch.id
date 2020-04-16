@@ -1,14 +1,75 @@
 from app import db
+from flask import current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import event
 from slugify import slugify
 from datetime import datetime
 from app import login_manager
-from flask_login import UserMixin, current_user
+from flask_login import UserMixin, current_user, AnonymousUserMixin
 
 
 __fotosize__ = 4028
 __filesize__ = 8056
+
+
+class Permission:
+    ADMIN = 1
+    GURU = 2
+    PEGAWAI = 3
+    MURID = 4
+
+
+class Role(db.Model):
+    __tablename__ = "roles"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    default = db.Column(db.Boolean, default=False, index=True)
+    permissions = db.Column(db.Integer)
+    admin = db.relationship("AdminModel", backref="role", lazy="dynamic")
+    guru = db.relationship("GuruModel", backref="role", lazy="dynamic")
+    pegawai = db.relationship("PegawaiModel", backref="role", lazy="dynamic")
+    murid = db.relationship("MuridModel", backref="role", lazy="dynamic")
+
+    def __init__(self, **kwargs):
+        super(Role, self).__init__(**kwargs)
+        if self.permissions is None:
+            self.permissions = 0
+
+    @staticmethod
+    def insert_roles():
+        roles = {
+            "Admin": [Permission.ADMIN],
+            "Guru": [Permission.GURU],
+            "Pegawai": [Permission.PEGAWAI],
+            "Murid": [Permission.MURID],
+        }
+
+        default_role = "Guru"
+        for r in roles:
+            role = Role.query.filter_by(name=r).first()
+            if role is None:
+                role = Role(name=r)
+            role.reset_permissions()
+            for perm in roles[r]:
+                role.add_permission(perm)
+            role.default = role.name == default_role
+            db.session.add(role)
+        db.session.commit()
+
+    def add_permission(self, perm):
+        if not self.has_permission(perm):
+            self.permissions += perm
+
+    def remove_permission(self, perm):
+        if self.has_permission(perm):
+            self.permissions -= perm
+
+    def reset_permissions(self):
+        self.permissions = 0
+
+    def has_permission(self, perm):
+        return self.permissions & perm == perm
 
 
 class AdminModel(db.Model):
@@ -17,6 +78,18 @@ class AdminModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(24), nullable=False)
     password_hash = db.Column(db.String(120), nullable=False)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+
+    def __init__(self, **kwargs):
+        super(AdminModel, self).__init__(**kwargs)
+        if self.role is None:
+            self.role = Role.query.filter_by(name="Admin").first()
+
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     @property
     def password(self):
@@ -30,7 +103,9 @@ class AdminModel(db.Model):
 
     @staticmethod
     def insert_admin():
-        insert_admin = AdminModel(username="tkpkkadmin")
+        insert_admin = AdminModel(
+            username="tkpkkadmin", role=Role.query.filter_by(name="Admin").first()
+        )
         insert_admin.password("tkadminadmin")
         db.session.add(insert_admin)
         db.session.commit()
@@ -104,6 +179,21 @@ class GuruModel(db.Model):
     password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+
+    def __init__(self, **kwargs):
+        super(GuruModel, self).__init__(**kwargs)
+        if self.role is None:
+            if self.jabatan == current_app.config["ADMIN_TK"]:
+                self.role = Role.query.filter_by(name="Admin").first()
+            if self.role is None:
+                self.role = Role.query.filter_by(name="Guru").first()
+
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     @property
     def password(self):
@@ -155,6 +245,18 @@ class PegawaiModel(db.Model):
     tahun_masuk = db.Column(db.String(24), nullable=False)
     email = db.Column(db.String(64), unique=True, nullable=False)
     password_hash = db.Column(db.String(120))
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+
+    def __init__(self, **kwargs):
+        super(PegawaiModel, self).__init__(**kwargs)
+        if self.role is None:
+            self.role = Role.query.filter_by(name="Pegawai").first()
+
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     @property
     def password(self):
@@ -214,6 +316,18 @@ class MuridModel(UserMixin, db.Model):
     kelas = db.relationship("KelasModel", back_populates="murid")
     wali_murid = db.relationship("WaliMuridModel", back_populates="murid")
     nilai = db.relationship("NilaiModel")
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+
+    def __init__(self, **kwargs):
+        super(MuridModel, self).__init__(**kwargs)
+        if self.role is None:
+            self.role = Role.query.filter_by(name="Murid").first()
+
+    def can(self, perm):
+        return self.role is not None and self.role.has_permission(perm)
+
+    def is_administrator(self):
+        return self.can(Permission.ADMIN)
 
     @property
     def password(self):
@@ -425,6 +539,17 @@ class KelasModel(db.Model):
         return "Kelas {}".format(self.ruang)
 
 
+class AnonymousUser(AnonymousUserMixin):
+    def can(self, permissions):
+        return False
+
+    def is_administrator(self):
+        return False
+
+
+login_manager.anonymous_user = AnonymousUser
+
+
 event.listen(
     DataSekolahModel.judul, "set", DataSekolahModel.generate_slug, retval=False
 )
@@ -441,8 +566,5 @@ def daftar_murid():
 
 
 @login_manager.user_loader
-def load_user(id, endpoint="server"):
-    if endpoint == "murid":
-        return MuridModel.query.get(id)
-    else:
-        return AdminModel.query.get(id)
+def load_user(id):
+    return GuruModel.query.get(id)

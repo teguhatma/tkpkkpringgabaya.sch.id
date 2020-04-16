@@ -5,9 +5,12 @@ from io import BytesIO
 from app.models import MuridModel
 from .forms import TambahMuridForm, RubahMuridForm, KelasModel
 import uuid
+from flask_login import login_required
+from ..decorators import guru_admin_required
 
 
 @server.route("/image/murid/foto/<filename>")
+@login_required
 def foto_murid(filename):
     data = MuridModel.query.filter_by(nama_foto_diri=filename).first()
     return send_file(
@@ -19,6 +22,7 @@ def foto_murid(filename):
 
 
 @server.route("/dashboard/murid")
+@login_required
 def data_murid():
     data_murid = MuridModel.query.all()
     return render_template(
@@ -27,6 +31,7 @@ def data_murid():
 
 
 @server.route("/dashboard/murid/hapus/<id>", methods=["GET", "POST"])
+@login_required
 def hapus_murid(id):
     murid = MuridModel.query.get(id)
     db.session.delete(murid)
@@ -36,6 +41,8 @@ def hapus_murid(id):
 
 
 @server.route("/dashboard/murid/tambah", methods=["GET", "POST"])
+@guru_admin_required
+@login_required
 def tambah_murid():
     form = TambahMuridForm()
     if form.validate_on_submit():
@@ -71,6 +78,7 @@ def tambah_murid():
 
 
 @server.route("/dashboard/murid/ubah/<id>", methods=["GET", "POST"])
+@login_required
 def ubah_murid(id):
     form = RubahMuridForm()
     murid = MuridModel.query.get(id)
@@ -131,12 +139,14 @@ def ubah_murid(id):
 
 
 @server.route("/dashboard/murid/lihat/<id>")
+@login_required
 def lihat_murid(id):
     murid = MuridModel.query.get(id)
     return render_template("murid/lihatMurid.html", title=murid.nama, murid=murid)
 
 
 @server.route("/dashboard/kelas/murid/<id>")
+@login_required
 def kelas_murid(id):
     kelas = KelasModel.query.get(id)
     data_murid = MuridModel.query.filter_by(kelas_id=id).all()

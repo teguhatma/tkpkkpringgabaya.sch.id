@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="container">
-  <div class=" row d-flex justify-content-between mb-5">
+  <div class="row d-flex justify-content-between mb-5">
     {% for ber in all_berita %}
     <div class="col-md-4 mb-5">
       <div class="card berita-terbaru" style="width: 18rem;">
@@ -21,7 +21,7 @@
           {% endfor %} -->
           <p class="card-text title-card">{{ ber.judul}}</p>
         </div>
-        <div class=" card-body card-bottom d-flex justify-content-right">
+        <div class="card-body card-bottom d-flex justify-content-right">
           <div class="selected">
             <a href="{{ url_for('client.lihat_berita', slug=ber.slug) }}"
               >Lihat Berita</a
@@ -53,7 +53,7 @@
               alt="..."
             />
           </div>
-          <div class="col-md-8 card-elearning ">
+          <div class="col-md-8 card-elearning">
             <div class="card-body py-0 px-2">
               <!-- Button trigger modal -->
               <a

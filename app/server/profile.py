@@ -5,9 +5,11 @@ from app import db
 from . import server
 from app.models import ProfileSekolahModel
 from .forms import TambahUbahProfileForm
+from flask_login import login_required
 
 
 @server.route("/dashboard/profile/tambah", methods=["GET", "POST"])
+@login_required
 def tambah_profile():
     form = TambahUbahProfileForm()
     if form.validate_on_submit():
@@ -40,6 +42,7 @@ def tambah_profile():
 
 
 @server.route("/dashboard/profile/lihat")
+@login_required
 def lihat_profile():
     profile = ProfileSekolahModel.query.first()
     return render_template(
@@ -48,6 +51,7 @@ def lihat_profile():
 
 
 @server.route("/dashboard/profile/ubah", methods=["GET", "POST"])
+@login_required
 def ubah_profile():
     form = TambahUbahProfileForm()
     profile = ProfileSekolahModel.query.first()

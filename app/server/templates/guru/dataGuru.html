@@ -23,11 +23,13 @@
         width="100%"
         cellspacing="0"
       >
+        {% if current_user.is_administrator() %}
         <a
           href="{{ url_for('server.tambah_guru') }}"
           class="btn btn-sm btn-primary mb-3"
           ><i class="far fa-plus-square"></i> Tambah Data
         </a>
+        {% endif %}
         <thead>
           <tr>
             <th>No.</th>
@@ -37,7 +39,9 @@
             <th>Jenis Kelamin</th>
             <th>Golongan</th>
             <th>Tempat/ Tanggal Lahir</th>
+            {% if current_user.is_administrator() %}
             <th>Action</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -50,6 +54,7 @@
             <td>{{ guru.jenis_kelamin }}</td>
             <td>{{ guru.golongan }}</td>
             <td>{{ guru.tempat_lahir }}, {{ guru.tanggal_lahir }}</td>
+            {% if current_user.is_administrator() %}
             <td>
               <a
                 href="{{ url_for('server.lihat_guru', id=guru.id) }}"
@@ -73,6 +78,7 @@
                 ><i class="fas fa-trash"></i
               ></a>
             </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>

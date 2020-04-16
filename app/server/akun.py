@@ -3,9 +3,11 @@ from flask import render_template, flash, redirect, url_for
 from .forms import AkunForm
 from app import db
 from app.models import GuruModel, PegawaiModel, MuridModel
+from flask_login import login_required
 
 
 @server.route("/dashboard/akun/guru/<id>", methods=["GET", "POST"])
+@login_required
 def akun_guru(id):
     akun_guru = GuruModel.query.get(id)
     form = AkunForm()
@@ -21,6 +23,7 @@ def akun_guru(id):
 
 
 @server.route("/dashboard/akun/pegawai/<id>", methods=["GET", "POST"])
+@login_required
 def akun_pegawai(id):
     akun_pegawai = PegawaiModel.query.get(id)
     form = AkunForm()
@@ -34,6 +37,7 @@ def akun_pegawai(id):
 
 
 @server.route("/dashboard/akun/murid/<id>", methods=["GET", "POST"])
+@login_required
 def akun_murid(id):
     akun_murid = MuridModel.query.get(id)
     form = AkunForm()

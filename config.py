@@ -4,6 +4,7 @@ import os
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get("SECRET_KEY")
+    ADMIN_TK = os.environ.get("ADMIN_TK")
 
     @staticmethod
     def init_app(app):
@@ -30,4 +31,3 @@ config = {
     "production": ProductionConfig,
     "testing": TestingConfig,
 }
-

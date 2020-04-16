@@ -13,9 +13,11 @@ from app.models import PegawaiModel
 import uuid
 from io import BytesIO
 from .forms import TambahPegawaiForm, RubahPegawaiForm
+from flask_login import login_required
 
 
 @server.route("/image/pegawai/foto/<filename>")
+@login_required
 def foto_pegawai(filename):
     data = PegawaiModel.query.filter_by(nama_foto=filename).first()
     return send_file(
@@ -27,6 +29,7 @@ def foto_pegawai(filename):
 
 
 @server.route("/dashboard/pegawai")
+@login_required
 def data_pegawai():
     data_pegawai = PegawaiModel.query.all()
     return render_template(
@@ -37,6 +40,7 @@ def data_pegawai():
 
 
 @server.route("/dashboard/pegawai/hapus/<id>", methods=["GET", "POST"])
+@login_required
 def hapus_pegawai():
     hapus_pegawai = PegawaiModel.query.get(id)
     db.session.delete(hapus_pegawai)
@@ -46,6 +50,7 @@ def hapus_pegawai():
 
 
 @server.route("/dashboard/pegawai/tambah", methods=["GET", "POST"])
+@login_required
 def tambah_pegawai():
     form = TambahPegawaiForm()
     if form.validate_on_submit():
@@ -75,6 +80,7 @@ def tambah_pegawai():
 
 
 @server.route("/dashboard/pegawai/ubah/<id>", methods=["GET", "POST"])
+@login_required
 def ubah_pegawai(id):
     form = RubahPegawaiForm()
     pegawai = PegawaiModel.query.get(id)
@@ -124,6 +130,7 @@ def ubah_pegawai(id):
 
 
 @server.route("/dashboard/pegawai/lihat/<id>", methods=["GET", "POST"])
+@login_required
 def lihat_pegawai(id):
     pegawai = PegawaiModel.query.get(id)
     return render_template(

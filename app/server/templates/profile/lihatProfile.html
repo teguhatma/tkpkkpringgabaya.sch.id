@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    {% if profile is none %}
+    {% if profile is none %} {% if current_user.is_administrator() %}
     <div class="row">
       <div class="col-md-6">
         <a
@@ -33,7 +33,7 @@
       </div>
       <div class="col-md-6"></div>
     </div>
-    {% else %}
+    {% endif %} {% else %}
     <div class="row">
       <div class="col-md-12">
         <div class="tab-content profile-tab" id="myTabContent">
@@ -183,6 +183,7 @@
               </div>
             </div>
             <div class="row">
+              {% if current_user.is_administrator() %}
               <div class="col-md-6">
                 <a
                   href="{{ url_for('server.ubah_profile') }}"
@@ -190,6 +191,7 @@
                   >Ubah Profil Sekolah</a
                 >
               </div>
+              {% endif %}
               <div class="col-md-6"></div>
             </div>
           </div>

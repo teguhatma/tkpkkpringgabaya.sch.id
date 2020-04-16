@@ -9,9 +9,11 @@ from .forms import (
     MuridGantiProfileForm,
     MuridGantiProfileWaliForm,
 )
+from ..decorators import murid_required
 
 
 @murid.route("/image/murid/foto/<filename>")
+@murid_required
 @login_required
 def foto_murid(filename):
     data = MuridModel.query.filter_by(nama_foto_diri=filename).first()
@@ -24,6 +26,7 @@ def foto_murid(filename):
 
 
 @murid.route("/murid/dashboard")
+@murid_required
 @login_required
 def murid_dashboard():
     jadwal = (
@@ -36,6 +39,7 @@ def murid_dashboard():
 
 
 @murid.route("/murid/profile")
+@murid_required
 @login_required
 def murid_profile():
     wali = WaliMuridModel.query.filter_by(murid_id=current_user.id).first()
@@ -46,6 +50,7 @@ def murid_profile():
 
 
 @murid.route("/murid/nilai", methods=["GET", "POST"])
+@murid_required
 @login_required
 def murid_nilai():
     number = []
@@ -72,6 +77,7 @@ def murid_nilai():
 
 
 @murid.route("/murid/nilai/select", methods=["GET", "POST"])
+@murid_required
 @login_required
 def murid_nilai_select():
     number = []
@@ -97,6 +103,7 @@ def murid_nilai_select():
 
 
 @murid.route("/murid/ganti-password", methods=["GET", "POST"])
+@murid_required
 @login_required
 def murid_ganti_password():
     akun = MuridModel.query.filter_by(id=current_user.id).first()
@@ -118,6 +125,7 @@ def murid_ganti_password():
 
 
 @murid.route("/murid/profile/ubah", methods=["POST", "GET"])
+@murid_required
 @login_required
 def murid_ganti_profile_diri():
     form = MuridGantiProfileForm()
@@ -160,6 +168,7 @@ def murid_ganti_profile_diri():
 
 
 @murid.route("/murid/profile/wali-murid/ubah", methods=["POST", "GET"])
+@murid_required
 @login_required
 def murid_ganti_profile_wali():
     form = MuridGantiProfileWaliForm()

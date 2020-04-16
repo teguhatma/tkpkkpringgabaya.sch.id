@@ -5,9 +5,11 @@ from app import db
 from . import server
 from app.models import DataSekolahModel
 from .forms import TambahDataSekolahForm, UbahDataSekolahForm
+from flask_login import login_required
 
 
 @server.route("/data-sekolah/<filename>")
+@login_required
 def dokumen_data_sekolah(filename):
     dokumen = DataSekolahModel.query.filter_by(nama_dokumen=filename).first()
     return send_file(
@@ -19,6 +21,7 @@ def dokumen_data_sekolah(filename):
 
 
 @server.route("/dashboard/data-sekolah")
+@login_required
 def data_sekolah():
     data_sekolah = DataSekolahModel.query.all()
     return render_template(
@@ -27,6 +30,7 @@ def data_sekolah():
 
 
 @server.route("/dashboard/data-sekolah/tambah", methods=["POST", "GET"])
+@login_required
 def tambah_data_sekolah():
     form = TambahDataSekolahForm()
     if form.validate_on_submit():
@@ -46,6 +50,7 @@ def tambah_data_sekolah():
 
 
 @server.route("/dashboard/data-sekolah/hapus/<slug>", methods=["GET", "POST"])
+@login_required
 def hapus_data_sekolah(slug):
     hapus_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
     db.session.delete(hapus_data_sekolah)
@@ -55,6 +60,7 @@ def hapus_data_sekolah(slug):
 
 
 @server.route("/dashboard/data-sekolah/ubah/<slug>", methods=["GET", "POST"])
+@login_required
 def ubah_data_sekolah(slug):
     ubah_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
     form = UbahDataSekolahForm()
@@ -81,4 +87,3 @@ def ubah_data_sekolah(slug):
     return render_template(
         "dataSekolah/ubahDataSekolah.html", title=ubah_data_sekolah.judul, form=form
     )
-

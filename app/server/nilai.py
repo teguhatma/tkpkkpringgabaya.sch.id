@@ -7,9 +7,11 @@ from .forms import TambahNilaiMuridForm
 import uuid
 from flask_weasyprint import HTML, render_pdf
 from datetime import datetime
+from flask_login import login_required
 
 
 @server.route("/dashboard/nilai/murid")
+@login_required
 def nilai_murid():
     nilai_murid = MuridModel.query.all()
     return render_template(
@@ -18,6 +20,7 @@ def nilai_murid():
 
 
 @server.route("/dashboard/nilai/murid/<id>", methods=["GET", "POST"])
+@login_required
 def data_nilai_murid(id):
     murid = MuridModel.query.get(id)
     nilai = NilaiModel.query.filter_by(murid_id=murid.id).all()
@@ -45,6 +48,7 @@ def data_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/select", methods=["GET", "POST"])
+@login_required
 def data_nilai_murid_select(id):
     murid = MuridModel.query.get(id)
     nilai = NilaiModel.query.filter_by(murid_id=murid.id).all()
@@ -74,6 +78,7 @@ def data_nilai_murid_select(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/tambah", methods=["GET", "POST"])
+@login_required
 def tambah_nilai_murid(id):
     murid = MuridModel.query.get(id)
     form = TambahNilaiMuridForm()
@@ -98,6 +103,7 @@ def tambah_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/ubah", methods=["GET", "POST"])
+@login_required
 def ubah_nilai_murid(id):
     nilai = NilaiModel.query.get(id)
     form = TambahNilaiMuridForm()
@@ -124,6 +130,7 @@ def ubah_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/hapus")
+@login_required
 def hapus_nilai_murid(id):
     nilai = NilaiModel.query.get(id)
     db.session.delete(nilai)
@@ -133,6 +140,7 @@ def hapus_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/print/<id>")
+@login_required
 def print_nilai(id):
     murid = MuridModel.query.get(id)
     nilai_murid = NilaiModel.query.filter_by(murid_id=murid.id).all()

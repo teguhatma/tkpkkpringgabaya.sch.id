@@ -10,6 +10,7 @@ from app.models import (
     NilaiModel,
     ProfileSekolahModel,
     AdminModel,
+    Role,
 )
 from dotenv import load_dotenv
 import os
@@ -31,6 +32,7 @@ def make_shell_context():
         DataSekolahModel=DataSekolahModel,
         NilaiModel=NilaiModel,
         ProfileSekolahModel=ProfileSekolahModel,
+        Role=Role,
     )
 
 
@@ -46,5 +48,13 @@ def test():
 @app.cli.command()
 def deploy():
     """ Insert Admin dan Insert Kelas """
+    db.create_all()
+    Role.insert_roles()
     AdminModel.insert_admin()
     KelasModel.insert_kelas()
+
+
+@app.cli.command()
+def drop():
+    """ Drop All Table in Database """
+    db.drop_all()

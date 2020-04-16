@@ -5,9 +5,11 @@ from app import db
 from . import server
 from app.models import ElearningModel
 from .forms import TambahElearningForm, UbahElearningForm
+from flask_login import login_required
 
 
 @server.route("/file/e-learning/<filename>")
+@login_required
 def dokumen_elearning(filename):
     data = ElearningModel.query.filter_by(nama_dokumen=filename).first()
     return send_file(
@@ -19,6 +21,7 @@ def dokumen_elearning(filename):
 
 
 @server.route("/dashboard/e-learning")
+@login_required
 def data_elearning():
     data_elearning = ElearningModel.query.all()
     return render_template(
@@ -29,6 +32,7 @@ def data_elearning():
 
 
 @server.route("/dashboard/e-learning/tambah", methods=["GET", "POST"])
+@login_required
 def tambah_elearning():
     form = TambahElearningForm()
     if form.validate_on_submit():
@@ -49,6 +53,7 @@ def tambah_elearning():
 
 
 @server.route("/dashboard/e-learning/hapus/<slug>")
+@login_required
 def hapus_elearning(slug):
     hapus_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()
     db.session.delete(hapus_elearning)
@@ -58,6 +63,7 @@ def hapus_elearning(slug):
 
 
 @server.route("/dashboard/e-learning/ubah/<slug>", methods=["GET", "POST"])
+@login_required
 def ubah_elearning(slug):
     ubah_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()
     form = UbahElearningForm()
@@ -85,4 +91,3 @@ def ubah_elearning(slug):
     return render_template(
         "elearning/tambahUbahLearning.html", title=ubah_elearning.judul, form=form
     )
-

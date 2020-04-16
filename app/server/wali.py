@@ -4,9 +4,11 @@ from uuid import uuid4
 from app import db
 from app.models import WaliMuridModel
 from .forms import TambahUbahWaliForm
+from flask_login import login_required
 
 
 @server.route("/dashboard/wali-murid")
+@login_required
 def data_wali():
     data_wali_murid = WaliMuridModel.query.all()
     return render_template(
@@ -15,6 +17,7 @@ def data_wali():
 
 
 @server.route("/dashboard/wali-murid/hapus/<id>")
+@login_required
 def hapus_wali(id):
     hapus_wali = WaliMuridModel.query.get(id)
     db.session.delete(hapus_wali)
@@ -24,6 +27,7 @@ def hapus_wali(id):
 
 
 @server.route("/dashboard/wali-murid/tambah", methods=["GET", "POST"])
+@login_required
 def tambah_wali():
     form = TambahUbahWaliForm()
     if form.validate_on_submit():
@@ -52,6 +56,7 @@ def tambah_wali():
 
 
 @server.route("/dashboard/wali-murid/ubah/<id>", methods=["GET", "POST"])
+@login_required
 def ubah_wali(id):
     form = TambahUbahWaliForm()
     wali = WaliMuridModel.query.get(id)
@@ -94,7 +99,7 @@ def ubah_wali(id):
 
 
 @server.route("/dashbaord/wali/lihat/<id>")
+@login_required
 def lihat_wali(id):
     wali = WaliMuridModel.query.get(id)
     return render_template("wali/lihatWali.html", title=wali.nama, wali=wali)
-

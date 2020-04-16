@@ -40,42 +40,15 @@
         data-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
+        >Password</a
       >
-        <i class="fas fa-bell fa-fw"></i>
-        <span class="badge badge-danger">9+</span>
-      </a>
-      <div
-        class="dropdown-menu dropdown-menu-right"
-        aria-labelledby="alertsDropdown"
-      >
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
     </li>
     <li class="nav-item dropdown no-arrow mx-1">
       <a
         class="nav-link dropdown-toggle"
-        href="#"
-        id="messagesDropdown"
-        role="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fas fa-envelope fa-fw"></i>
-        <span class="badge badge-danger">7</span>
+        href="{{ url_for('server.ubah_profile_guru', id=current_user.id) }}"
+        >Edit Your Profile
       </a>
-      <div
-        class="dropdown-menu dropdown-menu-right"
-        aria-labelledby="messagesDropdown"
-      >
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Something else here</a>
-      </div>
     </li>
     <li class="nav-item dropdown no-arrow">
       <a
@@ -88,8 +61,7 @@
         aria-expanded="false"
       >
         <i class="fas fa-user-circle fa-fw"></i>
-        {% if current_user.username is not none %} {{ current_user.username }}
-        {% else %} {{ current_user.nama }} {% endif %}
+        {{ current_user.nama }} {{ current_user.role.name}}
       </a>
       <div
         class="dropdown-menu dropdown-menu-right"
