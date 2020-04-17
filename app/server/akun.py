@@ -2,11 +2,13 @@ from . import server
 from flask import render_template, flash, redirect, url_for
 from .forms import AkunForm
 from app import db
-from app.models import GuruModel, PegawaiModel, MuridModel
+from app.models import GuruModel, MuridModel
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/dashboard/akun/guru/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def akun_guru(id):
     akun_guru = GuruModel.query.get(id)
@@ -22,21 +24,8 @@ def akun_guru(id):
     )
 
 
-@server.route("/dashboard/akun/pegawai/<id>", methods=["GET", "POST"])
-@login_required
-def akun_pegawai(id):
-    akun_pegawai = PegawaiModel.query.get(id)
-    form = AkunForm()
-    if form.validate_on_submit():
-        akun_pegawai.password(form.password.data)
-        db.session.add(akun_pegawai)
-        db.session.commit()
-        flash("Password berhasil ditambahkan", "Berhasil")
-        return redirect(url_for("server.lihat_pegawai", id=id))
-    return render_template("akun/password.html", form=form, title=akun_pegawai.nama)
-
-
 @server.route("/dashboard/akun/murid/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def akun_murid(id):
     akun_murid = MuridModel.query.get(id)

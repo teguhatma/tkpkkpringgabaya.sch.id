@@ -21,14 +21,8 @@ def admin_required(f):
     return permission_required(Permission.ADMIN)(f)
 
 
-def guru_required(f):
-    return permission_required(Permission.GURU)(f)
-
-
-def guru_admin_required(f):
-    return permission_required(Permission.ADMIN)(f) and permission_required(
-        Permission.GURU
-    )(f)
+def admin_guru_required(f):
+    return permission_required(Permission.ADMIN_GURU)(f)
 
 
 def murid_required(f):

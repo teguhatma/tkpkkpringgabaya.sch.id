@@ -8,9 +8,11 @@ import uuid
 from flask_weasyprint import HTML, render_pdf
 from datetime import datetime
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/dashboard/nilai/murid")
+@admin_guru_required
 @login_required
 def nilai_murid():
     nilai_murid = MuridModel.query.all()
@@ -20,6 +22,7 @@ def nilai_murid():
 
 
 @server.route("/dashboard/nilai/murid/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def data_nilai_murid(id):
     murid = MuridModel.query.get(id)
@@ -48,6 +51,7 @@ def data_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/select", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def data_nilai_murid_select(id):
     murid = MuridModel.query.get(id)
@@ -78,6 +82,7 @@ def data_nilai_murid_select(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/tambah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def tambah_nilai_murid(id):
     murid = MuridModel.query.get(id)
@@ -103,6 +108,7 @@ def tambah_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/ubah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_nilai_murid(id):
     nilai = NilaiModel.query.get(id)
@@ -130,6 +136,7 @@ def ubah_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/<id>/hapus")
+@admin_guru_required
 @login_required
 def hapus_nilai_murid(id):
     nilai = NilaiModel.query.get(id)
@@ -140,6 +147,7 @@ def hapus_nilai_murid(id):
 
 
 @server.route("/dashboard/nilai/murid/print/<id>")
+@admin_guru_required
 @login_required
 def print_nilai(id):
     murid = MuridModel.query.get(id)

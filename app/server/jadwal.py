@@ -6,9 +6,11 @@ from . import server
 from app.models import JadwalKelasModel
 from .forms import TambahUbahJadwalForm
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/dashboard/jadwal-sekolah")
+@admin_guru_required
 @login_required
 def data_jadwal():
     data_jadwal = (
@@ -22,6 +24,7 @@ def data_jadwal():
 
 
 @server.route("/dashboard/jadwal-sekolah/tambah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def tambah_jadwal():
     form = TambahUbahJadwalForm()
@@ -43,6 +46,7 @@ def tambah_jadwal():
 
 
 @server.route("/dashboard/jadwal-sekolah/hapus/<id>")
+@admin_guru_required
 @login_required
 def hapus_jadwal(id):
     hapus_jadwal = JadwalKelasModel.query.get(id)
@@ -53,6 +57,7 @@ def hapus_jadwal(id):
 
 
 @server.route("/dashboard/jadwal-sekolah/ubah/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_jadwal(id):
     form = TambahUbahJadwalForm()

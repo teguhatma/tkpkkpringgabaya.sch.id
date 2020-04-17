@@ -6,9 +6,11 @@ from . import server
 from app.models import BeritaModel
 from .forms import TambahUbahBeritaForm
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/dashboard/berita-sekolah")
+@admin_guru_required
 @login_required
 def berita_sekolah():
     berita_sekolah = BeritaModel.query.all()
@@ -18,6 +20,7 @@ def berita_sekolah():
 
 
 @server.route("/dashboard/berita-sekolah/tambah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def tambah_berita_sekolah():
     form = TambahUbahBeritaForm()
@@ -71,6 +74,7 @@ def tambah_berita_sekolah():
 
 
 @server.route("/dashboard/berita-sekolah/hapus/<slug>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def hapus_berita_sekolah(slug):
     hapus_berita_sekolah = BeritaModel.query.filter_by(slug=slug).first_or_404()
@@ -81,6 +85,7 @@ def hapus_berita_sekolah(slug):
 
 
 @server.route("/dashboard/berita-sekolah/ubah/<slug>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_berita_sekolah(slug):
     ubah = BeritaModel.query.filter_by(slug=slug).first_or_404()

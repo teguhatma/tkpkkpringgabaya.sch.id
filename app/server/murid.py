@@ -2,14 +2,15 @@ from . import server
 from app import db
 from flask import render_template, request, flash, url_for, redirect, send_file
 from io import BytesIO
-from app.models import MuridModel
+from app.models import MuridModel, Permission
 from .forms import TambahMuridForm, RubahMuridForm, KelasModel
 import uuid
 from flask_login import login_required
-from ..decorators import guru_admin_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/image/murid/foto/<filename>")
+@admin_guru_required
 @login_required
 def foto_murid(filename):
     data = MuridModel.query.filter_by(nama_foto_diri=filename).first()
@@ -22,6 +23,7 @@ def foto_murid(filename):
 
 
 @server.route("/dashboard/murid")
+@admin_guru_required
 @login_required
 def data_murid():
     data_murid = MuridModel.query.all()
@@ -31,6 +33,7 @@ def data_murid():
 
 
 @server.route("/dashboard/murid/hapus/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def hapus_murid(id):
     murid = MuridModel.query.get(id)
@@ -41,7 +44,7 @@ def hapus_murid(id):
 
 
 @server.route("/dashboard/murid/tambah", methods=["GET", "POST"])
-@guru_admin_required
+@admin_guru_required
 @login_required
 def tambah_murid():
     form = TambahMuridForm()
@@ -78,6 +81,7 @@ def tambah_murid():
 
 
 @server.route("/dashboard/murid/ubah/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_murid(id):
     form = RubahMuridForm()
@@ -139,6 +143,7 @@ def ubah_murid(id):
 
 
 @server.route("/dashboard/murid/lihat/<id>")
+@admin_guru_required
 @login_required
 def lihat_murid(id):
     murid = MuridModel.query.get(id)
@@ -146,6 +151,7 @@ def lihat_murid(id):
 
 
 @server.route("/dashboard/kelas/murid/<id>")
+@admin_guru_required
 @login_required
 def kelas_murid(id):
     kelas = KelasModel.query.get(id)

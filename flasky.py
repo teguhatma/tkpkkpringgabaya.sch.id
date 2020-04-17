@@ -1,7 +1,6 @@
 from app import create_app, db
 from app.models import (
     GuruModel,
-    PegawaiModel,
     MuridModel,
     KelasModel,
     ElearningModel,
@@ -24,7 +23,6 @@ def make_shell_context():
     return dict(
         db=db,
         GuruModel=GuruModel,
-        PegawaiModel=PegawaiModel,
         MuridModel=MuridModel,
         KelasModel=KelasModel,
         ElearningModel=ElearningModel,

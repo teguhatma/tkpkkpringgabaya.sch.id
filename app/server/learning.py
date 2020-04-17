@@ -6,9 +6,11 @@ from . import server
 from app.models import ElearningModel
 from .forms import TambahElearningForm, UbahElearningForm
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/file/e-learning/<filename>")
+@admin_guru_required
 @login_required
 def dokumen_elearning(filename):
     data = ElearningModel.query.filter_by(nama_dokumen=filename).first()
@@ -21,6 +23,7 @@ def dokumen_elearning(filename):
 
 
 @server.route("/dashboard/e-learning")
+@admin_guru_required
 @login_required
 def data_elearning():
     data_elearning = ElearningModel.query.all()
@@ -32,6 +35,7 @@ def data_elearning():
 
 
 @server.route("/dashboard/e-learning/tambah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def tambah_elearning():
     form = TambahElearningForm()
@@ -53,6 +57,7 @@ def tambah_elearning():
 
 
 @server.route("/dashboard/e-learning/hapus/<slug>")
+@admin_guru_required
 @login_required
 def hapus_elearning(slug):
     hapus_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()
@@ -63,6 +68,7 @@ def hapus_elearning(slug):
 
 
 @server.route("/dashboard/e-learning/ubah/<slug>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_elearning(slug):
     ubah_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()

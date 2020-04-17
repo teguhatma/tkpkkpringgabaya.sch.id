@@ -6,10 +6,11 @@ from . import server
 from app.models import GuruModel
 from .forms import TambahGuruForm, RubahGuruForm, KelasModel
 from flask_login import login_required, current_user
-from ..decorators import admin_required, guru_required
+from ..decorators import admin_required, admin_guru_required
 
 
 @server.route("/image/guru/foto/<filename>")
+@admin_guru_required
 @login_required
 def foto_guru(filename):
     data = GuruModel.query.filter_by(nama_foto=filename).first()
@@ -22,6 +23,7 @@ def foto_guru(filename):
 
 
 @server.route("/image/guru/ijazah/<filename>")
+@admin_guru_required
 @login_required
 def ijazah_guru(filename):
     data = GuruModel.query.filter_by(nama_foto_ijazah=filename).first()
@@ -34,6 +36,7 @@ def ijazah_guru(filename):
 
 
 @server.route("/dashboard/guru")
+@admin_guru_required
 @login_required
 def data_guru():
     data_guru = GuruModel.query.order_by(GuruModel.jabatan.asc()).all()
@@ -155,6 +158,7 @@ def ubah_guru(id):
 
 
 @server.route("/dashboard/guru/edit-your-profile", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_profile_guru():
     form = RubahGuruForm()
@@ -230,6 +234,7 @@ def ubah_profile_guru():
 
 
 @server.route("/dashboard/guru/lihat/<id>")
+@admin_required
 @login_required
 def lihat_guru(id):
     guru = GuruModel.query.filter_by(id=id).first_or_404()
@@ -239,6 +244,7 @@ def lihat_guru(id):
 
 
 @server.route("/dashboard/guru/your-profile")
+@admin_guru_required
 @login_required
 def lihat_profile_guru():
     guru = GuruModel.query.get(current_user.id)

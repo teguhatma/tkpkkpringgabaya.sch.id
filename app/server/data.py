@@ -6,9 +6,11 @@ from . import server
 from app.models import DataSekolahModel
 from .forms import TambahDataSekolahForm, UbahDataSekolahForm
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/data-sekolah/<filename>")
+@admin_guru_required
 @login_required
 def dokumen_data_sekolah(filename):
     dokumen = DataSekolahModel.query.filter_by(nama_dokumen=filename).first()
@@ -21,6 +23,7 @@ def dokumen_data_sekolah(filename):
 
 
 @server.route("/dashboard/data-sekolah")
+@admin_guru_required
 @login_required
 def data_sekolah():
     data_sekolah = DataSekolahModel.query.all()
@@ -30,6 +33,7 @@ def data_sekolah():
 
 
 @server.route("/dashboard/data-sekolah/tambah", methods=["POST", "GET"])
+@admin_guru_required
 @login_required
 def tambah_data_sekolah():
     form = TambahDataSekolahForm()
@@ -50,6 +54,7 @@ def tambah_data_sekolah():
 
 
 @server.route("/dashboard/data-sekolah/hapus/<slug>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def hapus_data_sekolah(slug):
     hapus_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
@@ -60,6 +65,7 @@ def hapus_data_sekolah(slug):
 
 
 @server.route("/dashboard/data-sekolah/ubah/<slug>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_data_sekolah(slug):
     ubah_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()

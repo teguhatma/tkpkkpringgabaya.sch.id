@@ -6,9 +6,11 @@ from . import server
 from app.models import ProfileSekolahModel
 from .forms import TambahUbahProfileForm
 from flask_login import login_required
+from ..decorators import admin_required, admin_guru_required
 
 
 @server.route("/dashboard/profile/tambah", methods=["GET", "POST"])
+@admin_required
 @login_required
 def tambah_profile():
     form = TambahUbahProfileForm()
@@ -42,6 +44,7 @@ def tambah_profile():
 
 
 @server.route("/dashboard/profile/lihat")
+@admin_guru_required
 @login_required
 def lihat_profile():
     profile = ProfileSekolahModel.query.first()
@@ -51,6 +54,7 @@ def lihat_profile():
 
 
 @server.route("/dashboard/profile/ubah", methods=["GET", "POST"])
+@admin_required
 @login_required
 def ubah_profile():
     form = TambahUbahProfileForm()

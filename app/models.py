@@ -13,10 +13,10 @@ __filesize__ = 8056
 
 
 class Permission:
-    ADMIN = 1
-    GURU = 2
-    PEGAWAI = 3
+    ADMIN = 2
     MURID = 4
+    ADMIN_GURU = 8
+    GURU = 16
 
 
 class Role(db.Model):
@@ -28,7 +28,6 @@ class Role(db.Model):
     permissions = db.Column(db.Integer)
     admin = db.relationship("AdminModel", backref="role", lazy="dynamic")
     guru = db.relationship("GuruModel", backref="role", lazy="dynamic")
-    pegawai = db.relationship("PegawaiModel", backref="role", lazy="dynamic")
     murid = db.relationship("MuridModel", backref="role", lazy="dynamic")
 
     def __init__(self, **kwargs):
@@ -39,9 +38,8 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            "Admin": [Permission.ADMIN],
-            "Guru": [Permission.GURU],
-            "Pegawai": [Permission.PEGAWAI],
+            "Admin": [Permission.ADMIN, Permission.ADMIN_GURU],
+            "Guru": [Permission.ADMIN_GURU, Permission.GURU,],
             "Murid": [Permission.MURID],
         }
 
@@ -207,69 +205,6 @@ class GuruModel(db.Model):
 
     def __repr__(self):
         return "Guru {}".format(self.nama)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return int(self.id)
-
-
-class PegawaiModel(db.Model):
-    __tablename__ = "pegawai"
-
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(64), nullable=False)
-    alamat = db.Column(db.Text, nullable=False)
-    kelurahan = db.Column(db.String(24))
-    kecamatan = db.Column(db.String(24))
-    kabupaten = db.Column(db.String(24))
-    provinsi = db.Column(db.String(24))
-    agama = db.Column(
-        db.Enum(
-            "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        )
-    )
-    tempat_lahir = db.Column(db.String(24), nullable=False)
-    tanggal_lahir = db.Column(db.String(24), nullable=False)
-    foto = db.Column(db.LargeBinary(__fotosize__))
-    nama_foto = db.Column(db.String(64), unique=True)
-    pendidikan_terakhir = db.Column(db.String(24), nullable=False)
-    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
-    tahun_masuk = db.Column(db.String(24), nullable=False)
-    email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120))
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
-
-    def __init__(self, **kwargs):
-        super(PegawaiModel, self).__init__(**kwargs)
-        if self.role is None:
-            self.role = Role.query.filter_by(name="Pegawai").first()
-
-    def can(self, perm):
-        return self.role is not None and self.role.has_permission(perm)
-
-    def is_administrator(self):
-        return self.can(Permission.ADMIN)
-
-    @property
-    def password(self):
-        raise AttributeError("Password is not readable attribute")
-
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def __repr__(self):
-        return "Pegawai {}".format(self.nama)
 
     def is_authenticated(self):
         return True
@@ -567,4 +502,4 @@ def daftar_murid():
 
 @login_manager.user_loader
 def load_user(id):
-    return GuruModel.query.get(id)
+    return MuridModel.query.get(id)

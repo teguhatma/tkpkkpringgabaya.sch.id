@@ -5,10 +5,11 @@ from . import server
 from app.models import KelasModel
 from .forms import TambahKelasForm
 from flask_login import login_required
-from ..decorators import admin_required
+from ..decorators import admin_required, admin_guru_required
 
 
 @server.route("/dashboard/kelas")
+@admin_guru_required
 @login_required
 def data_kelas():
     kelas = KelasModel.query.all()

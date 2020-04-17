@@ -6,7 +6,6 @@ from . import (
     guru,
     kelas,
     akun,
-    pegawai,
     murid,
     wali,
     profile,

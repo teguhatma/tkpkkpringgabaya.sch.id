@@ -1,4 +1,4 @@
-from app.models import MuridModel, AdminModel, GuruModel, PegawaiModel
+from app.models import MuridModel, AdminModel, GuruModel
 from . import auth
 from flask import request, redirect, url_for, render_template, flash
 from flask_login import login_user, logout_user, login_required
@@ -51,22 +51,6 @@ def login_guru():
 
         flash("Invalid username and password!")
     return render_template("loginGuru.html", title="Sign in", form=form)
-
-
-@auth.route("/login/pegawai", methods=["GET", "POST"])
-def login_pegawai():
-    form = LoginPegawaiForm()
-    if form.validate_on_submit():
-        pegawai = PegawaiModel.query.filter_by(email=form.email.data).first()
-        if pegawai is not None and pegawai.verify_password(form.password.data):
-            login_user(pegawai)
-            next = request.args.get("next")
-            if next is None or not next.startswith("/"):
-                next = url_for("server.data_guru")
-            return redirect(next)
-
-        flash("Invalid username and password!")
-    return render_template("loginPegawai.html", title="Sign in", form=form)
 
 
 @auth.route("/logout")

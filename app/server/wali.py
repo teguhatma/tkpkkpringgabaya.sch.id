@@ -5,9 +5,11 @@ from app import db
 from app.models import WaliMuridModel
 from .forms import TambahUbahWaliForm
 from flask_login import login_required
+from ..decorators import admin_guru_required
 
 
 @server.route("/dashboard/wali-murid")
+@admin_guru_required
 @login_required
 def data_wali():
     data_wali_murid = WaliMuridModel.query.all()
@@ -17,6 +19,7 @@ def data_wali():
 
 
 @server.route("/dashboard/wali-murid/hapus/<id>")
+@admin_guru_required
 @login_required
 def hapus_wali(id):
     hapus_wali = WaliMuridModel.query.get(id)
@@ -27,6 +30,7 @@ def hapus_wali(id):
 
 
 @server.route("/dashboard/wali-murid/tambah", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def tambah_wali():
     form = TambahUbahWaliForm()
@@ -56,6 +60,7 @@ def tambah_wali():
 
 
 @server.route("/dashboard/wali-murid/ubah/<id>", methods=["GET", "POST"])
+@admin_guru_required
 @login_required
 def ubah_wali(id):
     form = TambahUbahWaliForm()
@@ -99,6 +104,7 @@ def ubah_wali(id):
 
 
 @server.route("/dashbaord/wali/lihat/<id>")
+@admin_guru_required
 @login_required
 def lihat_wali(id):
     wali = WaliMuridModel.query.get(id)
