@@ -6,6 +6,7 @@ from app.models import (
     JadwalKelasModel,
     KelasModel,
     GuruModel,
+    ProfileSekolahModel,
 )
 from app import db
 from io import BytesIO
@@ -51,4 +52,33 @@ def lihat_berita(slug):
     berita = BeritaModel.query.filter_by(slug=slug).first_or_404()
     return render_template(
         "lihatBerita.html", title=berita.judul, berita=berita, arsip_berita=arsip_berita
+    )
+
+
+@client.route("/profile-sekolah")
+def lihat_profile():
+    profile = ProfileSekolahModel.query.first()
+    arsip_berita = (
+        BeritaModel.query.filter(BeritaModel.tampilkan == True)
+        .order_by(BeritaModel.waktu_upload.desc())
+        .all()
+    )
+    return render_template(
+        "lihatProfile.html",
+        title="Profile Sekolah",
+        profile=profile,
+        arsip_berita=arsip_berita,
+    )
+
+
+@client.route("/guru-sekolah")
+def guru_sekolah():
+    arsip_berita = (
+        BeritaModel.query.filter(BeritaModel.tampilkan == True)
+        .order_by(BeritaModel.waktu_upload.desc())
+        .all()
+    )
+    guru = GuruModel.query.order_by(GuruModel.jabatan.asc()).all()
+    return render_template(
+        "guruSekolah.html", title="Guru Sekolah", guru=guru, arsip_berita=arsip_berita
     )

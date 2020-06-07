@@ -300,7 +300,7 @@ class WaliMuridModel(db.Model):
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
         )
     )
-    alamat = db.Column(db.String(120), nullable=False)
+    alamat = db.Column(db.Text, nullable=False)
     kelurahan = db.Column(db.String(60))
     kecamatan = db.Column(db.String(60))
     kabupaten = db.Column(db.String(60))
@@ -372,7 +372,8 @@ class BeritaModel(db.Model):
     judul = db.Column(db.String(120), nullable=False)
     deskripsi = db.Column(db.Text)
     slug = db.Column(db.String(120))
-    kategori = db.Column(db.String(24), nullable=False)
+    dokumen = db.Column(db.LargeBinary(__filesize__))
+    nama_dokumen = db.Column(db.String(124))
     gambar = db.Column(db.LargeBinary(__fotosize__))
     nama_gambar = db.Column(db.String(124))
     waktu_upload = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -474,6 +475,20 @@ class KelasModel(db.Model):
         return "Kelas {}".format(self.ruang)
 
 
+class PrestasiModel(db.Model):
+    __tablename__ = "prestasi"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(64), nullable=True)
+    kategori = db.Column(db.String(24))
+    tahun = db.Column(db.String(24))
+    juara = db.Column(db.String(24))
+    tingkat = db.Column(db.String(48))
+
+    def __repr__(self):
+        return "Prestasi {}".format(self.nama)
+
+
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
         return False
@@ -502,4 +517,4 @@ def daftar_murid():
 
 @login_manager.user_loader
 def load_user(id):
-    return MuridModel.query.get(id)
+    return GuruModel.query.get(id)

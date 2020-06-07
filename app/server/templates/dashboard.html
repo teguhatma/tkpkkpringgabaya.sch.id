@@ -1,0 +1,82 @@
+{% extends 'components/main.html' %} {% block content %}
+
+<div class="intro d-flex justify-content-between">
+  <div class="col-md-3 jumlah">
+    <div class="jumlah-murid">
+      <div class="judul-murid">
+        <h5>Jumlah Murid</h5>
+      </div>
+      <div class="nilai-jumlah-murid">
+        {{ murid }} murid
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 jumlah">
+    <div class="jumlah-guru">
+      <div class="judul-guru">
+        <h5>Jumlah Guru</h5>
+      </div>
+      <div class="nilai-jumlah-guru">
+        {{ guru }} guru
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 jumlah">
+    <div class="jumlah-kelas">
+      <div class="judul-kelas">
+        <h5>Jumlah Kelas</h5>
+      </div>
+      <div class="nilai-jumlah-kelas">
+        {{ kelas }} kelas
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-murid mx-5 my-5">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Nomor Induk</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Kelompok</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for murid_baru in murid_baru %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ murid_baru.nomor_induk }}</td>
+        <td>{{ murid_baru.nama }}</td>
+        <td>{{ murid_baru.kelas.ruang }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="table-guru mx-5 my-5">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Nama</th>
+        <th scope="col">Jabatan</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Kelompok</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for guru_baru in guru_baru %}
+      <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ guru_baru.nama }}</td>
+        <td>{{ guru_baru.jabatan }}</td>
+        <td>{{ guru_baru.nik }}</td>
+        <td>{{ guru_baru.kelas.ruang }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

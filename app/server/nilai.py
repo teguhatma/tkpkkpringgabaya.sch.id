@@ -129,9 +129,9 @@ def ubah_nilai_murid(id):
         form.deskripsi.data = nilai.deskripsi
         form.tahun_pelajaran.data = nilai.tahun_pelajaran
         form.semester.data = nilai.semester
-        form.jenis_penilaian.data = nilai.jenis_penilaian
+        form.aspek_penilaian.data = nilai.aspek_penilaian
     return render_template(
-        "nilai/tambahUbahNilaiMurid.html", title=nilai.nama, form=form
+        "nilai/tambahUbahNilaiMurid.html", title=nilai.aspek_penilaian, form=form
     )
 
 

@@ -13,7 +13,6 @@ from ..decorators import murid_required
 
 
 @murid.route("/image/murid/foto/<filename>")
-@murid_required
 @login_required
 def foto_murid(filename):
     data = MuridModel.query.filter_by(nama_foto_diri=filename).first()

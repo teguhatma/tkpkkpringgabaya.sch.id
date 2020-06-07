@@ -4,9 +4,15 @@ import uuid
 from app import db
 from . import server
 from app.models import ElearningModel
-from .forms import TambahElearningForm, UbahElearningForm
+from .forms import (
+    TambahElearningForm,
+    UbahElearningForm,
+    TambahElearningGuruForm,
+    UbahElearningGuruForm,
+)
 from flask_login import login_required
 from ..decorators import admin_guru_required
+from flask_login import current_user
 
 
 @server.route("/file/e-learning/<filename>")
@@ -26,7 +32,12 @@ def dokumen_elearning(filename):
 @admin_guru_required
 @login_required
 def data_elearning():
-    data_elearning = ElearningModel.query.all()
+    if current_user.is_administrator():
+        data_elearning = ElearningModel.query.all()
+    else:
+        data_elearning = ElearningModel.query.filter_by(
+            kelas_id=current_user.kelas_id
+        ).all()
     return render_template(
         "elearning/dataLearning.html",
         title="E-Learning",
@@ -38,19 +49,34 @@ def data_elearning():
 @admin_guru_required
 @login_required
 def tambah_elearning():
-    form = TambahElearningForm()
-    if form.validate_on_submit():
-        tambah_elearning = ElearningModel(
-            judul=form.judul.data,
-            deskripsi=form.deskripsi.data,
-            dokumen=form.dokumen.data.read(),
-            nama_dokumen=uuid.uuid4().hex,
-            kelas_id=form.kelas.data.id,
-        )
-        db.session.add(tambah_elearning)
-        db.session.commit()
-        flash("Elearning sudah dibuat", "Berhasil")
-        return redirect(url_for("server.data_elearning"))
+    if current_user.is_administrator():
+        form = TambahElearningForm()
+        if form.validate_on_submit():
+            tambah_elearning = ElearningModel(
+                judul=form.judul.data,
+                deskripsi=form.deskripsi.data,
+                dokumen=form.dokumen.data.read(),
+                nama_dokumen=uuid.uuid4().hex,
+                kelas_id=form.kelas.data.id,
+            )
+            db.session.add(tambah_elearning)
+            db.session.commit()
+            flash("Elearning sudah dibuat", "Berhasil")
+            return redirect(url_for("server.data_elearning"))
+    else:
+        form = TambahElearningGuruForm()
+        if form.validate_on_submit():
+            tambah_elearning = ElearningModel(
+                judul=form.judul.data,
+                deskripsi=form.deskripsi.data,
+                dokumen=form.dokumen.data.read(),
+                nama_dokumen=uuid.uuid4().hex,
+                kelas_id=current_user.kelas_id,
+            )
+            db.session.add(tambah_elearning)
+            db.session.commit()
+            flash("Elearning sudah dibuat", "Berhasil")
+            return redirect(url_for("server.data_elearning"))
     return render_template(
         "elearning/tambahUbahLearning.html", title="Tambah Elearning", form=form
     )
@@ -72,28 +98,49 @@ def hapus_elearning(slug):
 @login_required
 def ubah_elearning(slug):
     ubah_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()
-    form = UbahElearningForm()
-    if form.validate_on_submit():
-        ubah_elearning.judul = form.judul.data
-        ubah_elearning.deskripsi = form.deskripsi.data
-        ubah_elearning.kelas_id = form.kelas.data.id
-        if form.dokumen.data is not None:
-            ubah_elearning.dokumen = form.dokumen.data.read()
-            ubah_elearning.nama_dokumen = uuid.uuid4().hex
-        else:
-            ubah_elearning.dokumen = ubah_elearning.dokumen
-            ubah_elearning.nama_dokumen = ubah_elearning.nama_dokumen
+    if current_user.is_administrator():
+        form = UbahElearningForm()
+        if form.validate_on_submit():
+            ubah_elearning.judul = form.judul.data
+            ubah_elearning.deskripsi = form.deskripsi.data
+            ubah_elearning.kelas_id = form.kelas.data.id
+            if form.dokumen.data is not None:
+                ubah_elearning.dokumen = form.dokumen.data.read()
+                ubah_elearning.nama_dokumen = uuid.uuid4().hex
+            else:
+                ubah_elearning.dokumen = ubah_elearning.dokumen
+                ubah_elearning.nama_dokumen = ubah_elearning.nama_dokumen
 
-        db.session.add(ubah_elearning)
-        db.session.commit()
-        flash("E-Learning telah diubah.", "Berhasil")
-        return redirect(url_for("server.data_elearning"))
+            db.session.add(ubah_elearning)
+            db.session.commit()
+            flash("E-Learning telah diubah.", "Berhasil")
+            return redirect(url_for("server.data_elearning"))
 
-    if request.method == "GET":
-        form.judul.data = ubah_elearning.judul
-        form.deskripsi.data = ubah_elearning.deskripsi
-        form.kelas.data = ubah_elearning.kelas_id
+        if request.method == "GET":
+            form.judul.data = ubah_elearning.judul
+            form.deskripsi.data = ubah_elearning.deskripsi
+            form.kelas.data = ubah_elearning.kelas_id
+    else:
+        form = UbahElearningGuruForm()
+        if form.validate_on_submit():
+            ubah_elearning.judul = form.judul.data
+            ubah_elearning.deskripsi = form.deskripsi.data
+            ubah_elearning.kelas_id = current_user.kelas_id
+            if form.dokumen.data is not None:
+                ubah_elearning.dokumen = form.dokumen.data.read()
+                ubah_elearning.nama_dokumen = uuid.uuid4().hex
+            else:
+                ubah_elearning.dokumen = ubah_elearning.dokumen
+                ubah_elearning.nama_dokumen = ubah_elearning.nama_dokumen
 
+            db.session.add(ubah_elearning)
+            db.session.commit()
+            flash("E-Learning telah diubah.", "Berhasil")
+            return redirect(url_for("server.data_elearning"))
+
+        if request.method == "GET":
+            form.judul.data = ubah_elearning.judul
+            form.deskripsi.data = ubah_elearning.deskripsi
     return render_template(
         "elearning/tambahUbahLearning.html", title=ubah_elearning.judul, form=form
     )

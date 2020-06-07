@@ -436,9 +436,7 @@ class TambahUbahBeritaForm(FlaskForm):
     deskripsi = TextAreaField("Deskripsi berita")
     tampilkan = BooleanField("Tampilkan berita")
     gambar = FileField("Background")
-    kategori = StringField(
-        "Kategori Berita", validators=[DataRequired(), Length(3, 24)]
-    )
+    dokumen = FileField("Dokumen")
     submit = SubmitField("Tambahkan")
 
 
@@ -471,6 +469,20 @@ class UbahElearningForm(FlaskForm):
         allow_blank=True,
         validators=[DataRequired()],
     )
+    submit = SubmitField("Tambahkan")
+
+
+class TambahElearningGuruForm(FlaskForm):
+    dokumen = FileField("Upload Dokumen", validators=[DataRequired()])
+    deskripsi = TextAreaField("Deskripsi")
+    judul = StringField("Judul E-learning", validators=[DataRequired(), Length(1, 120)])
+    submit = SubmitField("Tambahkan")
+
+
+class UbahElearningGuruForm(FlaskForm):
+    dokumen = FileField("Upload Dokumen")
+    deskripsi = TextAreaField("Deskripsi")
+    judul = StringField("Judul E-learning", validators=[DataRequired(), Length(1, 120)])
     submit = SubmitField("Tambahkan")
 
 

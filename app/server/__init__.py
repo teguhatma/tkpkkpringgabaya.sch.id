@@ -14,4 +14,5 @@ from . import (
     learning,
     jadwal,
     nilai,
+    dashboard,
 )

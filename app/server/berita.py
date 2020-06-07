@@ -35,7 +35,7 @@ def tambah_berita_sekolah():
     filename = directory + "/" + files[index]
 
     if form.validate_on_submit():
-        if form.gambar.data is None:
+        if form.gambar.data is None and form.dokumen.data is None:
 
             # Covert img to BLOB
             def converToBinaryData(filename):
@@ -49,7 +49,42 @@ def tambah_berita_sekolah():
                 gambar=converToBinaryData(filename),
                 nama_gambar="{}".format(uuid.uuid4().hex),
                 tampilkan=form.tampilkan.data,
-                kategori=form.kategori.data,
+            )
+
+            db.session.add(berita)
+            db.session.commit()
+            flash("Data berhasil terbuat", "Berhasil")
+            return redirect(url_for("server.berita_sekolah"))
+
+        elif form.gambar.data is None and form.dokumen.data is not None:
+            # Covert img to BLOB
+            def converToBinaryData(filename):
+                with open(filename, "rb") as file:
+                    blobData = file.read()
+                return blobData
+
+            berita = BeritaModel(
+                judul=form.judul.data,
+                deskripsi=form.deskripsi.data,
+                gambar=converToBinaryData(filename),
+                nama_gambar="{}".format(uuid.uuid4().hex),
+                tampilkan=form.tampilkan.data,
+                dokumen=form.dokumen.data.read(),
+                nama_dokumen="{}".format(uuid.uuid4().hex),
+            )
+
+            db.session.add(berita)
+            db.session.commit()
+            flash("Data berhasil terbuat", "Berhasil")
+            return redirect(url_for("server.berita_sekolah"))
+
+        elif form.gambar.data is not None and form.dokumen.data is None:
+            berita = BeritaModel(
+                judul=form.judul.data,
+                deskripsi=form.deskripsi.data,
+                gambar=form.gambar.data.read(),
+                nama_gambar="{}".format(uuid.uuid4().hex),
+                tampilkan=form.tampilkan.data,
             )
             db.session.add(berita)
             db.session.commit()
@@ -62,7 +97,8 @@ def tambah_berita_sekolah():
                 gambar=form.gambar.data.read(),
                 nama_gambar="{}".format(uuid.uuid4().hex),
                 tampilkan=form.tampilkan.data,
-                kategori=form.kategori.data,
+                dokumen=form.dokumen.data.read(),
+                nama_dokumen="{}".format(uuid.uuid4().hex),
             )
             db.session.add(berita)
             db.session.commit()

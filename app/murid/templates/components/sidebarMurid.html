@@ -4,7 +4,7 @@
       src="{{ url_for('murid.foto_murid', filename=current_user.nama_foto_diri)}}"
       class="img-fluid"
       alt="Responsive image"
-      style="width: 60%; border-radius:5%;"
+      style="width: 60%; border-radius: 5%;"
     />
     <ul class="navbar-nav text-center">
       <li class="nav-item my-3">{{ current_user.nama}}</li>
@@ -36,7 +36,7 @@
       </a>
     </li>
     <li class="nav-item sign-out">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{ url_for('auth.logout') }}">
         <i class="fas fa-fw fa-sign-out-alt"></i>
         <span>Logout</span>
       </a>
