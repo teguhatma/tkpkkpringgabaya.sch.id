@@ -1,0 +1,61 @@
+{% extends "components/main.html" %} {% block content %}
+
+<form action="" enctype="multipart/form-data" method="POST" class="my-4">
+  {{ form.csrf_token() }}
+  <div class="form-group row">
+    {{ form.nama.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.nama(class='form-control form-control-sm')}} {% for error in
+      form.nama.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.kategori.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.kategori(class='form-control form-control-sm')}} {% for error in
+      form.kategori.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.juara.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.juara(class='form-control form-control-sm')}} {% for error in
+      form.juara.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.tingkat.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.tingkat(class='form-control form-control-sm')}} {% for error in
+      form.tingkat.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.tahun.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-5">
+      {{ form.tahun(class='form-control form-control-sm')}} {% for error in
+      form.tahun.errors %}
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.submit(class='col-sm-2 mx-3 float-right btn btn-sm btn-primary')}}
+  </div>
+</form>
+<script>
+  $("#summernote").summernote({
+    tabsize: 2,
+    height: 300,
+  });
+</script>
+
+{% endblock %}

@@ -4,7 +4,7 @@ import uuid
 from app import db
 from . import server
 from app.models import GuruModel
-from .forms import TambahGuruForm, RubahGuruForm, KelasModel
+from .forms import TambahGuruForm, RubahGuruForm, KelasModel, RubahProfileGuruForm
 from flask_login import login_required, current_user
 from ..decorators import admin_required, admin_guru_required
 
@@ -161,7 +161,7 @@ def ubah_guru(id):
 @admin_guru_required
 @login_required
 def ubah_profile_guru():
-    form = RubahGuruForm()
+    form = RubahProfileGuruForm()
     ubah = GuruModel.query.get(current_user.id)
     if form.validate_on_submit():
         ubah.nama = form.nama.data
@@ -180,7 +180,6 @@ def ubah_profile_guru():
         ubahjenis_kelamin = form.jenis_kelamin.data
         ubahtahun_masuk = form.tahun_masuk.data
         ubah.golongan = form.golongan.data
-        ubah.kelas_id = form.kelas.data.id
         if form.foto.data is not None and form.foto_ijazah.data is not None:
             ubah.foto = form.foto.data.read()
             ubah.nama_foto = "{}".format(uuid.uuid4().hex)
@@ -224,13 +223,12 @@ def ubah_profile_guru():
         form.jenis_kelamin.data = ubah.jenis_kelamin
         form.tahun_masuk.data = ubah.tahun_masuk
         form.golongan.data = ubah.golongan
-        form.kelas.data = ubah.kelas_id
         form.email.data = ubah.email
         form.nik_hidden.data = ubah.nik
         form.email_hidden.data = ubah.email
         form.jabatan_hidden.data = ubah.jabatan
 
-    return render_template("guru/ubahGuru.html", title=ubah.nama, form=form)
+    return render_template("guru/ubahProfileGuru.html", title=ubah.nama, form=form)
 
 
 @server.route("/dashboard/guru/lihat/<id>")

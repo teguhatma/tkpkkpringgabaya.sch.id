@@ -27,8 +27,20 @@ def foto_murid(filename):
 @login_required
 def data_murid():
     data_murid = MuridModel.query.all()
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     return render_template(
-        "murid/dataMurid.html", title="Data Murid", data_murid=data_murid
+        "murid/dataMurid.html", title="Data Murid", data_murid=data_murid, kelas=kelas
+    )
+
+
+@server.route("/dashboard/murid/<ruang>")
+@admin_guru_required
+@login_required
+def data_murid_kelas(ruang):
+    data_murid = MuridModel.query.filter_by(kelas_id=ruang).all()
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
+    return render_template(
+        "murid/dataMurid.html", title="Data Murid", data_murid=data_murid, kelas=kelas
     )
 
 

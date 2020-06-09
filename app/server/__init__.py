@@ -15,4 +15,5 @@ from . import (
     jadwal,
     nilai,
     dashboard,
+    prestasi,
 )
