@@ -7,9 +7,21 @@ from app.models import (
     KelasModel,
     GuruModel,
     ProfileSekolahModel,
+    PrestasiModel,
 )
 from app import db
 from io import BytesIO
+
+
+@client.route("/dokumen/<filename>/file")
+def client_berita_dokumen(filename):
+    data = BeritaModel.query.filter_by(nama_dokumen=filename).first()
+    return send_file(
+        BytesIO(data.dokumen),
+        mimetype="file/*",
+        as_attachment=True,
+        attachment_filename=data.nama_dokumen,
+    )
 
 
 @client.route("/images/berita/<filename>")
@@ -32,6 +44,7 @@ def index():
         .all()
     )
     learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).all()
+    profile = ProfileSekolahModel.query.first()
 
     return render_template(
         "index.html",
@@ -39,6 +52,7 @@ def index():
         berita=berita,
         learning=learning,
         all_berita=all_berita,
+        profile=profile,
     )
 
 
@@ -50,8 +64,13 @@ def lihat_berita(slug):
         .all()
     )
     berita = BeritaModel.query.filter_by(slug=slug).first_or_404()
+    profile = ProfileSekolahModel.query.first()
     return render_template(
-        "lihatBerita.html", title=berita.judul, berita=berita, arsip_berita=arsip_berita
+        "lihatBerita.html",
+        title=berita.judul,
+        berita=berita,
+        arsip_berita=arsip_berita,
+        profile=profile,
     )
 
 
@@ -78,7 +97,39 @@ def guru_sekolah():
         .order_by(BeritaModel.waktu_upload.desc())
         .all()
     )
+    profile = ProfileSekolahModel.query.first()
     guru = GuruModel.query.order_by(GuruModel.jabatan.asc()).all()
     return render_template(
-        "guruSekolah.html", title="Guru Sekolah", guru=guru, arsip_berita=arsip_berita
+        "guruSekolah.html",
+        title="Guru Sekolah",
+        profile=profile,
+        guru=guru,
+        arsip_berita=arsip_berita,
+    )
+
+
+@client.route("/prestasi")
+def prestasi():
+    prestasi = PrestasiModel.query.all()
+    arsip_berita = (
+        BeritaModel.query.filter(BeritaModel.tampilkan == True)
+        .order_by(BeritaModel.waktu_upload.desc())
+        .all()
+    )
+    profile = ProfileSekolahModel.query.first()
+    return render_template(
+        "lihatPrestasi.html",
+        profile=profile,
+        titile="Prestasi Sekolah",
+        prestasi=prestasi,
+        arsip_berita=arsip_berita,
+    )
+
+
+@client.route("/e-learning")
+def learning():
+    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).all()
+    profile = ProfileSekolahModel.query.first()
+    return render_template(
+        "lihatElearning.html", title="E-Learning", learning=learning, profile=profile
     )

@@ -1,24 +1,24 @@
 <footer>
   <div class="container">
     <div class="row d-flex justify-content-between">
-      <div class="col-md-3">
-        <span class="menu-deskripsi">Copyright &#169; 2020 </span><br />
-        <span class="menu-deskripsi">TK PKK Pringgabaya</span><br />
-        <span class="menu-deskripsi">All Right Reserved</span>
-      </div>
-      <div class="col-md-3">
-        Logo
-      </div>
-      <div class="col-md-3">
-        <span class="menu">TK PKK Pringgabaya</span><br />
+      <div class="col-md-8 text-center">
+        <h6><span class="menu">{{ profile.nama_lembaga }}</span></h6>
         <span class="menu-deskripsi"
-          >Jalan Sandubaya Nomor 33 Desa Pringgabaya, Pringgabaya, Lombok Timur,
-          Nusa Tenggara Barat</span
-        ><br />
-        <span class="menu-deskripsi">No-Telepon: +62 81907823905</span><br />
-        <span class="menu-deskripsi">E-Mail: tkpkk@tkpkkpringgabaya.sch.id</span
-        ><br />
+          >{{ profile.alamat }} Kec. {{ profile.kecamatan }} Kab. {{
+          profile.kabupaten }} {{ profile.provinsi }} KP. {{ profile.kode_pos
+          }}</span
+        >
       </div>
+      <div class="col-md-4">
+        <br />
+        <span class="menu-deskripsi">No. Telepon </span><br />
+        <span class="menu-deskripsi">{{ profile.no_telepon }}</span><br />
+        <span class="menu-deskripsi">Email</span><br />
+        <span class="menu-deskripsi">{{ profile.email }}</span><br />
+      </div>
+    </div>
+    <div class="text-center copyright">
+      <p>Copyright @ 2019 tkpkkpringgabaya.sch.id</p>
     </div>
   </div>
 </footer>

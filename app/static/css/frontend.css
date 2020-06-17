@@ -187,7 +187,6 @@ span.menu-deskripsi {
 footer {
   background: #262c2f;
   padding-top: 50px;
-  padding-bottom: 50px;
 }
 .selected a {
   color: #535658;
@@ -204,7 +203,14 @@ footer {
   padding: 10px 30px !important;
   font-weight: bold !important;
 }
-
+.copyright {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.copyright p {
+  color: #9a9b9c;
+  font-size: 13px;
+}
 .btn-primary:hover {
   background: coral !important;
   color: #e9ecef !important;

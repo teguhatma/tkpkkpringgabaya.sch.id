@@ -3,7 +3,7 @@ from app import db
 from flask import render_template, request, flash, url_for, redirect, send_file
 from io import BytesIO
 from app.models import MuridModel, Permission
-from .forms import TambahMuridForm, RubahMuridForm, KelasModel
+from .forms import TambahMuridForm, RubahMuridForm, KelasModel, UserModel
 import uuid
 from flask_login import login_required
 from ..decorators import admin_guru_required
@@ -49,7 +49,9 @@ def data_murid_kelas(ruang):
 @login_required
 def hapus_murid(id):
     murid = MuridModel.query.get(id)
+    user = UserModel.query.get(murid.user_id)
     db.session.delete(murid)
+    db.session.delete(user)
     db.session.commit()
     flash("Data {} berhasil dihapus.".format(murid.nama), "Berhasil")
     return redirect(url_for("server.data_murid"))
@@ -83,6 +85,10 @@ def tambah_murid():
             nama_foto_diri="{}".format(uuid.uuid4().hex),
             kelas_id=form.kelas.data.id,
         )
+        tambah_email = UserModel(email=form.email.data)
+        db.session.add_all([tambah_murid, tambah_email])
+        db.session.commit()
+        tambah_murid.user_id = tambah_email.id
         db.session.add(tambah_murid)
         db.session.commit()
         flash("Data sudah ditambahkan", "Berhasil")

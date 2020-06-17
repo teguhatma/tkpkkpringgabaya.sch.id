@@ -7,6 +7,7 @@ from app.models import BeritaModel
 from .forms import TambahUbahBeritaForm
 from flask_login import login_required
 from ..decorators import admin_guru_required
+from werkzeug.utils import secure_filename
 
 
 @server.route("/dashboard/berita-sekolah")
@@ -70,7 +71,7 @@ def tambah_berita_sekolah():
                 nama_gambar="{}".format(uuid.uuid4().hex),
                 tampilkan=form.tampilkan.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen="{}".format(uuid.uuid4().hex),
+                nama_dokumen=secure_filename(form.dokumen.data.filename),
             )
 
             db.session.add(berita)
@@ -98,7 +99,7 @@ def tambah_berita_sekolah():
                 nama_gambar="{}".format(uuid.uuid4().hex),
                 tampilkan=form.tampilkan.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen="{}".format(uuid.uuid4().hex),
+                nama_dokumen=secure_filename(form.dokumen.data.filename),
             )
             db.session.add(berita)
             db.session.commit()
@@ -130,13 +131,26 @@ def ubah_berita_sekolah(slug):
         ubah.judul = form.judul.data
         ubah.deskripsi = form.deskripsi.data
         ubah.tampilkan = form.tampilkan.data
-        ubah.kategori = form.kategori.data
-        if form.gambar.data is None:
+        if form.gambar.data is None and form.dokumen.data is None:
             ubah.gambar = ubah.gambar
             ubah.nama_gambar = ubah.nama_gambar
+            ubah.dokumen = ubah.dokumen
+            ubah.nama_dokumen = ubah.nama_dokumen
+        elif form.gambar.data is None and form.dokumen.data is not None:
+            ubah.gambar = ubah.gambar
+            ubah.nama_gambar = ubah.nama_gambar
+            ubah.dokumen = form.dokumen.data.read()
+            ubah.nama_dokumen = secure_filename(form.dokumen.data.filename)
+        elif form.gambar.data is not None and form.dokumen.data is None:
+            ubah.gambar = form.gambar.data.read()
+            ubah.nama_gambar = "{}".format(uuid.uuid4().hex)
+            ubah.dokumen = ubah.dokumen
+            ubah.nama_dokumen = ubah.nama_dokumen
         else:
             ubah.gambar = form.gambar.data.read()
-            ubah.nama_gambar = uuid.uuid4().hex
+            ubah.nama_gambar = "{}".format(uuid.uuid4().hex)
+            ubah.dokumen = form.dokumen.data.read()
+            ubah.nama_dokumen = secure_filename(form.dokumen.data.filename)
         db.session.add(ubah)
         db.session.commit()
         flash("Berita sekolah telah diubah", "Berhasil")
@@ -145,7 +159,6 @@ def ubah_berita_sekolah(slug):
     if request.method == "GET":
         form.judul.data = ubah.judul
         form.deskripsi.data = ubah.deskripsi
-        form.kategori.data = ubah.kategori
         form.tampilkan.data = ubah.tampilkan
 
     return render_template("berita/tambahUbahBerita.html", title=ubah.judul, form=form)

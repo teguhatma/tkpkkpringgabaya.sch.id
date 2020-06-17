@@ -1,6 +1,12 @@
 from . import murid
 from app import db
-from app.models import JadwalKelasModel, MuridModel, WaliMuridModel, NilaiModel
+from app.models import (
+    JadwalKelasModel,
+    MuridModel,
+    WaliMuridModel,
+    NilaiModel,
+    UserModel,
+)
 from flask import render_template, send_file, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from io import BytesIO
@@ -12,9 +18,10 @@ from .forms import (
 from ..decorators import murid_required
 
 
-@murid.route("/image/murid/foto/<filename>")
+@murid.route("/image/murid/<filename>")
+@murid_required
 @login_required
-def foto_murid(filename):
+def foto_diri_murid(filename):
     data = MuridModel.query.filter_by(nama_foto_diri=filename).first()
     return send_file(
         BytesIO(data.foto_diri),
@@ -29,7 +36,7 @@ def foto_murid(filename):
 @login_required
 def murid_dashboard():
     jadwal = (
-        JadwalKelasModel.query.filter_by(kelas_id=current_user.id)
+        JadwalKelasModel.query.filter_by(kelas_id=current_user.murid.id)
         .order_by(JadwalKelasModel.hari.asc())
         .order_by(JadwalKelasModel.jam.asc())
         .all()
@@ -41,8 +48,8 @@ def murid_dashboard():
 @murid_required
 @login_required
 def murid_profile():
-    wali = WaliMuridModel.query.filter_by(murid_id=current_user.id).first()
-    murid = MuridModel.query.filter_by(id=current_user.id).first()
+    wali = WaliMuridModel.query.filter_by(murid_id=current_user.murid.id).first()
+    murid = MuridModel.query.filter_by(id=current_user.murid.id).first()
     return render_template(
         "profileMurid.html", wali=wali, murid=murid, title="Profile Peserta Didik"
     )
@@ -63,7 +70,7 @@ def murid_nilai():
         nilai_selected = (
             NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
             .filter_by(semester=request.form.get("semester"))
-            .filter_by(murid_id=current_user.id)
+            .filter_by(murid_id=current_user.murid.id)
             .all()
         )
         return redirect(url_for("murid.murid_nilai_select"))
@@ -89,7 +96,7 @@ def murid_nilai_select():
         nilai_selected = (
             NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
             .filter_by(semester=request.form.get("semester"))
-            .filter_by(murid_id=current_user.id)
+            .filter_by(murid_id=current_user.murid.id)
             .all()
         )
         return redirect(url_for("murid.murid_nilai_select"))
@@ -105,7 +112,7 @@ def murid_nilai_select():
 @murid_required
 @login_required
 def murid_ganti_password():
-    akun = MuridModel.query.filter_by(id=current_user.id).first()
+    akun = UserModel.query.filter_by(id=current_user.id).first()
     form = MuridGantiPasswordForm()
     if form.validate_on_submit():
         if akun.verify_password(form.password.data) == True:
@@ -128,7 +135,7 @@ def murid_ganti_password():
 @login_required
 def murid_ganti_profile_diri():
     form = MuridGantiProfileForm()
-    murid = MuridModel.query.filter_by(id=current_user.id).first_or_404()
+    murid = MuridModel.query.filter_by(id=current_user.murid.id).first_or_404()
     if form.validate_on_submit():
         murid.nama = form.nama.data
         murid.nama_panggilan = form.nama_panggilan.data
@@ -171,7 +178,7 @@ def murid_ganti_profile_diri():
 @login_required
 def murid_ganti_profile_wali():
     form = MuridGantiProfileWaliForm()
-    wali = WaliMuridModel.query.filter_by(murid_id=current_user.id).first_or_404()
+    wali = WaliMuridModel.query.filter_by(murid_id=current_user.murid.id).first_or_404()
     if form.validate_on_submit():
         wali.nama = form.nama.data
         wali.agama = form.agama.data

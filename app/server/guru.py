@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import GuruModel
+from app.models import GuruModel, UserModel, Role
 from .forms import TambahGuruForm, RubahGuruForm, KelasModel, RubahProfileGuruForm
 from flask_login import login_required, current_user
 from ..decorators import admin_required, admin_guru_required
@@ -49,11 +49,11 @@ def data_guru():
 def tambah_guru():
     form = TambahGuruForm()
     if form.validate_on_submit():
+        tambah_email = UserModel(email=form.email.data)
         tambah_guru = GuruModel(
             nama=form.nama.data,
             alamat=form.alamat.data,
             nik=form.nik.data,
-            email=form.email.data,
             kelurahan=form.kelurahan.data,
             kecamatan=form.kecamatan.data,
             kabupaten=form.kabupaten.data,
@@ -72,7 +72,11 @@ def tambah_guru():
             golongan=form.golongan.data,
             kelas_id=form.kelas.data.id,
         )
-        db.session.add(tambah_guru)
+        db.session.add_all([tambah_email, tambah_guru])
+        db.session.commit()
+        tambah_guru.user_id = tambah_email.id
+        tambah_email.role_id = Role.query.filter_by(name="Guru").first().id
+        db.session.add_all([tambah_guru, tambah_email])
         db.session.commit()
         flash("Data sudah ditambahkan", "Berhasil")
         return redirect(url_for("server.data_guru"))
@@ -91,7 +95,7 @@ def ubah_guru(id):
         ubah.nama = form.nama.data
         ubah.alamat = form.alamat.data
         ubah.nik = form.nik.data
-        ubah.email = form.email.data
+        ubah.user.email = form.email.data
         ubah.kelurahan = form.kelurahan.data
         ubah.kecamatan = form.kecamatan.data
         ubah.kabupaten = form.kabupaten.data
@@ -101,8 +105,8 @@ def ubah_guru(id):
         ubah.tanggal_lahir = form.tanggal_lahir.data
         ubah.jabatan = form.jabatan.data
         ubah.pendidikan_terakhir = form.pendidikan_terakhir.data
-        ubahjenis_kelamin = form.jenis_kelamin.data
-        ubahtahun_masuk = form.tahun_masuk.data
+        ubah.jenis_kelamin = form.jenis_kelamin.data
+        ubah.tahun_masuk = form.tahun_masuk.data
         ubah.golongan = form.golongan.data
         ubah.kelas_id = form.kelas.data.id
         if form.foto.data is not None and form.foto_ijazah.data is not None:
@@ -148,10 +152,9 @@ def ubah_guru(id):
         form.jenis_kelamin.data = ubah.jenis_kelamin
         form.tahun_masuk.data = ubah.tahun_masuk
         form.golongan.data = ubah.golongan
-        form.kelas.data = ubah.kelas_id
-        form.email.data = ubah.email
+        form.kelas.data = ubah.kelas
+        form.email.data = ubah.user.email
         form.nik_hidden.data = ubah.nik
-        form.email_hidden.data = ubah.email
         form.jabatan_hidden.data = ubah.jabatan
 
     return render_template("guru/ubahGuru.html", title=ubah.nama, form=form)
@@ -162,12 +165,12 @@ def ubah_guru(id):
 @login_required
 def ubah_profile_guru():
     form = RubahProfileGuruForm()
-    ubah = GuruModel.query.get(current_user.id)
+    ubah = GuruModel.query.get(current_user.guru.id)
     if form.validate_on_submit():
         ubah.nama = form.nama.data
         ubah.alamat = form.alamat.data
         ubah.nik = form.nik.data
-        ubah.email = form.email.data
+        ubah.user.email = form.email.data
         ubah.kelurahan = form.kelurahan.data
         ubah.kecamatan = form.kecamatan.data
         ubah.kabupaten = form.kabupaten.data
@@ -175,10 +178,9 @@ def ubah_profile_guru():
         ubah.agama = form.agama.data
         ubah.tempat_lahir = form.tempat_lahir.data
         ubah.tanggal_lahir = form.tanggal_lahir.data
-        ubah.jabatan = form.jabatan.data
         ubah.pendidikan_terakhir = form.pendidikan_terakhir.data
-        ubahjenis_kelamin = form.jenis_kelamin.data
-        ubahtahun_masuk = form.tahun_masuk.data
+        ubah.jenis_kelamin = form.jenis_kelamin.data
+        ubah.tahun_masuk = form.tahun_masuk.data
         ubah.golongan = form.golongan.data
         if form.foto.data is not None and form.foto_ijazah.data is not None:
             ubah.foto = form.foto.data.read()
@@ -216,19 +218,18 @@ def ubah_profile_guru():
         form.agama.data = ubah.agama
         form.tempat_lahir.data = ubah.tempat_lahir
         form.tanggal_lahir.data = ubah.tanggal_lahir
-        form.jabatan.data = ubah.jabatan
         form.foto.data = ubah.nama_foto
         form.foto_ijazah.data = ubah.nama_foto_ijazah
         form.pendidikan_terakhir.data = ubah.pendidikan_terakhir
         form.jenis_kelamin.data = ubah.jenis_kelamin
         form.tahun_masuk.data = ubah.tahun_masuk
         form.golongan.data = ubah.golongan
-        form.email.data = ubah.email
         form.nik_hidden.data = ubah.nik
-        form.email_hidden.data = ubah.email
-        form.jabatan_hidden.data = ubah.jabatan
+        form.email.data = ubah.user.email
 
-    return render_template("guru/ubahProfileGuru.html", title=ubah.nama, form=form)
+    return render_template(
+        "guru/ubahProfileGuru.html", title=ubah.nama, form=form, ubah=ubah
+    )
 
 
 @server.route("/dashboard/guru/lihat/<id>")
@@ -245,7 +246,7 @@ def lihat_guru(id):
 @admin_guru_required
 @login_required
 def lihat_profile_guru():
-    guru = GuruModel.query.get(current_user.id)
+    guru = GuruModel.query.get(current_user.guru.id)
     return render_template(
         "guru/lihatGuru.html", title="{}".format(guru.nama), guru=guru
     )
@@ -256,7 +257,9 @@ def lihat_profile_guru():
 @admin_required
 def hapus_guru(id):
     hapus_guru = GuruModel.query.get(id)
+    hapus_user = UserModel.query.get(hapus_guru.user_id)
     db.session.delete(hapus_guru)
+    db.session.delete(hapus_user)
     db.session.commit()
     flash("Data {} sudah berhasil dihapus".format(hapus_guru.nama), "Berhasil")
     return redirect(url_for("server.data_guru"))

@@ -3,9 +3,6 @@
 Website
 
 - Filter nilai dibagian print nilai (nilai.py)
-- Menampilkan prestasi di depan
-- Multiple login masih belum bisa
-- Prestasi pada bagian admin belum ditambahkan
 
 #### Naskah
 

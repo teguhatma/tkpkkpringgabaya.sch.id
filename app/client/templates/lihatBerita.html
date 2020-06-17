@@ -13,6 +13,12 @@
         </div>
         <div class="content-berita my-5">
           {{ berita.deskripsi | safe }}
+          <br />
+          <a
+            href="{{ url_for('client.client_berita_dokumen',
+filename=berita.nama_dokumen)}}"
+            >Download Dokumen</a
+          >
         </div>
         <div class="share mt-5">
           {{ share.create(title='Bagikan: ') }}

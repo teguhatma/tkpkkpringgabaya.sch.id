@@ -26,9 +26,7 @@ class Role(db.Model):
     name = db.Column(db.String(64), unique=True)
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
-    admin = db.relationship("AdminModel", backref="role", lazy="dynamic")
-    guru = db.relationship("GuruModel", backref="role", lazy="dynamic")
-    murid = db.relationship("MuridModel", backref="role", lazy="dynamic")
+    user = db.relationship("UserModel", backref="role", lazy="dynamic")
 
     def __init__(self, **kwargs):
         super(Role, self).__init__(**kwargs)
@@ -43,7 +41,7 @@ class Role(db.Model):
             "Murid": [Permission.MURID],
         }
 
-        default_role = "Guru"
+        default_role = "Murid"
         for r in roles:
             role = Role.query.filter_by(name=r).first()
             if role is None:
@@ -70,18 +68,23 @@ class Role(db.Model):
         return self.permissions & perm == perm
 
 
-class AdminModel(db.Model):
-    __tablename__ = "admin"
+class UserModel(UserMixin, db.Model):
+    __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(24), nullable=False)
-    password_hash = db.Column(db.String(120), nullable=False)
+    email = db.Column(db.String(64), unique=True)
+    password_hash = db.Column(db.String(120))
     role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    guru = db.relationship("GuruModel", uselist=False, back_populates="user")
+    murid = db.relationship("MuridModel", uselist=False, back_populates="user")
 
     def __init__(self, **kwargs):
-        super(AdminModel, self).__init__(**kwargs)
+        super(UserModel, self).__init__(**kwargs)
         if self.role is None:
-            self.role = Role.query.filter_by(name="Admin").first()
+            if self.email == current_app.config["ADMIN_TK"]:
+                self.role = Role.query.filter_by(name="Admin").frist()
+            if self.role is None:
+                self.role = Role.query.filter_by(default=True).first()
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
@@ -101,8 +104,9 @@ class AdminModel(db.Model):
 
     @staticmethod
     def insert_admin():
-        insert_admin = AdminModel(
-            username="tkpkkadmin", role=Role.query.filter_by(name="Admin").first()
+        insert_admin = UserModel(
+            email="baiqiriantini@gmail.com",
+            role=Role.query.filter_by(name="Admin").first(),
         )
         insert_admin.password("tkadminadmin")
         db.session.add(insert_admin)
@@ -121,16 +125,16 @@ class AdminModel(db.Model):
         return int(self.id)
 
     def __repr__(self):
-        return "Admin {}".format(self.username)
+        return "Email {}".format(self.email)
 
 
 class GuruModel(db.Model):
     __tablename__ = "guru"
 
     id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(64), nullable=False)
-    alamat = db.Column(db.Text, nullable=False)
-    nik = db.Column(db.String(24), unique=True, nullable=False)
+    nama = db.Column(db.String(64))
+    alamat = db.Column(db.Text)
+    nik = db.Column(db.String(24), unique=True)
     kelurahan = db.Column(db.String(24))
     kecamatan = db.Column(db.String(24))
     kabupaten = db.Column(db.String(24))
@@ -140,8 +144,8 @@ class GuruModel(db.Model):
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
         )
     )
-    tempat_lahir = db.Column(db.String(24), nullable=False)
-    tanggal_lahir = db.Column(db.String(24), nullable=False)
+    tempat_lahir = db.Column(db.String(24))
+    tanggal_lahir = db.Column(db.String(24))
     jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", name="jabatan"))
     foto = db.Column(db.LargeBinary(__fotosize__))
     nama_foto = db.Column(db.String(64), unique=True)
@@ -170,38 +174,30 @@ class GuruModel(db.Model):
             name="golongan",
         )
     )
-    pendidikan_terakhir = db.Column(db.String(24), nullable=False)
+    pendidikan_terakhir = db.Column(db.String(24))
     jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
-    tahun_masuk = db.Column(db.String(24), nullable=False)
-    email = db.Column(db.String(64), unique=True, nullable=False)
-    password_hash = db.Column(db.String(120))
+    tahun_masuk = db.Column(db.String(24))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("UserModel", back_populates="guru")
 
-    def __init__(self, **kwargs):
-        super(GuruModel, self).__init__(**kwargs)
-        if self.role is None:
-            if self.jabatan == current_app.config["ADMIN_TK"]:
-                self.role = Role.query.filter_by(name="Admin").first()
-            if self.role is None:
-                self.role = Role.query.filter_by(name="Guru").first()
+    @staticmethod
+    def insert_guru():
+        insert_admin = GuruModel(
+            nama="Baiq Iriantini, S.Pd.",
+            user=UserModel.query.first(),
+            nik="196512311985023321",
+            jabatan="Kepala Sekolah",
+        )
+        db.session.add(insert_admin)
+        db.session.commit()
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_administrator(self):
         return self.can(Permission.ADMIN)
-
-    @property
-    def password(self):
-        raise AttributeError("Password is not readable attribute")
-
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return "Guru {}".format(self.nama)
@@ -219,7 +215,7 @@ class GuruModel(db.Model):
         return int(self.id)
 
 
-class MuridModel(UserMixin, db.Model):
+class MuridModel(db.Model):
     __tablename__ = "murid"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -246,33 +242,18 @@ class MuridModel(UserMixin, db.Model):
     tahun_pelajaran = db.Column(db.String(24))
     foto_diri = db.Column(db.LargeBinary(__fotosize__))
     nama_foto_diri = db.Column(db.String(64), unique=True)
-    password_hash = db.Column(db.String(120))
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="murid")
     wali_murid = db.relationship("WaliMuridModel", back_populates="murid")
     nilai = db.relationship("NilaiModel")
-    role_id = db.Column(db.Integer, db.ForeignKey("roles.id"))
-
-    def __init__(self, **kwargs):
-        super(MuridModel, self).__init__(**kwargs)
-        if self.role is None:
-            self.role = Role.query.filter_by(name="Murid").first()
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    user = db.relationship("UserModel", back_populates="murid")
 
     def can(self, perm):
         return self.role is not None and self.role.has_permission(perm)
 
     def is_administrator(self):
         return self.can(Permission.ADMIN)
-
-    @property
-    def password(self):
-        raise AttributeError("Password is not readable attribute")
-
-    def password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def verify_password(self, password):
-        return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
         return "Murid {}".format(self.nama)
@@ -328,6 +309,7 @@ class ProfileSekolahModel(db.Model):
     kelurahan = db.Column(db.String(60), nullable=False)
     kecamatan = db.Column(db.String(60), nullable=False)
     kabupaten = db.Column(db.String(60), nullable=False)
+    alamat = db.Column(db.Text, nullable=False)
     provinsi = db.Column(db.String(60), nullable=False)
     no_statistik = db.Column(db.String(60), nullable=False)
     akte_notaris = db.Column(db.String(60), nullable=False)
@@ -337,6 +319,7 @@ class ProfileSekolahModel(db.Model):
     no_izin_pendirian = db.Column(db.String(46), nullable=False)
     no_izin_operasional = db.Column(db.String(46), nullable=False)
     kurikulum = db.Column(db.String(10), nullable=False)
+    alamat = db.Column(db.Text(), nullable=False)
     no_telepon = db.Column(db.String(13), nullable=False)
     email = db.Column(db.String(64), nullable=False)
     visi_misi = db.Column(db.Text, nullable=False)
@@ -517,4 +500,4 @@ def daftar_murid():
 
 @login_manager.user_loader
 def load_user(id):
-    return GuruModel.query.get(id)
+    return UserModel.query.get(id)

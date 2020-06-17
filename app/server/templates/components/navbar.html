@@ -46,7 +46,7 @@
     <li class="nav-item dropdown no-arrow mx-1">
       <a
         class="nav-link dropdown-toggle"
-        href="{{ url_for('server.ubah_profile_guru', id=current_user.id) }}"
+        href="{{ url_for('server.ubah_profile_guru') }}"
         >Edit Your Profile
       </a>
     </li>
@@ -61,7 +61,7 @@
         aria-expanded="false"
       >
         <i class="fas fa-user-circle fa-fw"></i>
-        {{ current_user.nama }} {{ current_user.role.name}}
+        {{ current_user.guru.nama }} {{ current_user.role.name}}
       </a>
       <div
         class="dropdown-menu dropdown-menu-right"

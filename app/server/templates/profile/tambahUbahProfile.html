@@ -8,7 +8,7 @@
     <div class="col-sm-5">
       {{ form.nama_lembaga(class='form-control form-control-sm',
       id="nama_lembaga")}} {% for error in form.nama_lembaga.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -17,7 +17,7 @@
     <div class="col-sm-2">
       {{ form.status_tk(class='form-control form-control-sm', id="status_tk")}}
       {% for error in form.status_tk.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -28,7 +28,7 @@
       {{ form.tahun_berdiri(class='form-control form-control-sm
       datepicker-here', id="tahun_berdiri", type='text')}} {% for error in
       form.tahun_berdiri.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -38,7 +38,7 @@
     <div class="col-sm-3">
       {{ form.no_statistik(class='form-control form-control-sm',
       id="no_statistik")}} {% for error in form.no_statistik.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -48,7 +48,7 @@
     <div class="col-sm-3">
       {{ form.akte_notaris(class='form-control form-control-sm',
       id="akte_notaris")}} {% for error in form.akte_notaris.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -58,7 +58,7 @@
     <div class="col-sm-5">
       {{ form.kegiatan_belajar(class='form-control form-control-sm',
       id="kegiatan_belajar")}} {% for error in form.kegiatan_belajar.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -67,7 +67,7 @@
     <div class="col-sm-4">
       {{ form.kurikulum(class='form-control form-control-sm', id="kurikulum")}}
       {% for error in form.kurikulum.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -77,7 +77,7 @@
     <div class="col-sm-5">
       {{ form.no_izin_pendirian(class='form-control form-control-sm',
       id="no_izin_pendirian")}} {% for error in form.no_izin_pendirian.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -86,7 +86,7 @@
     <div class="col-sm-5">
       {{ form.no_izin_operasional(class='form-control form-control-sm')}} {% for
       error in form.no_izin_operasional.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -95,7 +95,7 @@
     <div class="col-sm-4">
       {{ form.no_telepon(class='form-control form-control-sm')}} {% for error in
       form.no_telepon.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -104,7 +104,7 @@
     <div class="col-sm-5">
       {{ form.email(class='form-control form-control-sm', id="email",
       type='email')}} {% for error in form.email.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -113,7 +113,7 @@
     <div class="col-sm-2">
       {{ form.kode_pos(class='form-control form-control-sm', id="kode_pos",
       type='number')}} {% for error in form.kode_pos.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -122,7 +122,7 @@
     <div class="col-sm-3">
       {{ form.kelurahan(class='form-control form-control-sm', id="kelurahan")}}
       {% for error in form.kelurahan.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -131,7 +131,7 @@
     <div class="col-sm-3">
       {{ form.kecamatan(class='form-control form-control-sm', id="kecamatan")}}
       {% for error in form.kecamatan.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -140,7 +140,7 @@
     <div class="col-sm-3">
       {{ form.kabupaten(class='form-control form-control-sm', id="kabupaten")}}
       {% for error in form.kabupaten.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -149,7 +149,16 @@
     <div class="col-sm-3">
       {{ form.provinsi(class='form-control form-control-sm', id="provinsi")}} {%
       for error in form.provinsi.errors %}
-      <span style="color: red">{{ error }}</span>
+      <span style="color: red;">{{ error }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="form-group row">
+    {{ form.alamat.label(class='col-sm-2 col-form-label')}}
+    <div class="col-sm-3">
+      {{ form.alamat(class='form-control form-control-sm')}} {% for error in
+      form.alamat.errors %}
+      <span style="color: red;">{{ error }}</span>
       {% endfor %}
     </div>
   </div>
@@ -166,7 +175,7 @@
 <script>
   $("#summernote").summernote({
     tabsize: 2,
-    height: 300
+    height: 300,
   });
 </script>
 

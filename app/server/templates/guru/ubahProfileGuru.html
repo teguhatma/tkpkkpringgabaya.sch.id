@@ -3,7 +3,7 @@
 <form action="" method="POST" enctype="multipart/form-data">
   {{ form.csrf_token() }}
   <div class="form-row">
-    {{ form.nik_hidden()}} {{ form.email_hidden()}}{{ form.jabatan_hidden()}}
+    {{ form.nik_hidden()}} {{ form.email_hidden()}}
     <div class="col-md-3">
       {{ form.nama.label(for='nama')}} {{ form.nama(class='form-control
       form-control-sm', id='nama')}} {% for error in form.nama.errors %}
@@ -41,17 +41,19 @@
       <label for="kelas">Kelas</label>
       <input
         type="text"
-        value="{{ current_user.kelas.ruang }}"
         class="form-control form-control-sm"
-        id="kelas"
+        value="{{ubah.kelas.ruang}}"
         readonly
       />
     </div>
     <div class="col-md-3">
-      {{ form.jabatan.label(for='jabatan')}} {{ form.jabatan(class='form-control
-      form-control-sm', id='jabatan')}} {% for error in form.jabatan.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
+      <label for="jabatan">Jabatan</label>
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        value="{{ubah.jabatan }}"
+        readonly
+      />
     </div>
     <div class="col-md-2">
       {{ form.agama.label(for='agama')}} {{ form.agama(class='form-control-sm

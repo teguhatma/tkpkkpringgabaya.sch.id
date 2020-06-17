@@ -11,7 +11,7 @@ from wtforms import (
     IntegerField,
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Length, EqualTo
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from app.models import (
     GuruModel,
     KelasModel,
@@ -22,6 +22,7 @@ from app.models import (
     JadwalKelasModel,
     NilaiModel,
     WaliMuridModel,
+    UserModel,
 )
 
 
@@ -29,8 +30,10 @@ class TambahGuruForm(FlaskForm):
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
     nik = StringField("NIK", validators=[DataRequired(), Length(1, 24)])
+    email = EmailField(
+        "Email", validators=[DataRequired()], render_kw={"class": "form-control"}
+    )
     kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
-    email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
     kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
     provinsi = StringField("Provinsi", validators=[Length(1, 24)])
@@ -81,7 +84,7 @@ class TambahGuruForm(FlaskForm):
             raise ValueError("NIK sudah terdaftar.")
 
     def validate_email(self, nik):
-        email = GuruModel.query.filter_by(email=self.email.data).first()
+        email = UserModel.query.filter_by(email=self.email.data).first()
         if email is not None:
             raise ValueError("Email sudah terdaftar.")
 
@@ -109,8 +112,8 @@ class RubahGuruForm(FlaskForm):
     nama = StringField("Nama lengkap", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat lengkap", validators=[DataRequired()])
     nik = StringField("NIK", validators=[DataRequired(), Length(1, 24)])
-    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
     email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
+    kelurahan = StringField("Kelurahan", validators=[Length(1, 24)])
     kecamatan = StringField("Kecamatan", validators=[Length(1, 24)])
     kabupaten = StringField("Kabupaten", validators=[Length(1, 24)])
     provinsi = StringField("Provinsi", validators=[Length(1, 24)])
@@ -153,8 +156,8 @@ class RubahGuruForm(FlaskForm):
         allow_blank=True,
         validators=[DataRequired()],
     )
-    email_hidden = StringField("Email hidden", render_kw={"type": "hidden"})
     nik_hidden = StringField("NIK hidden", render_kw={"type": "hidden"})
+    email_hidden = StringField("email hidden", render_kw={"type": "hidden"})
     jabatan_hidden = StringField("Jabatan hidden", render_kw={"type": "hidden"})
     submit = SubmitField("Tambahkan")
 
@@ -165,14 +168,7 @@ class RubahGuruForm(FlaskForm):
                 if guru.nik == self.nik.data:
                     raise ValueError("NIK sudah terdaftar.")
 
-    def validate_email(self, nik):
-        email = GuruModel.query.filter_by(email=self.email_hidden.data).first()
-        for guru in GuruModel.query.all():
-            if guru.email != email.email:
-                if guru.email == self.email.data:
-                    raise ValueError("Email sudah terdaftar.")
-
-    def validate_jabatan(self, nik):
+    def validate_jabatan(self, jabatan):
         jabatan = GuruModel.query.filter_by(jabatan=self.jabatan_hidden.data).first()
         for guru in GuruModel.query.all():
             if guru.jabatan != jabatan.jabatan:
@@ -181,8 +177,15 @@ class RubahGuruForm(FlaskForm):
 
 
 class AkunForm(FlaskForm):
-    password = PasswordField("Password", validators=[DataRequired(), Length(1, 24)])
-    submit = SubmitField("Simpan")
+    email = EmailField(
+        "Email", validators=[DataRequired()], render_kw={"class": "form-control"}
+    )
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired(), Length(1, 24)],
+        render_kw={"class": "form-control"},
+    )
+    submit = SubmitField("Simpan", render_kw={"class": "btn btn-primary"})
 
 
 class TambahMuridForm(FlaskForm):
@@ -194,6 +197,7 @@ class TambahMuridForm(FlaskForm):
     nama_panggilan = StringField(
         "Nama panggilan", validators=[DataRequired(), Length(1, 25)]
     )
+    email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
     anak_ke = StringField(
         "Anak ke",
         validators=[DataRequired(), Length(1, 2)],
@@ -243,12 +247,17 @@ class TambahMuridForm(FlaskForm):
     )
     submit = SubmitField("Tambahkan")
 
-    def validate_nomor_induk(self, nik):
+    def validate_nomor_induk(self, nomor_induk):
         nomor_induk = MuridModel.query.filter_by(
             nomor_induk=self.nomor_induk.data
         ).first()
         if nomor_induk is not None:
             raise ValueError("Nomor induk sudah terdaftar.")
+
+    def validate_email(self, email):
+        email = UserModel.query.filter_by(email=self.email.data).first()
+        if email is not None:
+            raise ValidationError("Nomor induk sudah terdaftar.")
 
 
 class RubahMuridForm(FlaskForm):
@@ -312,7 +321,7 @@ class RubahMuridForm(FlaskForm):
     )
     submit = SubmitField("Tambahkan")
 
-    def validate_nomor_induk(self, nik):
+    def validate_nomor_induk(self, nomor_induk):
         nomor_induk = MuridModel.query.filter_by(
             nomor_induk=self.nomor_induk_hidden.data
         ).first()
@@ -395,8 +404,9 @@ class TambahUbahProfileForm(FlaskForm):
     no_telepon = StringField(
         "Nomor Telepon", validators=[DataRequired(), Length(0, 24)]
     )
-    email = EmailField("Email", validators=[DataRequired(), Length(1, 24)])
+    email = EmailField("Email", validators=[DataRequired(), Length(1, 64)])
     visi_misi = TextAreaField("Visi dan Misi", validators=[DataRequired()])
+    alamat = TextAreaField("Alamat", validators=[DataRequired()])
     submit = SubmitField("Tambahkan")
 
 
@@ -543,9 +553,6 @@ class RubahProfileGuruForm(FlaskForm):
         validators=[DataRequired()],
         render_kw={"data-language": "en", "data-date-format": "dd MM yyyy"},
     )
-    jabatan = SelectField(
-        choices=[(g, g) for g in GuruModel.jabatan.property.columns[0].type.enums]
-    )
     foto = FileField("Foto diri")
     foto_ijazah = FileField("Scan ijazah")
     pendidikan_terakhir = StringField(
@@ -564,7 +571,6 @@ class RubahProfileGuruForm(FlaskForm):
     )
     email_hidden = StringField("Email hidden", render_kw={"type": "hidden"})
     nik_hidden = StringField("NIK hidden", render_kw={"type": "hidden"})
-    jabatan_hidden = StringField("Jabatan hidden", render_kw={"type": "hidden"})
     submit = SubmitField("Tambahkan")
 
     def validate_nik(self, nik):
@@ -572,21 +578,7 @@ class RubahProfileGuruForm(FlaskForm):
         for guru in GuruModel.query.all():
             if guru.nik != nik.nik:
                 if guru.nik == self.nik.data:
-                    raise ValueError("NIK sudah terdaftar.")
-
-    def validate_email(self, nik):
-        email = GuruModel.query.filter_by(email=self.email_hidden.data).first()
-        for guru in GuruModel.query.all():
-            if guru.email != email.email:
-                if guru.email == self.email.data:
-                    raise ValueError("Email sudah terdaftar.")
-
-    def validate_jabatan(self, nik):
-        jabatan = GuruModel.query.filter_by(jabatan=self.jabatan_hidden.data).first()
-        for guru in GuruModel.query.all():
-            if guru.jabatan != jabatan.jabatan:
-                if guru.jabatan == self.jabatan.data:
-                    raise ValueError("Kepala sekolah hanya diperbolehkan satu.")
+                    raise ValidationError("NIK sudah terdaftar.")
 
 
 class TambahUbahPrestasiForm(FlaskForm):
@@ -596,4 +588,3 @@ class TambahUbahPrestasiForm(FlaskForm):
     juara = StringField("Juara", validators=[Length(1, 24)])
     tahun = EmailField("Tahun", validators=[DataRequired(), Length(1, 24)])
     submit = SubmitField("Simpan")
-

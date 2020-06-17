@@ -23,6 +23,7 @@ def tambah_profile():
             kabupaten=form.kabupaten.data,
             provinsi=form.provinsi.data,
             no_statistik=form.no_statistik.data,
+            alamat=form.alamat.data,
             akte_notaris=form.akte_notaris.data,
             kegiatan_belajar=form.kegiatan_belajar.data,
             tahun_berdiri=form.tahun_berdiri.data,
@@ -77,6 +78,7 @@ def ubah_profile():
         profile.kurikulum = form.kurikulum.data
         profile.no_telepon = form.no_telepon.data
         profile.email = form.email.data
+        profile.alamat = form.alamat.data
         profile.visi_misi = form.visi_misi.data
         db.session.add(profile)
         db.session.commit()
@@ -95,6 +97,7 @@ def ubah_profile():
         form.kegiatan_belajar.data = profile.kegiatan_belajar
         form.tahun_berdiri.data = profile.tahun_berdiri
         form.status_tk.data = profile.status_tk
+        form.alamat.data = profile.alamat
         form.no_izin_operasional.data = profile.no_izin_operasional
         form.no_izin_pendirian.data = profile.no_izin_pendirian
         form.kurikulum.data = profile.kurikulum

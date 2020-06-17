@@ -8,7 +8,7 @@ from app.models import (
     DataSekolahModel,
     NilaiModel,
     ProfileSekolahModel,
-    AdminModel,
+    UserModel,
     Role,
 )
 from dotenv import load_dotenv
@@ -46,9 +46,9 @@ def test():
 @app.cli.command()
 def deploy():
     """ Insert Admin dan Insert Kelas """
-    db.create_all()
     Role.insert_roles()
-    AdminModel.insert_admin()
+    UserModel.insert_admin()
+    GuruModel.insert_guru()
     KelasModel.insert_kelas()
 
 
