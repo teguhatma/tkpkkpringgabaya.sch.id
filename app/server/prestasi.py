@@ -34,7 +34,7 @@ def tambah_prestasi():
         )
         db.session.add(tambah)
         db.session.commit()
-        flash("Data berhasil ditambahkan.", "Berhasil")
+        flash("Data berhasil ditambahkan.", "info")
         return redirect(url_for(".prestasi"))
     return render_template(
         "prestasi/tambahUbahPrestasi.html", title="Tambah Prestasi", form=form
@@ -55,7 +55,7 @@ def ubah_prestasi(id):
         ubah.juara = form.juara.data
         db.session.add(ubah)
         db.session.commit()
-        flash("Data berhasil ditambahkan.", "Berhasil")
+        flash("Data berhasil ditambahkan.", "info")
         return redirect(url_for(".prestasi"))
 
     if request.method == "GET":
@@ -77,5 +77,5 @@ def hapus_prestasi(id):
     hapus = PrestasiModel.query.get(id)
     db.session.delete(hapus)
     db.session.commit()
-    flash("Data berhasil dihapus.", "Berhasil")
+    flash("Data berhasil dihapus.", "info")
     return redirect(url_for(".prestasi"))

@@ -1,126 +1,115 @@
-{% extends 'components/main.html' %} {% block content %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<!-- Custom styles for this page -->
+<link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
 
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="">Dashboard</a>
-  </li>
-  <li class="breadcrumb-item">Tabel</li>
-  <li class="breadcrumb-item">Nilai</li>
-  <li class="breadcrumb-item active">{{ murid.nama }}</li>
-</ol>
 
-{% include 'components/successInfo.html' %}
+<div class="container-fluid">
 
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fas fa-table"></i>
-    Tabel Data Nilai Peserta Didik
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
-        <a
-          href="{{ url_for('server.tambah_nilai_murid', id=murid.id) }}"
-          class="btn btn-primary btn-sm mb-3"
-          ><i class="far fa-plus-square"></i> Tambah Nilai</a
-        >
-        <a
-          href="{{ url_for('server.print_nilai', id=murid.id) }}"
-          target="_blank"
-          class="btn btn-primary btn-sm mb-3 mx-3"
-          ><i class="far fa-plus-square"></i> Print</a
-        >
-        <div class="my-4">
-          <form method="POST">
-            <div class="form-row">
-              <div class="col-md-5 mb-3">
-                <select name="tahun" class="custom-select custom-select-sm">
-                  {% for tahun in daftar_tahun_nilai %}
-                  <option value="{{ tahun }}">{{ tahun }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="col-md-5 mb-3">
-                <select name="semester" class="custom-select custom-select-sm">
-                  <option value="Semester I">Semester I</option>
-                  <option value="Semester II">Semester II</option>
-                </select>
-              </div>
-              <div class="col-md-2 mb-3">
-                <button class="btn btn-sm btn-primary btn-block">Button</button>
-              </div>
-            </div>
-          </form>
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Nilai</h1>
+  <p class="mb-4">Di dalam tabel ini mengandung beberapa informasi tentang {{ title.lower() }}</a>.</p>
+
+
+  {% include 'components/flash.html' %}
+  <!-- DataTales Example -->
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <form method="POST">
+        <div class="form-row">
+          <div class="col-md-5 mb-3">
+            <select name="tahun" class="custom-select custom-select-sm">
+              {% for tahun in daftar_tahun_nilai %}
+              <option value="{{ tahun }}">{{ tahun }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-5 mb-3">
+            <select name="semester" class="custom-select custom-select-sm">
+              <option value="Semester I">Semester I</option>
+              <option value="Semester II">Semester II</option>
+            </select>
+          </div>
+          <div class="col-md-2 mb-3">
+            <button class="btn btn-sm btn-primary btn-block">Button</button>
+          </div>
         </div>
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Aspek Penilaian</th>
-            <th>Semester</th>
-            <th>Tahun Pelajaran</th>
-            <th>Deskripsi</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% if nilai_selected is none %} {% for nilai in nilai %}
-          <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ nilai.aspek_penilaian }}</td>
-            <td>{{ nilai.semester}}</td>
-            <td>{{ nilai.tahun_pelajaran }}</td>
-            <td>{{ nilai.deskripsi | striptags }}</td>
-            <td>
-              <a
-                href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}"
-                class="edit"
-                title="Edit"
-                data-toggle="tooltip"
-                ><i class="fas fa-pencil-alt"></i
-              ></a>
-              <a
-                href="{{ url_for('server.hapus_nilai_murid', id=nilai.id) }}"
-                class="delete"
-                title="Delete"
-                data-toggle="tooltip"
-                ><i class="fas fa-trash"></i
-              ></a>
-            </td>
-          </tr>
-          {% endfor %} {% else %} {% for nilai in nilai_selected %}
-          <tr>
-            <td>{{ loop.index }}</td>
-            <td>{{ nilai.aspek_penilaian }}</td>
-            <td>{{ nilai.semester}}</td>
-            <td>{{ nilai.tahun_pelajaran }}</td>
-            <td>{{ nilai.deskripsi | striptags }}</td>
-            <td>
-              <a
-                href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}"
-                class="edit"
-                title="Edit"
-                data-toggle="tooltip"
-                ><i class="fas fa-pencil-alt"></i
-              ></a>
-              <a
-                href="{{ url_for('server.hapus_nilai_murid', id=nilai.id) }}"
-                class="delete"
-                title="Delete"
-                data-toggle="tooltip"
-                ><i class="fas fa-trash"></i
-              ></a>
-            </td>
-          </tr>
-          {% endfor %} {% endif %}
-        </tbody>
-      </table>
+      </form>
     </div>
   </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="py-3">
+          <a class="btn btn-sm btn-primary" href="{{ url_for('server.tambah_nilai_murid', id=murid.id) }}">Tambah
+            Nilai</a>
+          <a href="{{ url_for('server.print_nilai', id=murid.id ) }}" class="btn btn-sm btn-primary">Print</a>
+        </div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Aspek Penilaian</th>
+              <th>Semester</th>
+              <th>Tahun Pelajaran</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if nilai_selected is none %}
+            {% for nilai in nilai %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ nilai.aspek_penilaian }}</td>
+              <td>{{ nilai.semester}}</td>
+              <td>{{ nilai.tahun_pelajaran }}</td>
+              <td>
+                <a href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}" class="btn btn-info btn-circle btn-sm">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{{ url_for('server.hapus_nilai_murid', id=nilai.id) }}"
+                  class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            {% for nilai in nilai_selected %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ nilai.aspek_penilaian }}</td>
+              <td>{{ nilai.semester}}</td>
+              <td>{{ nilai.tahun_pelajaran }}</td>
+              <td>
+                <a href="{{ url_for('server.ubah_nilai_murid', id=nilai.id) }}" class="btn btn-info btn-circle btn-sm">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{{ url_for('server.hapus_nilai_murid', id=nilai.id) }}"
+                  class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+<!-- Page level plugins -->
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js' )}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
 {% endblock %}

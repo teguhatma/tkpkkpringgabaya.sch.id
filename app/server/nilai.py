@@ -7,7 +7,7 @@ from .forms import TambahNilaiMuridForm
 import uuid
 from flask_weasyprint import HTML, render_pdf
 from datetime import datetime
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..decorators import admin_guru_required
 
 
@@ -15,9 +15,14 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def nilai_murid():
-    nilai_murid = MuridModel.query.all()
+    if current_user.is_administrator():
+        nilai_murid = MuridModel.query.all()
+    else:
+        nilai_murid = MuridModel.query.filter_by(
+            kelas_id=current_user.guru.kelas.id
+        ).all()
     return render_template(
-        "nilai/dataNilaiMurid.html", title="Data nilai murid", nilai_murid=nilai_murid
+        "nilai/dataNilaiMurid.html", title="Data Nilai Murid", nilai_murid=nilai_murid
     )
 
 

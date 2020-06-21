@@ -1,157 +1,93 @@
 {% extends 'components/mainClient.html' %} {% block content %}
-
 <div class="container my-4">
   <div class="row">
-    <div class="col-md-8 berita-data">
-      <div class="text-center mb-5">
-        <h5><strong>Profile Sekolah</strong></h5>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Nama Lembaga</h6>
+    <div class="col-md-12 berita-data">
+      <div class="text-berita">
+        <div class="waktu-upload text-center">
+          <h5><strong>{{ title }}</strong></h5>
         </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.nama_lembaga }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kode Pos</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kode_pos }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kelurahan</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kelurahan }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kecamatan</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kecamatan }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kabupaten</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kabupaten }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Provinsi</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.provinsi }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>No. Statistik</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.no_statistik }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Akte Notaris</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.akte_notaris }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kegiatan Belajar</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kegiatan_belajar }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Tahun Berdiri</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.tahun_berdiri }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Status TK</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.status_tk }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>No. Izin Pendirian</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.no_izin_pendirian }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>No. Izin Operasional</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.no_izin_operasional }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Kurikulum</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.kurikulum }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>No. Telepon</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.no_telepon }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Email</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.nama_lembaga }}</h6>
-        </div>
-      </div>
-      <div class="form-group d-flex justify-content-start">
-        <div class="col-md-5 header-profile pl-0">
-          <h6>Nama Lembaga</h6>
-        </div>
-        <div class="col-md-7 content-profile">
-          <h6>: {{ profile.email }}</h6>
-        </div>
-      </div>
-      <div class="form-group my-5">
-        <div class="header-profile text-center">
-          <h6><strong>Visi dan Misi</strong></h6>
-        </div>
-        <div class="content-profile">
-          <h6>{{ profile.visi_misi | safe }}</h6>
+        <div class="content-berita my-5">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th>Nama Lembaga</th>
+                <td>{{ profile.nama_lembaga }}</td>
+              </tr>
+              <tr>
+                <th>No. Statistik</th>
+                <td>{{ profile.no_statistik }}</td>
+              </tr>
+              <tr>
+                <th>Akte Notaris</th>
+                <td>{{ profile.akte_notaris }}</td>
+              </tr>
+              <tr>
+                <th>No. Izin Pendirian</th>
+                <td>{{ profile.no_izin_pendirian }}</td>
+              </tr>
+              <tr>
+                <th>No. Izin Operasional</th>
+                <td>{{ profile.no_izin_operasional }}</td>
+              </tr>
+              <tr>
+                <th>Tahun Berdiri</th>
+                <td>{{ profile.tahun_berdiri }}</td>
+              </tr>
+              <tr>
+                <th>Status TK</th>
+                <td>{{ profile.status_tk }}</td>
+              </tr>
+              <tr>
+                <th>Kurikulum</th>
+                <td>{{ profile.kurikulum }}</td>
+              </tr>
+              <tr>
+                <th>Kegiatan Belajar</th>
+                <td>{{ profile.kegiatan_belajar }}</td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{ profile.email }}</td>
+              </tr>
+              <tr>
+                <th>No. Telepon</th>
+                <td>{{ profile.no_telepon }}</td>
+              </tr>
+              <tr>
+                <th>Kode Pos</th>
+                <td>{{ profile.kode_pos }}</td>
+              </tr>
+              <tr>
+                <th>Kelurahan</th>
+                <td>{{ profile.kelurahan }}</td>
+              </tr>
+              <tr>
+                <th>Kecamatan</th>
+                <td>{{ profile.kecamatan }}</td>
+              </tr>
+              <tr>
+                <th>Kabupaten</th>
+                <td>{{ profile.kabupaten }}</td>
+              </tr>
+              <tr>
+                <th>Provinsi</th>
+                <td>{{ profile.provinsi }}</td>
+              </tr>
+              <tr>
+                <th>Alamat</th>
+                <td>{{ profile.alamat | striptags }}</td>
+              </tr>
+              <tr>
+                <th colspan="2">Visi dan Misi</th>
+              </tr>
+              <tr>
+                <td colspan="2">{{ profile.visi_misi | safe }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    {% include 'components/arsipBerita.html' %}
   </div>
 </div>
 {% endblock %}

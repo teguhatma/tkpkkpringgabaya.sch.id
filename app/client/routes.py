@@ -120,7 +120,7 @@ def prestasi():
     return render_template(
         "lihatPrestasi.html",
         profile=profile,
-        titile="Prestasi Sekolah",
+        title="Prestasi Sekolah",
         prestasi=prestasi,
         arsip_berita=arsip_berita,
     )
@@ -132,4 +132,17 @@ def learning():
     profile = ProfileSekolahModel.query.first()
     return render_template(
         "lihatElearning.html", title="E-Learning", learning=learning, profile=profile
+    )
+
+
+@client.route("/berita")
+def berita():
+    berita = (
+        BeritaModel.query.order_by(BeritaModel.waktu_upload.asc())
+        .filter(BeritaModel.tampilkan == True)
+        .all()
+    )
+    profile = ProfileSekolahModel.query.first()
+    return render_template(
+        "berita.html", title="Berita Sekolah", berita=berita, profile=profile
     )

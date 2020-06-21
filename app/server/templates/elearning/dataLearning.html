@@ -1,83 +1,71 @@
-{% extends 'components/main.html' %} {% block content %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<!-- Custom styles for this page -->
+<link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
 
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="">Dashboard</a>
-  </li>
-  <li class="breadcrumb-item">Tabel</li>
-  <li class="breadcrumb-item active">E-Learning</li>
-</ol>
 
-{% include 'components/successInfo.html' %}
+<div class="container-fluid">
 
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fas fa-table"></i>
-    Tabel Data E-Learning
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
-        <div class="d-flex justify-content-between">
-          <div class="tambah-data">
-            <a
-              href="{{ url_for('server.tambah_elearning') }}"
-              class="btn btn-primary btn-sm mb-3"
-              ><i class="far fa-plus-square"></i> Tambah Data E-Learning</a
-            >
-          </div>
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Berita Sekolah</h1>
+  <p class="mb-4">Di dalam tabel ini mengandung beberapa informasi tentang {{ title.lower() }}</a>.</p>
+
+  {% include 'components/flash.html' %}
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="py-3">
+          <a class="btn btn-sm btn-primary" href="{{ url_for('server.tambah_elearning') }}">Tambah E-Learning</a>
         </div>
-
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Judul</th>
-            <th>Kelas</th>
-            <th>Upload Pada</th>
-            <th>Download a File</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for elearning in data_elearning %}
-          <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td>{{ elearning.judul }}</td>
-            <td>{{ elearning.kelas.ruang}}</td>
-            <td>{{ moment(elearning.waktu_upload).format('LLLL')}}</td>
-            <td>
-              <a
-                href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen) }}"
-                >Download a File</a
-              >
-            </td>
-            <td>
-              <a
-                href="{{ url_for('server.ubah_elearning', slug=elearning.slug) }}"
-                class="edit"
-                title="Edit"
-                data-toggle="tooltip"
-                ><i class="fas fa-pencil-alt"></i
-              ></a>
-              <a
-                href="{{ url_for('server.hapus_elearning', slug=elearning.slug) }}"
-                class="delete"
-                title="Delete"
-                data-toggle="tooltip"
-                ><i class="fas fa-trash"></i
-              ></a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Judul</th>
+              <th>Kelompok</th>
+              <th>Dokumen</th>
+              <th>Diupload Pada</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for elearning in data_elearning %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ elearning.judul }}</td>
+              <td>{{ elearning.kelas.ruang }}</td>
+              <td>
+                <a href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen) }}">Download</a>
+              </td>
+              <td>{{ moment(elearning.waktu_upload).format('LLLL')}}</td>
+              <td>
+                <a href="{{ url_for('server.ubah_elearning', slug=elearning.slug) }}"
+                  class="btn btn-info btn-circle btn-sm">
+                  <i class="fas fa-edit"></i>
+                </a>
+                <a href="{{ url_for('server.hapus_elearning', slug=elearning.slug) }}"
+                  class="btn btn-danger btn-circle btn-sm">
+                  <i class="fas fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
 </div>
+
+<!-- Page level plugins -->
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js' )}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
 {% endblock %}

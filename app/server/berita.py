@@ -161,4 +161,6 @@ def ubah_berita_sekolah(slug):
         form.deskripsi.data = ubah.deskripsi
         form.tampilkan.data = ubah.tampilkan
 
-    return render_template("berita/tambahUbahBerita.html", title=ubah.judul, form=form)
+    return render_template(
+        "berita/tambahUbahBerita.html", title="Mengubah Berita", form=form
+    )

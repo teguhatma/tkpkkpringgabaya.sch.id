@@ -16,6 +16,18 @@ from flask_login import current_user
 from werkzeug.utils import secure_filename
 
 
+def unique_filename(data):
+    """
+    Create unique and secure filename
+
+    @data is field name of current data now.
+    """
+    file = data
+    get_ext = file.filename.split(".")[-1]
+    new_name = "%s.%s" % (uuid.uuid4().hex, get_ext)
+    return new_name
+
+
 @server.route("/file/e-learning/<filename>")
 @admin_guru_required
 @login_required
@@ -57,7 +69,7 @@ def tambah_elearning():
                 judul=form.judul.data,
                 deskripsi=form.deskripsi.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen=secure_filename(form.dokumen.data.filename),
+                nama_dokumen=unique_filename(form.dokumen.data),
                 kelas_id=form.kelas.data.id,
             )
             db.session.add(tambah_elearning)
@@ -71,7 +83,7 @@ def tambah_elearning():
                 judul=form.judul.data,
                 deskripsi=form.deskripsi.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen=secure_filename(form.dokumen.data.filename),
+                nama_dokumen=unique_filename(form.dokumen.data),
                 kelas_id=current_user.guru.kelas_id,
             )
             db.session.add(tambah_elearning)
@@ -107,9 +119,7 @@ def ubah_elearning(slug):
             ubah_elearning.kelas_id = form.kelas.data.id
             if form.dokumen.data is not None:
                 ubah_elearning.dokumen = form.dokumen.data.read()
-                ubah_elearning.nama_dokumen = secure_filename(
-                    form.dokumen.data.filename
-                )
+                ubah_elearning.nama_dokumen = unique_filename(form.dokumen.data)
             else:
                 ubah_elearning.dokumen = ubah_elearning.dokumen
                 ubah_elearning.nama_dokumen = ubah_elearning.nama_dokumen
@@ -122,7 +132,7 @@ def ubah_elearning(slug):
         if request.method == "GET":
             form.judul.data = ubah_elearning.judul
             form.deskripsi.data = ubah_elearning.deskripsi
-            form.kelas.data = ubah_elearning.kelas_id
+            form.kelas.data = ubah_elearning.kelas
     else:
         form = UbahElearningGuruForm()
         if form.validate_on_submit():
@@ -131,9 +141,7 @@ def ubah_elearning(slug):
             ubah_elearning.kelas_id = current_user.guru.kelas_id
             if form.dokumen.data is not None:
                 ubah_elearning.dokumen = form.dokumen.data.read()
-                ubah_elearning.nama_dokumen = secure_filename(
-                    form.dokumen.data.filename
-                )
+                ubah_elearning.nama_dokumen = unique_filename(form.dokumen.data)
             else:
                 ubah_elearning.dokumen = ubah_elearning.dokumen
                 ubah_elearning.nama_dokumen = ubah_elearning.nama_dokumen
@@ -146,6 +154,7 @@ def ubah_elearning(slug):
         if request.method == "GET":
             form.judul.data = ubah_elearning.judul
             form.deskripsi.data = ubah_elearning.deskripsi
+            form.kelas.data = ubah_elearning.kelas
     return render_template(
         "elearning/tambahUbahLearning.html", title=ubah_elearning.judul, form=form
     )

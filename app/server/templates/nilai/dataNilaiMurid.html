@@ -1,60 +1,66 @@
-{% extends 'components/main.html' %} {% block content %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<!-- Custom styles for this page -->
+<link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
 
-<!-- Breadcrumbs-->
-<ol class="breadcrumb">
-  <li class="breadcrumb-item">
-    <a href="#">Dashboard</a>
-  </li>
-  <li class="breadcrumb-item">Data</li>
-  <li class="breadcrumb-item active">Murid</li>
-</ol>
-{% include 'components/successInfo.html' %}
-<div class="card mb-3">
-  <div class="card-header">
-    <i class="fas fa-table"></i>
-    Daftar data murid
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table
-        class="table table-bordered"
-        id="dataTable"
-        width="100%"
-        cellspacing="0"
-      >
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Nomor Induk</th>
-            <th>Kelompok</th>
-            <th>Lulus</th>
-            <th>Jenis Kelamin</th>
-            <th>Tempat/ Tanggal Lahir</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for murid in nilai_murid %}
-          <tr>
-            <th scope="row">{{ loop.index }}</th>
-            <td>
-              <a href="{{ url_for('server.data_nilai_murid', id=murid.id) }}">
-                {{ murid.nama }}
-              </a>
-            </td>
-            <td>{{ murid.nomor_induk }}</td>
-            <td>{{ murid.kelas.ruang }}</td>
-            <td>
-              {% if murid.lulus == True %}Sudah lulus {% else %} Belum lulus {%
-              endif%}
-            </td>
-            <td>{{ murid.jenis_kelamin }}</td>
-            <td>{{ murid.tempat_lahir }}, {{ murid.tanggal_lahir }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Nilai Murid</h1>
+  <p class="mb-4">Di dalam tabel ini mengandung beberapa informasi tentang {{ title.lower() }}</a>.</p>
+
+  {% include 'components/flash.html' %}
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Nomor Induk</th>
+              <th>Kelompok</th>
+              <th>Lulus</th>
+              <th>Jenis Kelamin</th>
+              <th>Tempat/ Tanggal Lahir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for murid in nilai_murid %}
+            <tr>
+              <td>{{ loop.index }}</th>
+              <td>
+                <a href="{{ url_for('server.data_nilai_murid', id=murid.id) }}">
+                  {{ murid.nama }}
+                </a>
+              </td>
+              <td>{{ murid.nomor_induk }}</td>
+              <td>{{ murid.kelas.ruang }}</td>
+              <td>
+                {% if murid.lulus == True %}Sudah lulus {% else %} Belum lulus {%
+                endif%}
+              </td>
+              <td>{{ murid.jenis_kelamin }}</td>
+              <td>{{ murid.tempat_lahir }}, {{ murid.tanggal_lahir }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
+
 </div>
+
+<!-- Page level plugins -->
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js' )}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
 {% endblock %}

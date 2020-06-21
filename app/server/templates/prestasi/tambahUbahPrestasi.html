@@ -1,61 +1,65 @@
-{% extends "components/main.html" %} {% block content %}
-
-<form action="" enctype="multipart/form-data" method="POST" class="my-4">
-  {{ form.csrf_token() }}
-  <div class="form-group row">
-    {{ form.nama.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.nama(class='form-control form-control-sm')}} {% for error in
-      form.nama.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <form class="user" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+        <div class="form-group">
+          {{ form.nama.label() }}
+          {{ form.nama(class="form-control")}}
+          {% for error in form.nama.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.kategori.label() }}
+            {{ form.kategori(class="form-control")}}
+            {% for error in form.kategori.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.tahun.label() }}
+            {{ form.tahun(class="form-control")}}
+            {% for error in form.tahun.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.tingkat.label() }}
+            {{ form.tingkat(class="form-control")}}
+            {% for error in form.tingkat.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.juara.label() }}
+            <br>
+            {{ form.juara(class="form-control")}}
+            {% for error in form.juara.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        {{ form.submit(class='btn btn-primary')}}
+      </form>
     </div>
   </div>
-  <div class="form-group row">
-    {{ form.kategori.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.kategori(class='form-control form-control-sm')}} {% for error in
-      form.kategori.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.juara.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.juara(class='form-control form-control-sm')}} {% for error in
-      form.juara.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.tingkat.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.tingkat(class='form-control form-control-sm')}} {% for error in
-      form.tingkat.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.tahun.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.tahun(class='form-control form-control-sm')}} {% for error in
-      form.tahun.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.submit(class='col-sm-2 mx-3 float-right btn btn-sm btn-primary')}}
-  </div>
-</form>
+</div>
+<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 <script>
-  $("#summernote").summernote({
-    tabsize: 2,
-    height: 300,
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    toolbar_mode: 'floating',
   });
 </script>
-
 {% endblock %}

@@ -4,8 +4,8 @@ import uuid
 from app import db
 from . import server
 from app.models import JadwalKelasModel
-from .forms import TambahUbahJadwalForm
-from flask_login import login_required
+from .forms import TambahJadwalForm, TambahAdminJadwalForm
+from flask_login import login_required, current_user
 from ..decorators import admin_guru_required
 
 
@@ -13,13 +13,21 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def data_jadwal():
-    data_jadwal = (
-        JadwalKelasModel.query.order_by(JadwalKelasModel.hari.asc())
-        .order_by(JadwalKelasModel.jam.asc())
-        .all()
-    )
+    if current_user.is_administrator():
+        data_jadwal = (
+            JadwalKelasModel.query.order_by(JadwalKelasModel.hari.asc())
+            .order_by(JadwalKelasModel.jam.asc())
+            .all()
+        )
+    else:
+        data_jadwal = (
+            JadwalKelasModel.query.order_by(JadwalKelasModel.hari.asc())
+            .order_by(JadwalKelasModel.jam.asc())
+            .filter_by(kelas_id=current_user.guru.kelas.id)
+            .all()
+        )
     return render_template(
-        "jadwal/dataJadwal.html", title="Jadwal Kelas", data_jadwal=data_jadwal
+        "jadwal/dataJadwal.html", title="Jadwal Kelompok", data_jadwal=data_jadwal
     )
 
 
@@ -27,19 +35,35 @@ def data_jadwal():
 @admin_guru_required
 @login_required
 def tambah_jadwal():
-    form = TambahUbahJadwalForm()
-    if form.validate_on_submit():
-        tambah_jadwal = JadwalKelasModel(
-            mata_pelajaran=form.mata_pelajaran.data,
-            jam=form.jam.data,
-            jam_end=form.jam_end.data,
-            hari=form.hari.data,
-            kelas_id=form.kelas.data.id,
-        )
-        db.session.add(tambah_jadwal)
-        db.session.commit()
-        flash("Jadwal telah ditambahkan.", "Berhasil")
-        return redirect(url_for("server.data_jadwal"))
+    if current_user.is_administrator():
+        form = TambahAdminJadwalForm()
+        if form.validate_on_submit():
+            tambah_jadwal = JadwalKelasModel(
+                mata_pelajaran=form.mata_pelajaran.data,
+                jam=form.jam.data,
+                jam_end=form.jam_end.data,
+                hari=form.hari.data,
+                kelas_id=form.kelas.data.id,
+            )
+            db.session.add(tambah_jadwal)
+            db.session.commit()
+            flash("Jadwal telah ditambahkan.", "Berhasil")
+            return redirect(url_for("server.data_jadwal"))
+    else:
+        form = TambahJadwalForm()
+        if form.validate_on_submit():
+            tambah_jadwal = JadwalKelasModel(
+                mata_pelajaran=form.mata_pelajaran.data,
+                jam=form.jam.data,
+                jam_end=form.jam_end.data,
+                hari=form.hari.data,
+                kelas_id=current_user.guru.kelas.id,
+            )
+            db.session.add(tambah_jadwal)
+            db.session.commit()
+            flash("Jadwal telah ditambahkan.", "Berhasil")
+            return redirect(url_for("server.data_jadwal"))
+
     return render_template(
         "jadwal/tambahUbahJadwal.html", title="Tambah Jadwal", form=form
     )

@@ -3,10 +3,22 @@ from app import db
 from flask import render_template, request, flash, url_for, redirect, send_file
 from io import BytesIO
 from app.models import MuridModel, Permission
-from .forms import TambahMuridForm, RubahMuridForm, KelasModel, UserModel
+from .forms import TambahMuridForm, RubahMuridForm, KelasModel, UserModel, AddPassword
 import uuid
 from flask_login import login_required
 from ..decorators import admin_guru_required
+
+
+def unique_filename(data):
+    """
+    Create unique and secure filename
+
+    @data is field name of current data now.
+    """
+    file = data
+    get_ext = file.filename.split(".")[-1]
+    new_name = "%s.%s" % (uuid.uuid4().hex, get_ext)
+    return new_name
 
 
 @server.route("/image/murid/foto/<filename>")
@@ -53,7 +65,7 @@ def hapus_murid(id):
     db.session.delete(murid)
     db.session.delete(user)
     db.session.commit()
-    flash("Data {} berhasil dihapus.".format(murid.nama), "Berhasil")
+    flash("Data {} berhasil dihapus.".format(murid.nama), "info")
     return redirect(url_for("server.data_murid"))
 
 
@@ -82,7 +94,7 @@ def tambah_murid():
             jenis_kelamin=form.jenis_kelamin.data,
             tahun_pelajaran=form.tahun_pelajaran.data,
             foto_diri=form.foto_diri.data.read(),
-            nama_foto_diri="{}".format(uuid.uuid4().hex),
+            nama_foto_diri=unique_filename(form.foto_diri.data),
             kelas_id=form.kelas.data.id,
         )
         tambah_email = UserModel(email=form.email.data)
@@ -91,7 +103,7 @@ def tambah_murid():
         tambah_murid.user_id = tambah_email.id
         db.session.add(tambah_murid)
         db.session.commit()
-        flash("Data sudah ditambahkan", "Berhasil")
+        flash("Data berhasil ditambahkan", "info")
         return redirect(url_for("server.data_murid"))
     return render_template(
         "murid/tambahMurid.html", form=form, title="Menambah data murid"
@@ -108,6 +120,7 @@ def ubah_murid(id):
         murid.nomor_induk = form.nomor_induk.data
         murid.nama_panggilan = form.nama_panggilan.data
         murid.anak_ke = form.anak_ke.data
+        murid.user.email = form.email.data
         murid.nama = form.nama.data
         murid.alamat = form.alamat.data
         murid.dusun = form.dusun.data
@@ -125,47 +138,58 @@ def ubah_murid(id):
         murid.kelas_id = form.kelas.data.id
         if form.foto_diri.data is not None:
             murid.foto_diri = form.foto_diri.data.read()
-            murid.nama_foto_diri = "{}".format(uuid.uuid4().hex)
+            murid.nama_foto_diri = unique_filename(form.foto_diri.data)
         elif form.foto_diri.data is None:
             murid.foto = murid.foto_diri
             murid.nama_foto = murid.nama_foto_diri
 
         db.session.add(murid)
         db.session.commit()
-        flash("Data sudah dirubah", "Berhasil")
+        flash("Data berhasil dirubah", "info")
         return redirect(url_for("server.data_murid"))
 
-    if request.method == "GET":
-        form.nomor_induk.data = murid.nomor_induk
-        form.nama_panggilan.data = murid.nama_panggilan
-        form.anak_ke.data = murid.anak_ke
-        form.nama.data = murid.nama
-        form.alamat.data = murid.alamat
-        form.dusun.data = murid.dusun
-        form.kelurahan.data = murid.kelurahan
-        form.kecamatan.data = murid.kecamatan
-        form.kabupaten.data = murid.kabupaten
-        form.provinsi.data = murid.provinsi
-        form.agama.data = murid.agama
-        form.tempat_lahir.data = murid.tempat_lahir
-        form.tanggal_lahir.data = murid.tanggal_lahir
-        form.lulus.data = murid.lulus
-        form.nama_ibu_kandung.data = murid.nama_ibu_kandung
-        form.jenis_kelamin.data = murid.jenis_kelamin
-        form.tahun_pelajaran.data = murid.tahun_pelajaran
-        form.foto_diri.data = murid.foto_diri
-        form.kelas.data = murid.kelas
-        form.nomor_induk_hidden.data = murid.nomor_induk
+    form.nomor_induk.data = murid.nomor_induk
+    form.nama_panggilan.data = murid.nama_panggilan
+    form.anak_ke.data = murid.anak_ke
+    form.nama.data = murid.nama
+    form.alamat.data = murid.alamat
+    form.dusun.data = murid.dusun
+    form.kelurahan.data = murid.kelurahan
+    form.kecamatan.data = murid.kecamatan
+    form.kabupaten.data = murid.kabupaten
+    form.provinsi.data = murid.provinsi
+    form.agama.data = murid.agama
+    form.tempat_lahir.data = murid.tempat_lahir
+    form.tanggal_lahir.data = murid.tanggal_lahir
+    form.lulus.data = murid.lulus
+    form.nama_ibu_kandung.data = murid.nama_ibu_kandung
+    form.jenis_kelamin.data = murid.jenis_kelamin
+    form.tahun_pelajaran.data = murid.tahun_pelajaran
+    form.foto_diri.data = murid.foto_diri
+    form.email.data = murid.user.email
+    form.kelas.data = murid.kelas
 
-    return render_template("murid/ubahMurid.html", form=form, title=murid.nama)
+    return render_template(
+        "murid/ubahMurid.html", form=form, title="Merubah Data Murid", data=murid
+    )
 
 
-@server.route("/dashboard/murid/lihat/<id>")
-@admin_guru_required
+@server.route("/dashboard/murid/ubah/<id>/kata-sandi", methods=["GET", "POST"])
 @login_required
-def lihat_murid(id):
-    murid = MuridModel.query.get(id)
-    return render_template("murid/lihatMurid.html", title=murid.nama, murid=murid)
+@admin_guru_required
+def ubah_password_murid(id):
+    data = MuridModel.query.filter_by(id=id).first_or_404()
+    pwd = UserModel.query.filter_by(id=data.user_id).first_or_404()
+    form = AddPassword()
+    if form.validate_on_submit():
+        pwd.password(form.password.data)
+        db.session.add(pwd)
+        db.session.commit()
+        flash("Data sudah dirubah", "info")
+        return redirect(url_for("server.data_guru"))
+    return render_template(
+        "guru/ubahPasswordGuru.html", form=form, title="Password Murid"
+    )
 
 
 @server.route("/dashboard/kelas/murid/<id>")

@@ -43,3 +43,9 @@ def akun_murid(id):
     elif request.method == "GET":
         form.email.data = akun_murid.user.email
     return render_template("akun/password.html", form=form, title=akun_murid.nama)
+
+
+@server.route("/back_office")
+def back():
+    return render_template("dashboard.html")
+

@@ -14,7 +14,7 @@ from ..decorators import admin_guru_required
 def data_wali():
     data_wali_murid = WaliMuridModel.query.all()
     return render_template(
-        "wali/dataWali.html", title="Daftar wali murid", data_wali_murid=data_wali_murid
+        "wali/dataWali.html", title="Data Wali Murid", data_wali=data_wali_murid
     )
 
 
@@ -98,14 +98,6 @@ def ubah_wali(id):
         form.tanggal_lahir.data = wali.tanggal_lahir
         form.pekerjaan.data = wali.pekerjaan
         form.nomor_telepon.data = wali.nomor_telepon
-        form.murid.data = wali.murid_id
+        form.murid.data = wali.murid
 
     return render_template("wali/tambahUbahWali.html", title=wali.nama, form=form)
-
-
-@server.route("/dashbaord/wali/lihat/<id>")
-@admin_guru_required
-@login_required
-def lihat_wali(id):
-    wali = WaliMuridModel.query.get(id)
-    return render_template("wali/lihatWali.html", title=wali.nama, wali=wali)

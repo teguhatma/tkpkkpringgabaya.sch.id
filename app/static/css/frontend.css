@@ -235,3 +235,38 @@ footer {
 .nav-tk {
   color: #ffffff;
 }
+
+a.nav-link.home-link{
+  padding: 8px 30px;
+}
+a.nav-link.berita-link{
+
+  background: #36b9cc;
+  padding: 8px 30px;
+  border-radius: 3px;
+
+}
+a.nav-link.learning-link{
+
+  background: #36b9cc;
+  padding: 8px 30px;
+  border-radius: 3px;
+
+}
+a.nav-link.profil-link{
+
+  background: #36b9cc;
+  padding: 8px 30px;
+  border-radius: 3px;
+
+}
+a-nav-link.guru-link{
+
+  background: #36b9cc;
+  padding: 8px 30px;
+  border-radius: 3px;
+
+}
+.topbar .nav-item .nav-link{
+  height: 0;
+}

@@ -21,7 +21,7 @@ def login():
             return redirect(next)
 
         flash("Invalid username and password!")
-    return render_template("loginGuru.html", title="Sign in", form=form)
+    return render_template("login.html", title="Sign in", form=form)
 
 
 @auth.route("/logout")

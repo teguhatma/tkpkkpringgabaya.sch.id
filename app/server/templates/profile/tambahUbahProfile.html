@@ -1,182 +1,151 @@
-{% extends "components/main.html" %} {% block content %}
-
-<form action="" enctype="multipart/form-data" method="POST" class="my-4">
-  {{ form.csrf_token() }}
-  <div class="form-group row">
-    {{ form.nama_lembaga.label(for='nama_lembaga', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.nama_lembaga(class='form-control form-control-sm',
-      id="nama_lembaga")}} {% for error in form.nama_lembaga.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <form class="user" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+        <div class="form-group">
+          {{ form.nama_lembaga.label() }}
+          {{ form.nama_lembaga(class="form-control")}}
+          {% for error in form.nama_lembaga.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.no_statistik.label() }}
+          {{ form.no_statistik(class="form-control")}}
+          {% for error in form.no_statistik.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.akte_notaris.label() }}
+          {{ form.akte_notaris(class="form-control")}}
+          {% for error in form.akte_notaris.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.no_izin_pendirian.label() }}
+          {{ form.no_izin_pendirian(class="form-control")}}
+          {% for error in form.no_izin_pendirian.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.no_izin_operasional.label() }}
+          {{ form.no_izin_operasional(class="form-control")}}
+          {% for error in form.no_izin_operasional.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.tahun_berdiri.label() }}
+          {{ form.tahun_berdiri(class="form-control")}}
+          {% for error in form.tahun_berdiri.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.status_tk.label() }}
+          {{ form.status_tk(class="form-control")}}
+          {% for error in form.status_tk.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kurikulum.label() }}
+          {{ form.kurikulum(class="form-control")}}
+          {% for error in form.kurikulum.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kegiatan_belajar.label() }}
+          {{ form.kegiatan_belajar(class="form-control")}}
+          {% for error in form.kegiatan_belajar.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label() }}
+          {{ form.email(class="form-control")}}
+          {% for error in form.email.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.no_telepon.label() }}
+          {{ form.no_telepon(class="form-control")}}
+          {% for error in form.no_telepon.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kode_pos.label() }}
+          {{ form.kode_pos(class="form-control")}}
+          {% for error in form.kode_pos.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kelurahan.label() }}
+          {{ form.kelurahan(class="form-control")}}
+          {% for error in form.kelurahan.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kecamatan.label() }}
+          {{ form.kecamatan(class="form-control")}}
+          {% for error in form.kecamatan.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.kabupaten.label() }}
+          {{ form.kabupaten(class="form-control")}}
+          {% for error in form.kabupaten.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.provinsi.label() }}
+          {{ form.provinsi(class="form-control")}}
+          {% for error in form.provinsi.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.alamat.label() }}
+          {{ form.alamat(class="form-control")}}
+          {% for error in form.alamat.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.visi_misi.label() }}
+          {{ form.visi_misi(class="form-control")}}
+          {% for error in form.visi_misi.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary')}}
+      </form>
     </div>
   </div>
-  <div class="form-group row">
-    {{ form.status_tk.label(for='status_tk', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-2">
-      {{ form.status_tk(class='form-control form-control-sm', id="status_tk")}}
-      {% for error in form.status_tk.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.tahun_berdiri.label(for='tahun_berdiri', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-2">
-      {{ form.tahun_berdiri(class='form-control form-control-sm
-      datepicker-here', id="tahun_berdiri", type='text')}} {% for error in
-      form.tahun_berdiri.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.no_statistik.label(for='no_statistik', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.no_statistik(class='form-control form-control-sm',
-      id="no_statistik")}} {% for error in form.no_statistik.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.akte_notaris.label(for='akte_notaris', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.akte_notaris(class='form-control form-control-sm',
-      id="akte_notaris")}} {% for error in form.akte_notaris.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kegiatan_belajar.label(for='kegiatan_belajar', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.kegiatan_belajar(class='form-control form-control-sm',
-      id="kegiatan_belajar")}} {% for error in form.kegiatan_belajar.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kurikulum.label(for='kurikulum', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-4">
-      {{ form.kurikulum(class='form-control form-control-sm', id="kurikulum")}}
-      {% for error in form.kurikulum.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.no_izin_pendirian.label(for='no_izin_pendirian', class='col-sm-2
-    col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.no_izin_pendirian(class='form-control form-control-sm',
-      id="no_izin_pendirian")}} {% for error in form.no_izin_pendirian.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.no_izin_operasional.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.no_izin_operasional(class='form-control form-control-sm')}} {% for
-      error in form.no_izin_operasional.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.no_telepon.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-4">
-      {{ form.no_telepon(class='form-control form-control-sm')}} {% for error in
-      form.no_telepon.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.email.label(for='email', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-5">
-      {{ form.email(class='form-control form-control-sm', id="email",
-      type='email')}} {% for error in form.email.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kode_pos.label(for='kode_pos', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-2">
-      {{ form.kode_pos(class='form-control form-control-sm', id="kode_pos",
-      type='number')}} {% for error in form.kode_pos.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kelurahan.label(for='kelurahan', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.kelurahan(class='form-control form-control-sm', id="kelurahan")}}
-      {% for error in form.kelurahan.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kecamatan.label(for='kecamatan', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.kecamatan(class='form-control form-control-sm', id="kecamatan")}}
-      {% for error in form.kecamatan.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.kabupaten.label(for='kabupaten', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.kabupaten(class='form-control form-control-sm', id="kabupaten")}}
-      {% for error in form.kabupaten.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.provinsi.label(for='provinsi', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.provinsi(class='form-control form-control-sm', id="provinsi")}} {%
-      for error in form.provinsi.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.alamat.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-3">
-      {{ form.alamat(class='form-control form-control-sm')}} {% for error in
-      form.alamat.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.visi_misi.label(for='visi_misi', class='col-sm-2 col-form-label')}}
-    <div class="col-sm-8 mb-3">
-      {{ form.visi_misi(id='summernote')}}
-    </div>
-  </div>
-  <div class="form-group row">
-    {{ form.submit(class='col-sm-2 mx-3 float-right btn btn-sm btn-primary')}}
-  </div>
-</form>
+</div>
+<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 <script>
-  $("#summernote").summernote({
-    tabsize: 2,
-    height: 300,
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    toolbar_mode: 'floating',
   });
 </script>
-
 {% endblock %}

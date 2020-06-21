@@ -1,62 +1,67 @@
-{% extends 'components/main.html' %} {% block content %}
-
-<form action="" method="POST" enctype="multipart/form-data">
-  {{ form.csrf_token() }}
-  <div class="row mb-3">
-    <div class="col-sm-5">
-      <div class="form-row">
-        {{ form.judul.label(class='col-sm-12 col-form-label')}}
-        <div class="col-sm-10">
-          {{ form.judul(class='form-control form-control-sm')}}
-        </div>
-        {% for error in form.judul.errors %}
-        <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-      </div>
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
     </div>
-    <div class="col-sm-2">
-      <div class="form-row">
-        <div class="custom-control custom-switch">
-          {{ form.tampilkan(type='checkbox', class='custom-control-input
-          custom-control-input-sm')}} {{
-          form.tampilkan.label(class='custom-control-label')}}
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-row">
-            {{ form.dokumen.label(class='col-sm-12 col-form-label')}}
-            <div class="col-sm-10">
-              {{ form.dokumen(class='form-control form-control-sm')}}
-            </div>
+    <div class="card-body">
+      <form class="user" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.judul.label() }}
+            {{ form.judul(class="form-control")}}
+            {% for error in form.judul.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.tampilkan.label() }}
+            <br>
+            {{ form.tampilkan(class="form-control")}}
+            {% for error in form.tampilkan.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-row">
-            {{ form.gambar.label(class='col-sm-12 col-form-label')}}
-            <div class="col-sm-10">
-              {{ form.gambar(class='form-control form-control-sm')}}
-            </div>
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.gambar.label() }}
+            <br>
+            {{ form.gambar(accept="image/*")}}
+            {% for error in form.gambar.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.dokumen.label() }}
+            <br>
+            {{ form.dokumen(accept="aplication/pdf, aplication/docx, aplication/xls, image/*")}}
+            {% for error in form.dokumen.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
           </div>
         </div>
-      </div>
+        <div class="form-group">
+          {{ form.deskripsi.label() }}
+          {{ form.deskripsi()}}
+          {% for error in form.deskripsi.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary')}}
+      </form>
     </div>
   </div>
-  <div class="form-group">
-    {{ form.deskripsi(id='summernote')}}
-  </div>
-  {{ form.submit(class='btn btn-primary btn-sm') }}
-</form>
+</div>
+<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 <script>
-  $("#summernote").summernote({
-    tabsize: 2,
-    height: 300,
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    toolbar_mode: 'floating',
   });
 </script>
 {% endblock %}

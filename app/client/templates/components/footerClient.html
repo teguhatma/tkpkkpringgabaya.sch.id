@@ -3,11 +3,9 @@
     <div class="row d-flex justify-content-between">
       <div class="col-md-8 text-center">
         <h6><span class="menu">{{ profile.nama_lembaga }}</span></h6>
-        <span class="menu-deskripsi"
-          >{{ profile.alamat }} Kec. {{ profile.kecamatan }} Kab. {{
+        <span class="menu-deskripsi">{{ profile.alamat | striptags}} Kec. {{ profile.kecamatan }} Kab. {{
           profile.kabupaten }} {{ profile.provinsi }} KP. {{ profile.kode_pos
-          }}</span
-        >
+          }}</span>
       </div>
       <div class="col-md-4">
         <br />

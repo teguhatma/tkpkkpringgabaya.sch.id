@@ -1,0 +1,88 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">TK PKK</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('server.dashboard' ) }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Data</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ url_for('server.data_guru')}}">Guru</a>
+                <a class="collapse-item" href="{{ url_for('server.data_murid')}}">Murid</a>
+                <a class="collapse-item" href="{{ url_for('server.data_wali')}}">Wali Murid</a>
+                <a class="collapse-item" href="{{ url_for('server.data_kelas')}}">Kelompok</a>
+            </div>
+        </div>
+    </li>
+    <div class="sidebar-heading">
+        Raport
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.nilai_murid')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Nilai Murid</span></a>
+    </li>
+    <div class="sidebar-heading">
+        Informasi
+    </div>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.berita_sekolah')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Berita Sekolah</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.data_elearning')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>E-Learning</span></a>
+    </li>
+
+    {% if current_user.is_administrator() %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.profile_sekolah')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Profil Sekolah</span></a>
+    </li>
+    {% endif %}
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.data_jadwal')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Jadwal Sekolah</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.data_sekolah')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Dokumen Sekolah</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('server.prestasi')}}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Prestasi Sekolah</span></a>
+    </li>
+</ul>

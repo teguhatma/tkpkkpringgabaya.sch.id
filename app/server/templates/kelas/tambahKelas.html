@@ -1,23 +1,24 @@
-{% extends 'components/main.html' %} {% block content %}
-
-<form action="" method="POST">
-  <a
-    href="{{ url_for('server.data_kelas')}}"
-    class="btn btn-primary btn-sm mb-3"
-    >Kembali</a
-  >
-  {{ form.csrf_token() }}
-  <div class="form-group row">
-    {{ form.ruang.label(class='col-sm-2 col-form-label')}}
-    <div class="col-sm-8">
-      {{ form.ruang(class='form-control form-control-sm', maxlength='2')}} {%
-      for error in form.ruang.errors %}
-      <span style="color: red;">{{ error }}</span>
-      {% endfor %}
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
     </div>
-    <div class="col-sm-2">
-      {{ form.submit(class='btn btn-sm btn-info btn-block')}}
+    <div class="card-body">
+      <form class="user" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+        <div class="form-group">
+          {{ form.ruang.label() }}
+          {{ form.ruang(class="form-control")}}
+          {% for error in form.ruang.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary')}}
+      </form>
     </div>
   </div>
-</form>
+
+</div>
 {% endblock %}

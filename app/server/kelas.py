@@ -13,7 +13,7 @@ from ..decorators import admin_required, admin_guru_required
 @login_required
 def data_kelas():
     kelas = KelasModel.query.all()
-    return render_template("kelas/dataKelas.html", kelas=kelas, title="Data Kelas")
+    return render_template("kelas/dataKelas.html", data_kelas=kelas, title="Data Kelas")
 
 
 @server.route("/dashboard/kelas/tambah", methods=["GET", "POST"])

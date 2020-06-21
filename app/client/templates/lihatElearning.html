@@ -12,28 +12,17 @@
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img
-              src="{{ url_for('static', filename='img/foto/foto1.jpg')}}"
-              class="card-img"
-              alt="..."
-            />
+            <img src="{{ url_for('static', filename='img/foto/foto1.jpg')}}" class="card-img" alt="..." />
           </div>
           <div class="col-md-8 card-elearning">
             <div class="card-body py-0 px-2">
               <!-- Button trigger modal -->
-              <a
-                class="card-title nama-elearning"
-                data-toggle="modal"
-                data-target="#{{ elearning.slug}}"
-                href=""
-              >
+              <a class="card-title nama-elearning" data-toggle="modal" data-target="#{{ elearning.slug}}" href="">
                 {{ elearning.judul}}
               </a>
               <p class="kelas-footer">Kelas {{ elearning.kelas.ruang}}</p>
               <p class="card-text time">
-                <small class="text-muted"
-                  >{{ moment(elearning.waktu_upload).fromNow()}}</small
-                >
+                <small class="text-muted">{{ moment(elearning.waktu_upload).fromNow()}}</small>
               </p>
               <h5 class="nama-guru">{{ elearning.nama }}</h5>
             </div>
@@ -43,26 +32,15 @@
     </div>
 
     <!-- Modal -->
-    <div
-      class="modal fade"
-      id="{{ elearning.slug}}"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
-      aria-hidden="true"
-    >
+    <div class="modal fade" id="{{ elearning.slug}}" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
               {{ elearning.judul }}
             </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -85,16 +63,12 @@
                   <td scope="row">Download</td>
                   {% if current_user.is_authenticated %}
                   <td>
-                    <a
-                      href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen)}}"
-                      >Download a File</a
-                    >
+                    <a href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen)}}">Download a
+                      File</a>
                   </td>
                   {% else %}
                   <td>
-                    <a href="{{ url_for('auth.login_murid')}}"
-                      >Login untuk download</a
-                    >
+                    <a href="{{ url_for('auth.login')}}">Login untuk download</a>
                   </td>
                   {% endif %}
                 </tr>
