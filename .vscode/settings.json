@@ -1,7 +1,0 @@
-{
-    "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "editor.fontWeight": "500",
-    "python.pythonPath": "env/bin/python3",
-    "python.formatting.provider": "black",
-}

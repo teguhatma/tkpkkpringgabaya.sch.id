@@ -5,7 +5,6 @@ from io import BytesIO
 from app.models import MuridModel, NilaiModel, GuruModel, WaliMuridModel, GuruModel
 from .forms import TambahNilaiMuridForm
 import uuid
-from flask_weasyprint import HTML, render_pdf
 from datetime import datetime
 from flask_login import login_required, current_user
 from ..decorators import admin_guru_required
