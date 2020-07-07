@@ -132,21 +132,22 @@ class GuruModel(db.Model):
     __tablename__ = "guru"
 
     id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(64))
-    alamat = db.Column(db.Text)
-    nik = db.Column(db.String(24), unique=True)
-    kelurahan = db.Column(db.String(24))
-    kecamatan = db.Column(db.String(24))
-    kabupaten = db.Column(db.String(24))
-    provinsi = db.Column(db.String(24))
+    nama = db.Column(db.String(64), nullable=False)
+    alamat = db.Column(db.Text(), nullable=False)
+    nik = db.Column(db.String(24), unique=True, nullable=False)
+    nip = db.Column(db.String(24), unique=True)
+    kelurahan = db.Column(db.String(24), nullable=False)
+    kecamatan = db.Column(db.String(24), nullable=False)
+    kabupaten = db.Column(db.String(24), nullable=False)
+    provinsi = db.Column(db.String(24), nullable=False)
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        )
+        ), nullable=False
     )
-    tempat_lahir = db.Column(db.String(24))
-    tanggal_lahir = db.Column(db.String(24))
-    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", name="jabatan"))
+    tempat_lahir = db.Column(db.String(24), nullable=False)
+    tanggal_lahir = db.Column(db.String(24), nullable=False)
+    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", name="jabatan"), nullable=False)
     foto = db.Column(db.LargeBinary(__fotosize__))
     nama_foto = db.Column(db.String(64), unique=True)
     foto_ijazah = db.Column(db.LargeBinary(__fotosize__))
@@ -172,11 +173,11 @@ class GuruModel(db.Model):
             "IV/d",
             "IV/e",
             name="golongan",
-        )
+        ), nullable=False
     )
-    pendidikan_terakhir = db.Column(db.String(24))
-    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
-    tahun_masuk = db.Column(db.String(24))
+    pendidikan_terakhir = db.Column(db.String(24), nullable=False)
+    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False)
+    tahun_masuk = db.Column(db.String(24), nullable=False)
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -189,6 +190,19 @@ class GuruModel(db.Model):
             user=UserModel.query.first(),
             nik="196512311985023321",
             jabatan="Kepala Sekolah",
+            alamat="Dasan Bantek",
+            nip="1912341234514",
+            kelurahan="Pringgabaya",
+            kecamatan="Pringgabaya",
+            kabupaten="Lombok Timur",
+            provinsi="Nusa Tenggara Barat",
+            agama="Islam",
+            tempat_lahir="Pringgabaya",
+            tanggal_lahir="15 September 1965",
+            golongan="IV/e",
+            pendidikan_terakhir="S1 PGPAUD",
+            jenis_kelamin="Perempuan",
+            tahun_masuk="2010"
         )
         db.session.add(insert_admin)
         db.session.commit()
@@ -224,22 +238,22 @@ class MuridModel(db.Model):
     nama_panggilan = db.Column(db.String(24), nullable=False)
     anak_ke = db.Column(db.String(2), nullable=False)
     alamat = db.Column(db.Text, nullable=False)
-    dusun = db.Column(db.String(24))
-    kelurahan = db.Column(db.String(24))
-    kecamatan = db.Column(db.String(24))
-    kabupaten = db.Column(db.String(24))
-    provinsi = db.Column(db.String(24))
+    dusun = db.Column(db.String(24), nullable=False)
+    kelurahan = db.Column(db.String(24), nullable=False)
+    kecamatan = db.Column(db.String(24), nullable=False)
+    kabupaten = db.Column(db.String(24), nullable=False)
+    provinsi = db.Column(db.String(24), nullable=False)
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        )
+        ), nullable=False
     )
     tempat_lahir = db.Column(db.String(24), nullable=False)
     tanggal_lahir = db.Column(db.String(24), nullable=False)
     lulus = db.Column(db.Boolean, default=False)
     nama_ibu_kandung = db.Column(db.String(64), nullable=False)
-    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"))
-    tahun_pelajaran = db.Column(db.String(24))
+    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False)
+    tahun_pelajaran = db.Column(db.String(24), nullable=False)
     foto_diri = db.Column(db.LargeBinary(__fotosize__))
     nama_foto_diri = db.Column(db.String(64), unique=True)
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
@@ -279,13 +293,13 @@ class WaliMuridModel(db.Model):
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        )
+        ), nullable=False
     )
     alamat = db.Column(db.Text, nullable=False)
-    kelurahan = db.Column(db.String(60))
-    kecamatan = db.Column(db.String(60))
-    kabupaten = db.Column(db.String(60))
-    provinsi = db.Column(db.String(60))
+    kelurahan = db.Column(db.String(60), nullable=False)
+    kecamatan = db.Column(db.String(60), nullable=False)
+    kabupaten = db.Column(db.String(60), nullable=False)
+    provinsi = db.Column(db.String(60), nullable=False)
     jenis_kelamin = db.Column(
         db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False
     )
@@ -321,6 +335,8 @@ class ProfileSekolahModel(db.Model):
     kurikulum = db.Column(db.String(10), nullable=False)
     alamat = db.Column(db.Text(), nullable=False)
     no_telepon = db.Column(db.String(13), nullable=False)
+    website = db.Column(db.String(64), nullable=False)
+    sosmed = db.Column(db.JSON, nullable=True)
     email = db.Column(db.String(64), nullable=False)
     visi_misi = db.Column(db.Text, nullable=False)
 
@@ -329,7 +345,7 @@ class ProfileSekolahModel(db.Model):
 
 
 class DataSekolahModel(db.Model):
-    __tablename__ = "data_sekolah"
+    __tablename__ = "dokumen_sekolah"
 
     id = db.Column(db.Integer, primary_key=True)
     judul = db.Column(db.String(60), unique=True, nullable=False)
@@ -356,9 +372,9 @@ class BeritaModel(db.Model):
     deskripsi = db.Column(db.Text)
     slug = db.Column(db.String(120))
     dokumen = db.Column(db.LargeBinary(__filesize__))
-    nama_dokumen = db.Column(db.String(124))
+    nama_dokumen = db.Column(db.String(124), unique=True)
     gambar = db.Column(db.LargeBinary(__fotosize__))
-    nama_gambar = db.Column(db.String(124))
+    nama_gambar = db.Column(db.String(124), unique=True)
     waktu_upload = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     tampilkan = db.Column(db.Boolean, default=False)
 
@@ -413,7 +429,7 @@ class NilaiModel(db.Model):
     semester = db.Column(
         db.Enum("Semester I", "Semester II", name="semester"), nullable=False
     )
-    tahun_pelajaran = db.Column(db.String(24))
+    tahun_pelajaran = db.Column(db.String(24), nullable=False)
     murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
 
     def __repr__(self):
@@ -428,7 +444,7 @@ class JadwalKelasModel(db.Model):
     jam = db.Column(db.String(10), nullable=False)
     jam_end = db.Column(db.String(10), nullable=False)
     hari = db.Column(
-        db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari")
+        db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari"), nullable=False
     )
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="jadwal")
@@ -463,10 +479,10 @@ class PrestasiModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(64), nullable=True)
-    kategori = db.Column(db.String(24))
-    tahun = db.Column(db.String(24))
-    juara = db.Column(db.String(24))
-    tingkat = db.Column(db.String(48))
+    kategori = db.Column(db.String(24), nullable=False)
+    tahun = db.Column(db.String(24), nullable=False)
+    juara = db.Column(db.String(24), nullable=False)
+    tingkat = db.Column(db.String(48), nullable=False)
 
     def __repr__(self):
         return "Prestasi {}".format(self.nama)

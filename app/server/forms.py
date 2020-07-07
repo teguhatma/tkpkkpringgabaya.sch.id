@@ -11,7 +11,7 @@ from wtforms import (
     IntegerField,
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, EqualTo, ValidationError, URL
 from app.models import (
     GuruModel,
     KelasModel,
@@ -31,6 +31,9 @@ class GuruForm(FlaskForm):
     alamat = TextAreaField("Alamat *", validators=[DataRequired()])
     nik = StringField(
         "Nomor Induk Kependudukan *", validators=[DataRequired(), Length(1, 24)]
+    )
+    nip = StringField(
+        "Nomor Induk Pegawai", validators=[Length(0, 24)]
     )
     email = EmailField(
         "Email *", validators=[DataRequired()], render_kw={"class": "form-control"}
@@ -99,6 +102,11 @@ class TambahGuruForm(GuruForm):
         nik = GuruModel.query.filter_by(nik=self.nik.data).first()
         if nik is not None:
             raise ValidationError("NIK sudah terdaftar.")
+    
+    def validate_nip(self, nip):
+        nip = GuruModel.query.filter_by(nip=self.nip.data).first()
+        if nip is not None:
+            raise ValidationError("NIP sudah terdaftar.")
 
     def validate_email(self, nik):
         email = UserModel.query.filter_by(email=self.email.data).first()
@@ -357,6 +365,10 @@ class TambahUbahProfileForm(FlaskForm):
     no_telepon = StringField(
         "Nomor Telepon *", validators=[DataRequired(), Length(0, 24)]
     )
+    website = StringField("Website", validators=[DataRequired(), Length(1, 64)])
+    instagram = StringField("Instagram", validators=[URL()])
+    facebook = StringField("Facebook", validators=[URL()])
+    twitter = StringField("Twitter", validators=[URL()])
     email = EmailField("Email *", validators=[DataRequired(), Length(1, 64)])
     visi_misi = TextAreaField("Visi dan Misi *", validators=[DataRequired()])
     alamat = TextAreaField("Alamat *", validators=[DataRequired()])

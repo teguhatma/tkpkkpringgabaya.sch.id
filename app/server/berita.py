@@ -9,6 +9,16 @@ from flask_login import login_required
 from ..decorators import admin_guru_required
 from werkzeug.utils import secure_filename
 
+def unique_filename(data):
+    """
+    Create unique and secure filename
+
+    @data is field name of current data now.
+    """
+    file = data
+    get_ext = file.filename.split(".")[-1]
+    new_name = "%s.%s" % (uuid.uuid4().hex, get_ext)
+    return new_name
 
 @server.route("/dashboard/berita-sekolah")
 @admin_guru_required
@@ -71,7 +81,7 @@ def tambah_berita_sekolah():
                 nama_gambar="{}".format(uuid.uuid4().hex),
                 tampilkan=form.tampilkan.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen=secure_filename(form.dokumen.data.filename),
+                nama_dokumen=unique_filename(form.dokumen.data),
             )
 
             db.session.add(berita)
@@ -84,7 +94,7 @@ def tambah_berita_sekolah():
                 judul=form.judul.data,
                 deskripsi=form.deskripsi.data,
                 gambar=form.gambar.data.read(),
-                nama_gambar="{}".format(uuid.uuid4().hex),
+                nama_gambar=unique_filename(form.gambar.data),
                 tampilkan=form.tampilkan.data,
             )
             db.session.add(berita)
@@ -96,17 +106,17 @@ def tambah_berita_sekolah():
                 judul=form.judul.data,
                 deskripsi=form.deskripsi.data,
                 gambar=form.gambar.data.read(),
-                nama_gambar="{}".format(uuid.uuid4().hex),
+                nama_gambar=unique_filename(form.gambar.data),
                 tampilkan=form.tampilkan.data,
                 dokumen=form.dokumen.data.read(),
-                nama_dokumen=secure_filename(form.dokumen.data.filename),
+                nama_dokumen=unique_filename(form.dokumen.data),
             )
             db.session.add(berita)
             db.session.commit()
             flash("Data berhasil terbuat", "Berhasil")
             return redirect(url_for("server.berita_sekolah"))
     return render_template(
-        "berita/tambahUbahBerita.html", title="Tambah berita sekolah", form=form
+        "berita/tambahBerita.html", title="Tambah berita sekolah", form=form, data=[]
     )
 
 
@@ -140,17 +150,17 @@ def ubah_berita_sekolah(slug):
             ubah.gambar = ubah.gambar
             ubah.nama_gambar = ubah.nama_gambar
             ubah.dokumen = form.dokumen.data.read()
-            ubah.nama_dokumen = secure_filename(form.dokumen.data.filename)
+            ubah.nama_dokumen = unique_filename(form.dokumen.data)
         elif form.gambar.data is not None and form.dokumen.data is None:
             ubah.gambar = form.gambar.data.read()
-            ubah.nama_gambar = "{}".format(uuid.uuid4().hex)
+            ubah.nama_gambar = unique_filename(form.gambar.data)
             ubah.dokumen = ubah.dokumen
             ubah.nama_dokumen = ubah.nama_dokumen
         else:
             ubah.gambar = form.gambar.data.read()
-            ubah.nama_gambar = "{}".format(uuid.uuid4().hex)
+            ubah.nama_gambar = unique_filename(form.gambar.data)
             ubah.dokumen = form.dokumen.data.read()
-            ubah.nama_dokumen = secure_filename(form.dokumen.data.filename)
+            ubah.nama_dokumen = unique_filename(form.dokumen.data)
         db.session.add(ubah)
         db.session.commit()
         flash("Berita sekolah telah diubah", "Berhasil")
@@ -162,5 +172,5 @@ def ubah_berita_sekolah(slug):
         form.tampilkan.data = ubah.tampilkan
 
     return render_template(
-        "berita/tambahUbahBerita.html", title="Mengubah Berita", form=form
+        "berita/ubahBerita.html", title="Mengubah Berita", form=form, data=ubah
     )

@@ -184,10 +184,6 @@ span.menu-deskripsi {
   color: #adb5bd;
   font-size: 14px;
 }
-footer {
-  background: #262c2f;
-  padding-top: 50px;
-}
 .selected a {
   color: #535658;
   font-weight: bold;
@@ -269,4 +265,14 @@ a-nav-link.guru-link{
 }
 .topbar .nav-item .nav-link{
   height: 0;
+}
+footer{
+  background-color: #fff;
+  padding: 50px 0;
+}
+footer div.col-md-8.text-center, footer div.col-md-4{
+  padding: 0 100px;
+}
+footer span.menu{
+  color: #78797f;
 }

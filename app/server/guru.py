@@ -73,6 +73,7 @@ def tambah_guru():
             nama=form.nama.data,
             alamat=form.alamat.data,
             nik=form.nik.data,
+            nip=form.nip.data,
             kelurahan=form.kelurahan.data,
             kecamatan=form.kecamatan.data,
             kabupaten=form.kabupaten.data,
@@ -115,6 +116,7 @@ def ubah_guru(id):
         form = RubahGuruForm()
         if form.validate_on_submit():
             ubah.nama = form.nama.data
+            ubah.nip = form.nip.data
             ubah.alamat = form.alamat.data
             ubah.nik = form.nik.data
             ubah.user.email = form.email.data
@@ -133,9 +135,9 @@ def ubah_guru(id):
             ubah.kelas_id = form.kelas.data.id
             if form.foto.data is not None and form.foto_ijazah.data is not None:
                 ubah.foto = form.foto.data.read()
-                ubah.nama_foto = "{}".format(uuid.uuid4().hex)
+                ubah.nama_foto = unique_filename(form.foto.data)
                 ubah.foto_ijazah = form.foto_ijazah.data.read()
-                ubah.nama_foto_ijazah = "{}".format(uuid.uuid4().hex)
+                ubah.nama_foto_ijazah = unique_filename(form.foto_ijazah.data)
             elif form.foto.data is None and form.foto_ijazah.data is None:
                 ubah.foto = ubah.foto
                 ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
@@ -143,14 +145,14 @@ def ubah_guru(id):
                 ubah.nama_foto = ubah.nama_foto
             elif form.foto.data is not None and form.foto_ijazah is None:
                 ubah.foto = form.foto.data.read()
-                ubah.nama_foto_ijazah = "{}".format(uuid.uuid4().hex)
+                ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
                 ubah.foto_ijazah = ubah.foto_ijazah
-                ubah.nama_foto = ubah.nama_foto
+                ubah.nama_foto = unique_filename(form.foto.data)
             elif form.foto.data is None and form.foto_ijazah is not None:
                 ubah.foto_ijazah = form.foto_ijazah.data.read()
-                ubah.nama_foto = "{}".format(uuid.uuid4().hex)
+                ubah.nama_foto = ubah.nama_foto
                 ubah.foto = ubah.foto
-                ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
+                ubah.nama_foto_ijazah = unique_filename(form.foto_ijazah.data)
             db.session.add(ubah)
             db.session.commit()
             flash("Data sudah dirubah", "info")
@@ -159,6 +161,7 @@ def ubah_guru(id):
         form.nama.data = ubah.nama
         form.alamat.data = ubah.alamat
         form.nik.data = ubah.nik
+        form.nip.data = ubah.nip
         form.kelurahan.data = ubah.kelurahan
         form.kabupaten.data = ubah.kabupaten
         form.kecamatan.data = ubah.kecamatan
@@ -228,6 +231,7 @@ def ubah_profile_guru():
         ubah.kecamatan = form.kecamatan.data
         ubah.kabupaten = form.kabupaten.data
         ubah.provinsi = form.provinsi.data
+        ubah.nip = form.nip.data
         ubah.agama = form.agama.data
         ubah.tempat_lahir = form.tempat_lahir.data
         ubah.tanggal_lahir = form.tanggal_lahir.data
@@ -237,9 +241,9 @@ def ubah_profile_guru():
         ubah.golongan = form.golongan.data
         if form.foto.data is not None and form.foto_ijazah.data is not None:
             ubah.foto = form.foto.data.read()
-            ubah.nama_foto = "{}".format(uuid.uuid4().hex)
+            ubah.nama_foto = unique_filename(form.foto.data)
             ubah.foto_ijazah = form.foto_ijazah.data.read()
-            ubah.nama_foto_ijazah = "{}".format(uuid.uuid4().hex)
+            ubah.nama_foto_ijazah = unique_filename(form.foto_ijazah.data)
         elif form.foto.data is None and form.foto_ijazah.data is None:
             ubah.foto = ubah.foto
             ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
@@ -247,14 +251,14 @@ def ubah_profile_guru():
             ubah.nama_foto = ubah.nama_foto
         elif form.foto.data is not None and form.foto_ijazah is None:
             ubah.foto = form.foto.data.read()
-            ubah.nama_foto_ijazah = "{}".format(uuid.uuid4().hex)
+            ubah.nama_foto = unique_filename(form.foto.data)
             ubah.foto_ijazah = ubah.foto_ijazah
-            ubah.nama_foto = ubah.nama_foto
+            ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
         elif form.foto.data is None and form.foto_ijazah is not None:
             ubah.foto_ijazah = form.foto_ijazah.data.read()
-            ubah.nama_foto = "{}".format(uuid.uuid4().hex)
+            ubah.nama_foto_ijazah = unique_filename(form.foto_ijazah.data)
+            ubah.nama_foto = ubah.nama_foto
             ubah.foto = ubah.foto
-            ubah.nama_foto_ijazah = ubah.nama_foto_ijazah
         db.session.add(ubah)
         db.session.commit()
         flash("Data sudah dirubah", "info")
@@ -263,6 +267,7 @@ def ubah_profile_guru():
     if request.method == "GET":
         form.nama.data = ubah.nama
         form.alamat.data = ubah.alamat
+        form.nip.data = ubah.nip
         form.nik.data = ubah.nik
         form.kelurahan.data = ubah.kelurahan
         form.kabupaten.data = ubah.kabupaten

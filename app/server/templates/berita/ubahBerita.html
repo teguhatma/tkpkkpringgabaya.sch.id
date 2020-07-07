@@ -1,0 +1,90 @@
+{% extends 'components/back_office.html' %}
+{% block content_app %}
+<div class="container-fluid">
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
+    </div>
+    <div class="card-body">
+      <form class="user" method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token() }}
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.judul.label() }}
+            {{ form.judul(class="form-control")}}
+            {% for error in form.judul.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.tampilkan.label() }}
+            <br>
+            {{ form.tampilkan(class="form-control")}}
+            {% for error in form.tampilkan.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            {{ form.gambar.label() }}
+            <br>
+            <div class="row">
+              <div class="col-sm-6">
+                {% if data.gambar is not none %}
+                <img src="{{ url_for('client.image_berita', filename=data.nama_gambar) }}" alt="{{ data.nama_gambar }}"
+                  width="100px" class="img-thumbnail">
+                {% else %}
+                <img src="{{ url_for('static', filename='img/100x100.svg') }}" width="100" alt="Placeholder Logo">
+                {% endif %}
+              </div>
+              <div class="col-sm-6">
+                {{ form.gambar(accept="image/*")}}
+              </div>
+            </div>
+            {% for error in form.gambar.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <div class="col-sm-6">
+            {{ form.dokumen.label() }}
+            <br>
+            <div class="row">
+              <div class="col-sm-6">
+                {% if data.dokumen is not none %}
+                <a href="{{ url_for('client.client_berita_dokumen', filename=data.nama_dokumen) }}">Download Ijazah</a>
+                {% else %}
+                No File
+                {% endif %}
+              </div>
+              <div class="col-sm-6">
+                {{ form.dokumen()}}
+              </div>
+            </div>
+            {% for error in form.dokumen.errors %}
+            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-group">
+          {{ form.deskripsi.label() }}
+          {{ form.deskripsi()}}
+          {% for error in form.deskripsi.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        {{ form.submit(class='btn btn-primary')}}
+      </form>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    toolbar_mode: 'floating',
+  });
+</script>
+{% endblock %}

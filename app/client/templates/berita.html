@@ -26,6 +26,14 @@
             </div>
         </div>
         {% endfor %}
+        <div class="row d-flex justify-content-between">
+            {% if prev_url %}
+            <a href="{{ prev_url }}">Sebelumnya</a>
+            {% endif %}
+            {% if next_url %}
+            <a href="{{ next_url }}">Selanjutnya</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

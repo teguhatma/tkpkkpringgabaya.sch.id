@@ -29,7 +29,7 @@
           <div class="col-sm-6 mb-3 mb-sm-0">
             {{ form.gambar.label() }}
             <br>
-            {{ form.gambar(accept="image/*")}}
+            {{ form.gambar(accept='image/*')}}
             {% for error in form.gambar.errors %}
             <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
             {% endfor %}
@@ -37,7 +37,7 @@
           <div class="col-sm-6">
             {{ form.dokumen.label() }}
             <br>
-            {{ form.dokumen(accept="aplication/pdf, aplication/docx, aplication/xls, image/*")}}
+            {{ form.dokumen()}}
             {% for error in form.dokumen.errors %}
             <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
             {% endfor %}

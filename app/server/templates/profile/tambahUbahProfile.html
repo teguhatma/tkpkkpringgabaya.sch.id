@@ -121,6 +121,34 @@
           {% endfor %}
         </div>
         <div class="form-group">
+          {{ form.website.label() }}
+          {{ form.website(class="form-control")}}
+          {% for error in form.website.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.instagram.label() }}
+          {{ form.instagram(class="form-control")}}
+          {% for error in form.instagram.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.facebook.label() }}
+          {{ form.facebook(class="form-control")}}
+          {% for error in form.facebook.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.twitter.label() }}
+          {{ form.twitter(class="form-control")}}
+          {% for error in form.twitter.errors %}
+          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {% endfor %}
+        </div>
+        <div class="form-group">
           {{ form.alamat.label() }}
           {{ form.alamat(class="form-control")}}
           {% for error in form.alamat.errors %}

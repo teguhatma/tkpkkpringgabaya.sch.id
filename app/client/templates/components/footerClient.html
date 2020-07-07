@@ -4,8 +4,11 @@
       <div class="col-md-8 text-center">
         <h6><span class="menu">{{ profile.nama_lembaga }}</span></h6>
         <span class="menu-deskripsi">{{ profile.alamat | striptags}} Kec. {{ profile.kecamatan }} Kab. {{
-          profile.kabupaten }} {{ profile.provinsi }} KP. {{ profile.kode_pos
-          }}</span>
+          profile.kabupaten }} {{ profile.provinsi }} {{ profile.kode_pos
+          }}</span><br><br>
+          <a href="{{ profile.sosmed.instagram }}"><span class="menu-deskripsi"><img src="{{ url_for('static', filename='img/logo/instagram.png') }}" alt="instagram" style="width: 30px; margin: 0 5px;"></span></a>
+          <a href="{{ profile.sosmed.twitter }}"><span class="menu-deskripsi"><img src="{{ url_for('static', filename='img/logo/twiiter.png') }}" alt="twiiter" style="width: 30px; margin: 0 5px;"></span></a>
+          <a href="{{ profile.sosmed.facebook }}"><span class="menu-deskripsi"><img src="{{ url_for('static', filename='img/logo/facebook.png') }}" alt="facebook" style="width: 31px; margin: 0 5px;"></span></a>
       </div>
       <div class="col-md-4">
         <br />
@@ -16,7 +19,7 @@
       </div>
     </div>
     <div class="text-center copyright">
-      <p>Copyright @ 2019 tkpkkpringgabaya.sch.id</p>
+      <p>Copyright @ 2019 {{profile.website}}</p>
     </div>
   </div>
 </footer>

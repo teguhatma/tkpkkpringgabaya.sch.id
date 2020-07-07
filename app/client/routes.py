@@ -1,5 +1,5 @@
 from . import client
-from flask import render_template, send_file
+from flask import render_template, send_file, request, url_for
 from app.models import (
     BeritaModel,
     ElearningModel,
@@ -11,6 +11,7 @@ from app.models import (
 )
 from app import db
 from io import BytesIO
+from flask_paginate import Pagination, get_page_args
 
 
 @client.route("/dokumen/<filename>/file")
@@ -43,6 +44,7 @@ def index():
         .order_by(BeritaModel.waktu_upload.desc())
         .all()
     )
+
     learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).all()
     profile = ProfileSekolahModel.query.first()
 
@@ -128,21 +130,31 @@ def prestasi():
 
 @client.route("/e-learning")
 def learning():
-    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).all()
+    page = request.args.get('page', 1, type=int)
+    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).paginate(page, 12, False)
+    next_url = url_for('client.learning', page=learning.next_num) \
+        if learning.has_next else None
+    prev_url = url_for('client.learning', page=learning.prev_num) \
+        if learning.has_prev else None
     profile = ProfileSekolahModel.query.first()
     return render_template(
-        "lihatElearning.html", title="E-Learning", learning=learning, profile=profile
+        "lihatElearning.html", title="E-Learning", learning=learning.items, prev_url=prev_url, next_url=next_url, profile=profile
     )
 
 
 @client.route("/berita")
 def berita():
-    berita = (
-        BeritaModel.query.order_by(BeritaModel.waktu_upload.asc())
-        .filter(BeritaModel.tampilkan == True)
-        .all()
+    page = request.args.get('page', 1, type=int)
+    all_berita = (
+        BeritaModel.query.filter(BeritaModel.tampilkan == True)
+        .order_by(BeritaModel.waktu_upload.desc())
+        .paginate(page, 9, False)
     )
+    next_url = url_for('client.berita', page=all_berita.next_num) \
+        if all_berita.has_next else None
+    prev_url = url_for('client.berita', page=all_berita.prev_num) \
+        if all_berita.has_prev else None
     profile = ProfileSekolahModel.query.first()
     return render_template(
-        "berita.html", title="Berita Sekolah", berita=berita, profile=profile
+        "berita.html", title="Berita Sekolah", berita=all_berita.items, profile=profile, next_url=next_url, prev_url=prev_url
     )

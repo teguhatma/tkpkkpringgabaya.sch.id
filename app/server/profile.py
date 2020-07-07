@@ -36,7 +36,13 @@ def profile_sekolah():
                 no_telepon=form.no_telepon.data,
                 email=form.email.data,
                 visi_misi=form.visi_misi.data,
+                website=form.website.data,
             )
+            tambah_profile.sosmed = {
+                "twitter": form.twitter.data,
+                "instagram": form.instagram.data,
+                "facebook": form.facebook.data,
+            }
             db.session.add(tambah_profile)
             db.session.commit()
             flash("Profile sekolah berhasil ditambah", "info")
@@ -61,6 +67,12 @@ def profile_sekolah():
             profile.email = form.email.data
             profile.alamat = form.alamat.data
             profile.visi_misi = form.visi_misi.data
+            profile.website = form.website.data
+            profile.sosmed = {
+                "twitter": form.twitter.data,
+                "instagram": form.instagram.data,
+                "facebook": form.facebook.data,
+            }
             db.session.add(profile)
             db.session.commit()
             flash("Profile sekolah berhasil diubah", "info")
@@ -84,6 +96,10 @@ def profile_sekolah():
         form.no_telepon.data = profile.no_telepon
         form.email.data = profile.email
         form.visi_misi.data = profile.visi_misi
+        form.website.data = profile.website
+        form.instagram.data = profile.sosmed["instagram"]
+        form.facebook.data = profile.sosmed["facebook"]
+        form.twitter.data = profile.sosmed["twitter"]
 
     return render_template(
         "profile/tambahUbahProfile.html", title="Profil Sekolah", form=form
