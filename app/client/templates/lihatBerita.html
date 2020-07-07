@@ -15,8 +15,10 @@
           {{ berita.deskripsi | safe }}
           <br />
           {% if berita.dokumen is not none %}
-          <a href="{{ url_for('client.client_berita_dokumen', filename=berita.nama_dokumen)}}"
-          >Download Dokumen</a>
+          <a
+            href="{{ url_for('client.client_berita_dokumen', filename=berita.nama_dokumen)}}"
+            >Download Dokumen</a
+          >
           {% endif %}
         </div>
         <div class="share mt-5">

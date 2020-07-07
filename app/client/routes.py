@@ -38,22 +38,23 @@ def image_berita(filename):
 
 @client.route("/")
 def index():
+    page = request.args.get('page', 1, type=int)
     berita = BeritaModel.query.filter(BeritaModel.tampilkan == True).first()
     all_berita = (
         BeritaModel.query.filter(BeritaModel.tampilkan == True)
         .order_by(BeritaModel.waktu_upload.desc())
-        .all()
+        .paginate(page, 6, False)
     )
 
-    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).all()
+    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).paginate(page, 6, False)
     profile = ProfileSekolahModel.query.first()
 
     return render_template(
         "index.html",
         title="TK PKK Pringgabaya",
         berita=berita,
-        learning=learning,
-        all_berita=all_berita,
+        learning=learning.items,
+        all_berita=all_berita.items,
         profile=profile,
     )
 
@@ -131,7 +132,7 @@ def prestasi():
 @client.route("/e-learning")
 def learning():
     page = request.args.get('page', 1, type=int)
-    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).paginate(page, 12, False)
+    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.desc()).paginate(page, 12, False)
     next_url = url_for('client.learning', page=learning.next_num) \
         if learning.has_next else None
     prev_url = url_for('client.learning', page=learning.prev_num) \

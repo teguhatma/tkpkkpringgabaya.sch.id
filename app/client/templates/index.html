@@ -6,12 +6,15 @@
   </div>
 </div>
 <div class="container">
-  <div class="row d-flex justify-content-start mb-5">
+  <div class="row d-flex justify-content-start mb-3">
     {% for ber in all_berita %}
     <div class="col-md-4 mb-5">
       <div class="card berita-terbaru" style="width: 18rem;">
-        <img src="{{ url_for('client.image_berita', filename=ber.nama_gambar) }}" class="card-img-top"
-          alt="{{ ber.fotoname }}" />
+        <img
+          src="{{ url_for('client.image_berita', filename=ber.nama_gambar) }}"
+          class="card-img-top"
+          alt="{{ ber.fotoname }}"
+        />
         <div class="card-body">
           <!-- {% for kategori in ber.kategori %}
           <a class="btn btn-small btn-category" href="">{{ kategori }}</a>
@@ -20,12 +23,19 @@
         </div>
         <div class="card-body card-bottom d-flex justify-content-right">
           <div class="selected">
-            <a href="{{ url_for('client.lihat_berita', slug=ber.slug) }}">Lihat Berita</a>
+            <a href="{{ url_for('client.lihat_berita', slug=ber.slug) }}"
+              >Lihat Berita</a
+            >
           </div>
         </div>
       </div>
     </div>
     {% endfor %}
+  </div>
+  <div class="text-center">
+    <a href="{{ url_for('client.berita') }}" class="btn btn-sm btn-info"
+      >Semua Berita</a
+    >
   </div>
 </div>
 
@@ -42,17 +52,29 @@
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img class="img-thumbnail" src="https://source.unsplash.com/100x105/?book" width="100" alt="Placeholder Logo">
+            <img
+              class="img-thumbnail"
+              src="https://source.unsplash.com/100x105/?book"
+              width="100"
+              alt="Placeholder Logo"
+            />
           </div>
           <div class="col-md-8 card-elearning">
             <div class="card-body py-0 px-2">
               <!-- Button trigger modal -->
-              <a class="card-title nama-elearning" data-toggle="modal" data-target="#{{ elearning.slug}}" href="">
+              <a
+                class="card-title nama-elearning"
+                data-toggle="modal"
+                data-target="#{{ elearning.slug}}"
+                href=""
+              >
                 {{ elearning.judul}}
               </a>
               <p class="kelas-footer">Kelas {{ elearning.kelas.ruang}}</p>
               <p class="card-text time">
-                <small class="text-muted">{{ moment(elearning.waktu_upload).fromNow()}}</small>
+                <small class="text-muted"
+                  >{{ moment(elearning.waktu_upload).fromNow()}}</small
+                >
               </p>
               <h5 class="nama-guru">{{ elearning.nama }}</h5>
             </div>
@@ -62,15 +84,26 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="{{ elearning.slug}}" tabindex="-1" role="dialog"
-      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="{{ elearning.slug}}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
               {{ elearning.judul }}
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -93,12 +126,16 @@
                   <td scope="row">Download</td>
                   {% if current_user.is_authenticated %}
                   <td>
-                    <a href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen)}}">Download a
-                      File</a>
+                    <a
+                      href="{{ url_for('server.dokumen_elearning', filename=elearning.nama_dokumen)}}"
+                      >Download a File</a
+                    >
                   </td>
                   {% else %}
                   <td>
-                    <a href="{{ url_for('auth.login')}}">Login untuk download</a>
+                    <a href="{{ url_for('auth.login')}}"
+                      >Login untuk download</a
+                    >
                   </td>
                   {% endif %}
                 </tr>
@@ -109,6 +146,11 @@
       </div>
     </div>
     {% endfor%}
+  </div>
+  <div class="text-center mb-5">
+    <a href="{{ url_for('client.learning') }}" class="btn btn-sm btn-info"
+      >Semua E-Learning</a
+    >
   </div>
 </div>
 {% endblock %}

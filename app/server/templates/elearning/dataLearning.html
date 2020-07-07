@@ -1,9 +1,6 @@
 {% extends 'components/back_office.html' %}
 {% block content_app %}
 <!-- Custom styles for this page -->
-<link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
-
-
 <div class="container-fluid">
 
   <!-- Page Heading -->
@@ -66,6 +63,13 @@
 <script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js' )}}"></script>
 
+
 <!-- Page level custom scripts -->
 <script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
+
+<script>
+  $(document).ready( function () {
+  $('#dataTable').DataTable();
+} );
+</script>
 {% endblock %}

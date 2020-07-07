@@ -46,11 +46,11 @@ def dokumen_elearning(filename):
 @login_required
 def data_elearning():
     if current_user.is_administrator():
-        data_elearning = ElearningModel.query.all()
+        data_elearning = ElearningModel.query.order_by(ElearningModel.waktu_upload.desc()).all()
     else:
         data_elearning = ElearningModel.query.filter_by(
             kelas_id=current_user.guru.kelas_id
-        ).all()
+        ).order_by(ElearningModel.waktu_upload.desc()).all()
     return render_template(
         "elearning/dataLearning.html",
         title="E-Learning",

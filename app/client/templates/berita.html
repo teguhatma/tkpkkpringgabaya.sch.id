@@ -1,39 +1,43 @@
 {% extends 'components/mainClient.html' %} {% block content %}
 <div class="container my-5">
-    <div class="feed">
-        <span class="title-index">Info Berita Sekolah</span>
-        <hr />
-    </div>
+  <div class="feed">
+    <span class="title-index">Info Berita Sekolah</span>
+    <hr />
+  </div>
 </div>
 <div class="container">
-    <div class="row d-flex justify-content-start mb-5">
-        {% for ber in berita %}
-        <div class="col-md-4 mb-5">
-            <div class="card berita-terbaru" style="width: 18rem;">
-                <img src="{{ url_for('client.image_berita', filename=ber.nama_gambar) }}" class="card-img-top"
-                    alt="{{ ber.fotoname }}" />
-                <div class="card-body">
-                    <!-- {% for kategori in ber.kategori %}
+  <div class="row d-flex justify-content-start mb-5">
+    {% for ber in berita %}
+    <div class="col-md-4 mb-5">
+      <div class="card berita-terbaru" style="width: 18rem;">
+        <img
+          src="{{ url_for('client.image_berita', filename=ber.nama_gambar) }}"
+          class="card-img-top"
+          alt="{{ ber.fotoname }}"
+        />
+        <div class="card-body">
+          <!-- {% for kategori in ber.kategori %}
             <a class="btn btn-small btn-category" href="">{{ kategori }}</a>
             {% endfor %} -->
-                    <p class="card-text title-card">{{ ber.judul}}</p>
-                </div>
-                <div class="card-body card-bottom d-flex justify-content-right">
-                    <div class="selected">
-                        <a href="{{ url_for('client.lihat_berita', slug=ber.slug) }}">Lihat Berita</a>
-                    </div>
-                </div>
-            </div>
+          <p class="card-text title-card">{{ ber.judul}}</p>
         </div>
-        {% endfor %}
-        <div class="row d-flex justify-content-between">
-            {% if prev_url %}
-            <a href="{{ prev_url }}">Sebelumnya</a>
-            {% endif %}
-            {% if next_url %}
-            <a href="{{ next_url }}">Selanjutnya</a>
-            {% endif %}
+        <div class="card-body card-bottom d-flex justify-content-right">
+          <div class="selected">
+            <a href="{{ url_for('client.lihat_berita', slug=ber.slug) }}"
+              >Lihat Berita</a
+            >
+          </div>
         </div>
+      </div>
     </div>
+    {% endfor %}
+    <div class="row d-flex justify-content-between">
+      {% if prev_url %}
+      <a href="{{ prev_url }}">Sebelumnya</a>
+      {% endif %} {% if next_url %}
+      <a href="{{ next_url }}">Selanjutnya</a>
+      {% endif %}
+    </div>
+  </div>
 </div>
 {% endblock %}
