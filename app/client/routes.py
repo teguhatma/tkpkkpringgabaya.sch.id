@@ -11,7 +11,6 @@ from app.models import (
 )
 from app import db
 from io import BytesIO
-from flask_paginate import Pagination, get_page_args
 
 
 @client.route("/dokumen/<filename>/file")
