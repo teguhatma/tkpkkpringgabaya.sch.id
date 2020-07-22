@@ -1,6 +1,8 @@
 {% extends 'components/mainMurid.html' %} {% block content %} {% include
-'components/successInfo.html' %}
-<small class="mx-5">AKUN PESERTA DIDIK</small>
+'components/flash.html' %}
+<div class="container-fluid mb-5">
+  <small class="mx-5">AKUN PESERTA DIDIK</small>
+</div>
 <form method="POST">
   {{ form.csrf_token() }}
   <div class="mx-5 mt-4 student-login d-flex flex-column">

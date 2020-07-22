@@ -84,27 +84,44 @@ def hapus_jadwal(id):
 @admin_guru_required
 @login_required
 def ubah_jadwal(id):
-    form = TambahUbahJadwalForm()
     ubah_jadwal = JadwalKelasModel.query.get(id)
-    if form.validate_on_submit():
+    if current_user.is_administrator():
+        form=TambahAdminJadwalForm()
+        if form.validate_on_submit():
+            ubah_jadwal.mata_pelajaran = form.mata_pelajaran.data
+            ubah_jadwal.jam = form.jam.data
+            ubah_jadwal.jam_end = form.jam_end.data
+            ubah_jadwal.hari = form.hari.data
+            ubah_jadwal.kelas_id = form.kelas.data.id
 
-        ubah_jadwal.mata_pelajaran = form.mata_pelajaran.data
-        ubah_jadwal.jam = form.jam.data
-        ubah_jadwal.jam_end = form.jam_end.data
-        ubah_jadwal.hari = form.hari.data
-        ubah_jadwal.kelas_id = form.kelas.data.id
+            db.session.add(ubah_jadwal)
+            db.session.commit()
+            flash("Jadwal sudah diubah.", "Berhasil")
+            return redirect(url_for("server.data_jadwal"))
 
-        db.session.add(ubah_jadwal)
-        db.session.commit()
-        flash("Jadwal sudah diubah.", "Berhasil")
-        return redirect(url_for("server.data_jadwal"))
-
-    if request.method == "GET":
         form.mata_pelajaran.data = ubah_jadwal.mata_pelajaran
         form.jam.data = ubah_jadwal.jam
         form.jam_end.data = ubah_jadwal.jam_end
         form.hari.data = ubah_jadwal.hari
-        form.kelas.data = ubah_jadwal.kelas_id
+        form.kelas.data = ubah_jadwal.kelas
+    else:
+        form = TambahJadwalForm()
+        if form.validate_on_submit():
+            ubah_jadwal.mata_pelajaran = form.mata_pelajaran.data
+            ubah_jadwal.jam = form.jam.data
+            ubah_jadwal.jam_end = form.jam_end.data
+            ubah_jadwal.hari = form.hari.data
+            ubah_jadwal.kelas_id = current_user.guru.kelas.id
+
+            db.session.add(ubah_jadwal)
+            db.session.commit()
+            flash("Jadwal sudah diubah.", "Berhasil")
+            return redirect(url_for("server.data_jadwal"))
+
+        form.mata_pelajaran.data = ubah_jadwal.mata_pelajaran
+        form.jam.data = ubah_jadwal.jam
+        form.jam_end.data = ubah_jadwal.jam_end
+        form.hari.data = ubah_jadwal.hari
 
     return render_template(
         "jadwal/tambahUbahJadwal.html", title=ubah_jadwal.mata_pelajaran, form=form

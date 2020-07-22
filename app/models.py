@@ -135,7 +135,7 @@ class GuruModel(db.Model):
     nama = db.Column(db.String(64), nullable=False)
     alamat = db.Column(db.Text(), nullable=False)
     nik = db.Column(db.String(24), unique=True, nullable=False)
-    nip = db.Column(db.String(24), unique=True)
+    nip = db.Column(db.String(24))
     kelurahan = db.Column(db.String(24), nullable=False)
     kecamatan = db.Column(db.String(24), nullable=False)
     kabupaten = db.Column(db.String(24), nullable=False)
@@ -143,11 +143,14 @@ class GuruModel(db.Model):
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        ), nullable=False
+        ),
+        nullable=False,
     )
     tempat_lahir = db.Column(db.String(24), nullable=False)
     tanggal_lahir = db.Column(db.String(24), nullable=False)
-    jabatan = db.Column(db.Enum("Kepala Sekolah", "Guru", name="jabatan"), nullable=False)
+    jabatan = db.Column(
+        db.Enum("Kepala Sekolah", "Guru", name="jabatan"), nullable=False
+    )
     foto = db.Column(db.LargeBinary(__fotosize__))
     nama_foto = db.Column(db.String(64), unique=True)
     foto_ijazah = db.Column(db.LargeBinary(__fotosize__))
@@ -173,10 +176,13 @@ class GuruModel(db.Model):
             "IV/d",
             "IV/e",
             name="golongan",
-        ), nullable=False
+        ),
+        nullable=False,
     )
     pendidikan_terakhir = db.Column(db.String(24), nullable=False)
-    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False)
+    jenis_kelamin = db.Column(
+        db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False
+    )
     tahun_masuk = db.Column(db.String(24), nullable=False)
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="guru")
@@ -202,7 +208,7 @@ class GuruModel(db.Model):
             golongan="IV/e",
             pendidikan_terakhir="S1 PGPAUD",
             jenis_kelamin="Perempuan",
-            tahun_masuk="2010"
+            tahun_masuk="2010",
         )
         db.session.add(insert_admin)
         db.session.commit()
@@ -246,13 +252,16 @@ class MuridModel(db.Model):
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        ), nullable=False
+        ),
+        nullable=False,
     )
     tempat_lahir = db.Column(db.String(24), nullable=False)
     tanggal_lahir = db.Column(db.String(24), nullable=False)
     lulus = db.Column(db.Boolean, default=False)
     nama_ibu_kandung = db.Column(db.String(64), nullable=False)
-    jenis_kelamin = db.Column(db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False)
+    jenis_kelamin = db.Column(
+        db.Enum("Laki-laki", "Perempuan", name="gender"), nullable=False
+    )
     tahun_pelajaran = db.Column(db.String(24), nullable=False)
     foto_diri = db.Column(db.LargeBinary(__fotosize__))
     nama_foto_diri = db.Column(db.String(64), unique=True)
@@ -293,7 +302,8 @@ class WaliMuridModel(db.Model):
     agama = db.Column(
         db.Enum(
             "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Kong Hu Cu", name="agama"
-        ), nullable=False
+        ),
+        nullable=False,
     )
     alamat = db.Column(db.Text, nullable=False)
     kelurahan = db.Column(db.String(60), nullable=False)
@@ -323,7 +333,6 @@ class ProfileSekolahModel(db.Model):
     kelurahan = db.Column(db.String(60), nullable=False)
     kecamatan = db.Column(db.String(60), nullable=False)
     kabupaten = db.Column(db.String(60), nullable=False)
-    alamat = db.Column(db.Text, nullable=False)
     provinsi = db.Column(db.String(60), nullable=False)
     no_statistik = db.Column(db.String(60), nullable=False)
     akte_notaris = db.Column(db.String(60), nullable=False)
@@ -444,7 +453,8 @@ class JadwalKelasModel(db.Model):
     jam = db.Column(db.String(10), nullable=False)
     jam_end = db.Column(db.String(10), nullable=False)
     hari = db.Column(
-        db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari"), nullable=False
+        db.Enum("Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu", name="hari"),
+        nullable=False,
     )
     kelas_id = db.Column(db.Integer, db.ForeignKey("kelas.id"))
     kelas = db.relationship("KelasModel", back_populates="jadwal")

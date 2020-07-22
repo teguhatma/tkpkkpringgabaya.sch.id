@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button
+      id="download"
+      onclick="exportTableToExcel('tableID', '{{ title }}')"
+    >
+      Export To Excel File
+    </button>
+    <table id="tableID">
+      <tr>
+        <th>Nama</th>
+        <th>Kategori</th>
+        <th>Juara</th>
+        <th>Tingkat</th>
+        <th>Tahun</th>
+      </tr>
+      {% for prestasi in data_prestasi %}
+      <tr>
+        <th>{{ prestasi.nama }}</th>
+        <th>{{ prestasi.kategori }}</th>
+        <th>{{ prestasi.juara }}</th>
+        <th>{{ prestasi.tingkat }}</th>
+        <th>{{ prestasi.tahun }}</th>
+      </tr>
+      {% endfor %}
+    </table>
+    <script>
+      function exportTableToExcel(tableID, filename = "{{ title }}") {
+        var downloadLink;
+        var dataType = "application/vnd.ms-excel";
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, "%20");
+
+        // Specify file name
+        filename = filename ? filename + ".xls" : "excel_data.xls";
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+          var blob = new Blob(["\ufeff", tableHTML], {
+            type: dataType,
+          });
+          navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+          // Create a link to the file
+          downloadLink.href = "data:" + dataType + ", " + tableHTML;
+
+          // Setting the file name
+          downloadLink.download = filename;
+
+          //triggering the function
+          downloadLink.click();
+        }
+      }
+      document.getElementById("download").click();
+      window.close();
+    </script>
+  </body>
+</html>

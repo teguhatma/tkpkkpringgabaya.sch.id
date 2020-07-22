@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button
+      id="download"
+      onclick="exportTableToExcel('tableID', '{{ title }}')"
+    >
+      Export To Excel File
+    </button>
+    <table id="tableID">
+      <tr>
+        <th>Nama</th>
+        <th>Nama Panggilan</th>
+        <th>Nomor Induk</th>
+        <th>Anak Ke</th>
+        <th>Kelompok</th>
+        <th>Agama</th>
+        <th>Lulus</th>
+        <th>Jenis Kelamin</th>
+        <th>Tahun Pelajaran</th>
+        <th>Nama Ibu Kandung</th>
+        <th>Tempat/ Tanggal Lahir</th>
+        <th>Dusun</th>
+        <th>Kelurahan</th>
+        <th>Kecamatan</th>
+        <th>Kabupaten</th>
+        <th>Provinsi</th>
+        <th>Alamat</th>
+        <th>Email</th>
+      </tr>
+      {% for murid in data_murid %}
+      <tr>
+        <th>{{ murid.nama }}</th>
+        <th>{{ murid.nama_panggilan }}</th>
+        <th>{{ murid.nomor_induk }}</th>
+        <th>{{ murid.anak_ke }}</th>
+        <th>{{ murid.kelas.ruang }}</th>
+        <th>{{ murid.agama }}</th>
+        <th>
+          {% if murid.lulus == True %} Telah Lulus {% else %} Belum Lulus {%
+          endif %}
+        </th>
+        <th>{{ murid.jenis_kelamin }}</th>
+        <th>{{ murid.tahun_pelajaran }}</th>
+        <th>{{ murid.nama_ibu_kandung }}</th>
+        <th>{{ murid.tempat_lahir }}, {{ murid.tanggal_lahir }}</th>
+        <th>{{ murid.dusun }}</th>
+        <th>{{ murid.kelurahan }}</th>
+        <th>{{ murid.kecamatan }}</th>
+        <th>{{ murid.kabupaten }}</th>
+        <th>{{ murid.provinsi }}</th>
+        <th>{{ murid.alamat }}</th>
+        <th>{{ murid.user.email }}</th>
+      </tr>
+      {% endfor %}
+    </table>
+    <script>
+      function exportTableToExcel(tableID, filename = "{{ title }}") {
+        var downloadLink;
+        var dataType = "application/vnd.ms-excel";
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, "%20");
+
+        // Specify file name
+        filename = filename ? filename + ".xls" : "excel_data.xls";
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+          var blob = new Blob(["\ufeff", tableHTML], {
+            type: dataType,
+          });
+          navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+          // Create a link to the file
+          downloadLink.href = "data:" + dataType + ", " + tableHTML;
+
+          // Setting the file name
+          downloadLink.download = filename;
+
+          //triggering the function
+          downloadLink.click();
+        }
+      }
+      document.getElementById("download").click();
+      window.close();
+    </script>
+  </body>
+</html>

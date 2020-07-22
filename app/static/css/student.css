@@ -1,0 +1,27 @@
+div.nis.col-md-4.mx-3 {
+  background: blanchedalmond;
+  padding: 30px !important;
+  border-radius: 5px;
+}
+
+div.title-biodata {
+  padding: 20px;
+  background: #1cc88a;
+  margin-bottom: 20px;
+}
+h5 {
+  font-size: 15px !important;
+}
+
+div.title-biodata-wali {
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #3a3b45;
+}
+
+a.nav-link.nav-dashboard,
+a.nav-link.nav-profile,
+a.nav-link.nav-nilai,
+a.nav-link.nav-akun {
+  margin-left: 30px;
+}

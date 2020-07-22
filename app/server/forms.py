@@ -102,11 +102,6 @@ class TambahGuruForm(GuruForm):
         nik = GuruModel.query.filter_by(nik=self.nik.data).first()
         if nik is not None:
             raise ValidationError("NIK sudah terdaftar.")
-    
-    def validate_nip(self, nip):
-        nip = GuruModel.query.filter_by(nip=self.nip.data).first()
-        if nip is not None:
-            raise ValidationError("NIP sudah terdaftar.")
 
     def validate_email(self, nik):
         email = UserModel.query.filter_by(email=self.email.data).first()
@@ -475,7 +470,7 @@ class TambahAdminJadwalForm(TambahJadwalForm):
 
 
 class TambahNilaiMuridForm(FlaskForm):
-    deskripsi = TextAreaField("Deskripsi Penilaian *", validators=[DataRequired()])
+    deskripsi = TextAreaField("Deskripsi Penilaian *")
     aspek_penilaian = SelectField(
         "Aspek Penilaian *",
         choices=[

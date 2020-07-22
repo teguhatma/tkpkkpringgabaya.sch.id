@@ -1,76 +1,109 @@
 {% extends 'components/mainMurid.html' %} {% block content %}
-<small class="ml-5">DASHBOARD PESERTA DIDIK</small>
-<div class="intro d-flex justify-content-between my-5 mx-5">
-  <div class="nis col-md-3" style="padding: 0px;">
-    <div class="nis-title d-flex justify-content-between">
-      <h5>NIS</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
-    </div>
-    <div class="nis-content d-flex justify-content-between">
-      <h5>{{ current_user.murid.nomor_induk }}</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
-    </div>
+<div class="container-fluid mb-4">
+  <div class="row">
+    <small class="ml-5">DASHBOARD PESERTA DIDIK</small>
   </div>
-  <div class="kelas col-md-3" style="padding: 0px;">
-    <div class="kelas-title d-flex justify-content-between">
-      <h5>Kelompok</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-xl-4 col-md-4 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Nomor Induk Siswa
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ current_user.murid.nomor_induk }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="kelas-content d-flex justify-content-between">
-      <h5>{{ current_user.murid.kelas.ruang }}</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-4 col-md-4 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-success text-uppercase mb-1"
+              >
+                Orang Tua/ Wali
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ current_user.murid.wali_murid[0].nama }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-user fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="wali-murid col-md-3" style="padding: 0px;">
-    <div class="wali-murid-title d-flex justify-content-between">
-      <h5>Orang Tua</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
-    </div>
-    <div class="wali-murid-content d-flex justify-content-between">
-      <h5>{{ current_user.murid.nama_ibu_kandung }}</h5>
-      <i
-        class="fas fa-space-shuttle fa-lg fa-rotate-270"
-        style="color: #845ef7;"
-      ></i>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-4 col-md-4 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div
+                class="text-xs font-weight-bold text-info text-uppercase mb-1"
+              >
+                Kelompok
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ current_user.murid.kelas.ruang }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-university fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<small class="ml-5">JADWAL KEGIATAN</small>
-<div class="jadwal mx-5 my-3">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">No.</th>
-        <th scope="col">Hari</th>
-        <th scope="col">Mata Pelajaran</th>
-        <th scope="col">Jam</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for jadwal in jadwal%}
-      <tr>
-        <th scope="row">{{loop.index}}</th>
-        <td>{{jadwal.hari}}</td>
-        <td>{{jadwal.mata_pelajaran}}</td>
-        <td>{{jadwal.jam}} - {{ jadwal.jam_end }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+
+<div class="container-fluid mb-4">
+  <div class="row">
+    <small class="ml-5">JADWAL PESERTA DIDIK</small>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="jadwal mx-5 my-3">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">Hari</th>
+          <th scope="col">Mata Pelajaran</th>
+          <th scope="col">Jam</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for jadwal in jadwal%}
+        <tr>
+          <th scope="row">{{loop.index}}</th>
+          <td>{{jadwal.hari}}</td>
+          <td>{{jadwal.mata_pelajaran}}</td>
+          <td>{{jadwal.jam}} - {{ jadwal.jam_end }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

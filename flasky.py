@@ -55,4 +55,5 @@ def deploy():
 @app.cli.command()
 def drop():
     """ Drop All Table in Database """
+    db.session.remove()
     db.drop_all()

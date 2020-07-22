@@ -16,4 +16,5 @@ from . import (
     nilai,
     dashboard,
     prestasi,
+    report,
 )
