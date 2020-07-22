@@ -24,6 +24,7 @@ from app.models import (
     WaliMuridModel,
     UserModel,
 )
+from flask_login import current_user
 
 
 class GuruForm(FlaskForm):
@@ -154,7 +155,7 @@ class RubahGuruForm(GuruForm):
 
 class RubahProfileGuruForm(GuruForm):
     foto = FileField("Foto Diri *")
-    foto_ijazah = FileField("Scan Ijazah *")
+    foto_ijazah = FileField("Scan Ijazah *", render_kw={"accept":"application/pdf"})
 
 
 class AddPassword(FlaskForm):
@@ -163,7 +164,7 @@ class AddPassword(FlaskForm):
 
 
 class UbahPasswordDiriForm(FlaskForm):
-    password = PasswordField("Kata Sandi", validators=[DataRequired(), Length(5, 24)])
+    password = PasswordField("Kata Sandi Lama", validators=[DataRequired(), Length(5, 24)])
     new_password = PasswordField(
         "Kata Sandi Baru", validators=[DataRequired(), Length(5, 24)]
     )
@@ -176,6 +177,12 @@ class UbahPasswordDiriForm(FlaskForm):
         ],
     )
     submit = SubmitField("Simpan")
+
+    def validate_password(self, password):
+        data = UserModel.query.filter_by(id=current_user.id).first()
+        if data.verify_password(self.password.data) == False:
+            raise ValidationError("Kata sandi lama salah.")
+
 
 
 class TambahKelasForm(FlaskForm):

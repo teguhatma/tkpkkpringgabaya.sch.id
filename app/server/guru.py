@@ -208,11 +208,11 @@ def ubah_password_diri():
     data = UserModel.query.filter_by(id=current_user.id).first_or_404()
     form = UbahPasswordDiriForm()
     if form.validate_on_submit():
-        data.password(form.password.data)
+        data.password(form.new_password.data)
         db.session.add(data)
         db.session.commit()
         flash("Password berhasil dirubah.", "info")
-        return redirect(url_for(".ubah_profile_guru"))
+        return redirect(url_for(".ubah_password_diri"))
     return render_template("guru/ubahPasswordDiri.html", title="Password", form=form)
 
 
@@ -262,7 +262,7 @@ def ubah_profile_guru():
         db.session.add(ubah)
         db.session.commit()
         flash("Data sudah dirubah", "info")
-        return redirect(url_for("server.dashboard"))
+        return redirect(url_for(".ubah_profile_guru"))
 
     if request.method == "GET":
         form.nama.data = ubah.nama

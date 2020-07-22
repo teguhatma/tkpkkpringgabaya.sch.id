@@ -8,6 +8,9 @@
           profile.kabupaten }} {{ profile.provinsi }} {{ profile.kode_pos
           }}</span
         ><br /><br />
+        {% if profile is none %}
+        <span class="menu-deskripsi">Your sosmed here</span>
+        {% else %}
         <a href="{{ profile.sosmed.instagram }}"
           ><span class="menu-deskripsi"
             ><img
@@ -29,6 +32,7 @@
               alt="facebook"
               style="width: 31px; margin: 0 5px;" /></span
         ></a>
+        {% endif %}
       </div>
       <div class="col-md-4">
         <br />
