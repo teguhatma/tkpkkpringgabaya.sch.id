@@ -46,7 +46,11 @@
               <td>{{ guru.nip }}</td>
               <td>{{ guru.jabatan }}</td>
               <td>{{ guru.tempat_lahir }}, {{ guru.tanggal_lahir }}</td>
+              {% if guru.jabatan == "Kepala Sekolah" %}
+              <td>-</td>
+              {% else %}
               <td>Kelompok {{ guru.kelas.ruang }}</td>
+              {% endif %}
               {% if current_user.is_administrator() %}
               <td>
                 {% if current_user.guru.nama != guru.nama%}

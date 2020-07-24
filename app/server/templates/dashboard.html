@@ -1,7 +1,5 @@
-{% extends 'components/back_office.html' %}
-{% block content_app %}
+{% extends 'components/back_office.html' %} {% block content_app %}
 <div class="container-fluid">
-
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
@@ -9,16 +7,20 @@
 
   <!-- Content Row -->
   <div class="row">
-
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                Jumlah Peserta Didik</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ murid }}</div>
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
+                Jumlah Peserta Didik
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ murid }}
+              </div>
             </div>
             <div class="col-auto">
               <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -34,9 +36,14 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                Jumlah Wali/ Orang Tua</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ wali }}</div>
+              <div
+                class="text-xs font-weight-bold text-success text-uppercase mb-1"
+              >
+                Jumlah Wali/ Orang Tua
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ wali }}
+              </div>
             </div>
             <div class="col-auto">
               <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -52,9 +59,14 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                Jumlah Kelompok</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kelas }}</div>
+              <div
+                class="text-xs font-weight-bold text-info text-uppercase mb-1"
+              >
+                Jumlah Kelompok
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ kelas }}
+              </div>
             </div>
             <div class="col-auto">
               <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -70,9 +82,14 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                Jumlah Guru</div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">{{ guru }}</div>
+              <div
+                class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+              >
+                Jumlah Guru
+              </div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                {{ guru }}
+              </div>
             </div>
             <div class="col-auto">
               <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -89,12 +106,17 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
           <thead>
             <tr>
               <th>#</th>
               <th>Nama</th>
-              <th>NIK</th>
+              <th>Nomor Induk Pendidik</th>
               <th>Jabatan</th>
               <th>Tempat/ Tanggal Lahir</th>
               <th>Mengajar</th>
@@ -105,7 +127,7 @@
             <tr>
               <td>{{ loop.index }}</td>
               <td>{{ guru.nama }}</td>
-              <td>{{ guru.nik }}</td>
+              <td>{{ guru.nip }}</td>
               <td>{{ guru.jabatan }}</td>
               <td>{{ guru.tempat_lahir }}, {{ guru.tanggal_lahir }}</td>
               <td>Kelompok {{ guru.kelas.ruang }}</td>
@@ -123,7 +145,12 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
           <thead>
             <tr>
               <th>#</th>
@@ -150,3 +177,4 @@
   </div>
 
   {% endblock %}
+</div>

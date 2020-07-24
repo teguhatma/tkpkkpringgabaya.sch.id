@@ -98,7 +98,7 @@ def tambah_guru():
         tambah_email.role_id = Role.query.filter_by(name="Guru").first().id
         db.session.add_all([tambah_guru, tambah_email])
         db.session.commit()
-        flash("Data sudah ditambahkan", "info")
+        flash("Data guru berhasil ditambahkan.", "info")
         return redirect(url_for("server.data_guru"))
     return render_template(
         "guru/tambahGuru.html", title="Menambah Data Guru", form=form
@@ -155,8 +155,8 @@ def ubah_guru(id):
                 ubah.nama_foto_ijazah = unique_filename(form.foto_ijazah.data)
             db.session.add(ubah)
             db.session.commit()
-            flash("Data sudah dirubah", "info")
-            return redirect(url_for("server.data_guru"))
+            flash("Data guru berhasil dirubah.", "info")
+            return redirect(url_for("server.ubah_guru", id=id))
 
         form.nama.data = ubah.nama
         form.alamat.data = ubah.alamat
@@ -195,8 +195,8 @@ def ubah_password_guru(id):
         pwd.password(form.password.data)
         db.session.add(pwd)
         db.session.commit()
-        flash("Data sudah dirubah", "info")
-        return redirect(url_for("server.data_guru"))
+        flash("Kata sandi berhasil ditambahkan.", "info")
+        return redirect(url_for("server.ubah_password_guru", id=id))
     return render_template(
         "guru/ubahPasswordGuru.html", form=form, title="Password Guru"
     )
@@ -298,5 +298,5 @@ def hapus_guru(id):
     db.session.delete(hapus_guru)
     db.session.delete(hapus_user)
     db.session.commit()
-    flash("Data {} sudah berhasil dihapus".format(hapus_guru.nama), "info")
+    flash("Data {} telah berhasil dihapus.".format(hapus_guru.nama), "info")
     return redirect(url_for("server.data_guru"))

@@ -98,6 +98,13 @@ class TambahGuruForm(GuruForm):
     foto_ijazah = FileField(
         "Scan Ijazah *", validators=[DataRequired(), FileAllowed(["pdf"], "Pdf Only")]
     )
+    def validate_nip(self, nik):
+        if self.nip.data == "":
+            self.nip.data = ""
+        else:
+            data = GuruModel.query.filter_by(nip=self.nip.data).first()
+            if data is not None:
+                raise ValidationError("NIP sudah terdaftar.")
 
     def validate_nik(self, nik):
         nik = GuruModel.query.filter_by(nik=self.nik.data).first()
@@ -130,22 +137,6 @@ class RubahGuruForm(GuruForm):
     foto = FileField("Foto Diri *")
     foto_ijazah = FileField("Scan Ijazah *")
 
-    # def __init__(self, original_nik, original_email, *args, **kwargs):
-    #     super(RubahGuruForm, self).__init__(*args, **kwargs)
-    #     self.original_nik = original_nik
-    #     self.original_email = original_email
-
-    # def validate_nik(self, nik):
-    #     if nik.data != self.original_nik:
-    #         guru = GuruModel.query.filter_by(nik=self.nik.data).first()
-    #         if guru is not None:
-    #             raise ValidationError("NIK sudah terdaftar.")
-
-    # def validate_email(self, email):
-    #     if email.data != self.original_email:
-    #         user = UserModel.query.filter_by(email=self.email.data).first()
-    #         if user is not None:
-    #             raise ValidationError("Email sudah terdaftar.")
 
     def validate_jabatan(self, jabatan):
         jabatan = GuruModel.query.filter_by(jabatan=self.jabatan.data).first()

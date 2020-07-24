@@ -1,5 +1,6 @@
 {% extends 'components/back_office.html' %} {% block content_app %}
 <div class="container-fluid">
+  {% include 'components/flash.html' %}
   <a
     href="{{ url_for('server.ubah_password_guru', id=data.id) }}"
     class="btn btn-primary mb-4"

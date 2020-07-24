@@ -19,8 +19,10 @@ def login():
                 else:
                     next = url_for("murid.murid_dashboard")
             return redirect(next)
-
-        flash("Invalid username and password!")
+        elif user is None:
+            flash("Maaf, Anda belum terdaftar.")
+        else:
+            flash("Email dan password anda salah.")
     return render_template("login.html", title="Sign in", form=form)
 
 
