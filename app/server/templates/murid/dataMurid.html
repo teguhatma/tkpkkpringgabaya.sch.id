@@ -10,6 +10,8 @@
   <h1 class="h3 mb-2 text-gray-800">Murid</h1>
   <p class="mb-4">Di dalam tabel ini mengandung beberapa informasi tentang {{ title.lower() }}</a>.</p>
 
+  {% include 'components/flash.html' %}
+
   <div class="button-select d-flex justify-content-center">
     {% for kelas in kelas %}
     <a class="btn btn-sm btn-info my-3 mx-3" href="{{ url_for('server.data_murid_kelas', ruang=kelas.id) }}">Kelompok
@@ -17,7 +19,6 @@
     {% endfor %}
   </div>
 
-  {% include 'components/flash.html' %}
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">

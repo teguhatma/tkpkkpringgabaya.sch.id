@@ -1,6 +1,6 @@
-{% extends 'components/back_office.html' %}
-{% block content_app %}
+{% extends 'components/back_office.html' %} {% block content_app %}
 <div class="container-fluid">
+  {% include "components/flash.html" %}
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
@@ -10,43 +10,52 @@
       <form class="user" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token() }}
         <div class="form-group">
-          {{ form.mata_pelajaran.label() }}
-          {{ form.mata_pelajaran(class="form-control")}}
-          {% for error in form.mata_pelajaran.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.mata_pelajaran.label() }} {{
+          form.mata_pelajaran(class="form-control")}} {% for error in
+          form.mata_pelajaran.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
             {{ form.hari.label() }}
-            <br>
-            {{ form.hari(class="form-control")}}
-            {% for error in form.hari.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            <br />
+            {{ form.hari(class="form-control")}} {% for error in
+            form.hari.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
           <div class="col-sm-6">
             {{ form.kelas.label() }}
-            <br>
-            {{ form.kelas(class="form-control")}}
-            {% for error in form.kelas.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            <br />
+            {{ form.kelas(class="form-control")}} {% for error in
+            form.kelas.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
         </div>
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
-            {{ form.jam.label() }}
-            {{ form.jam(class="form-control")}}
-            {% for error in form.jam.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {{ form.jam.label() }} {{ form.jam(class="form-control")}} {% for
+            error in form.jam.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
           <div class="col-sm-6">
-            {{ form.jam_end.label(class="hidden")}}
-            {{ form.jam_end(class="form-control")}}
-            {% for error in form.jam_end.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {{ form.jam_end.label(class="hidden")}} {{
+            form.jam_end(class="form-control")}} {% for error in
+            form.jam_end.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
         </div>
@@ -58,34 +67,40 @@
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
             {{ form.mata_pelajaran.label() }}
-            <br>
-            {{ form.mata_pelajaran(class="form-control")}}
-            {% for error in form.mata_pelajaran.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            <br />
+            {{ form.mata_pelajaran(class="form-control")}} {% for error in
+            form.mata_pelajaran.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
           <div class="col-sm-6">
             {{ form.hari.label() }}
-            <br>
-            {{ form.hari(class="form-control")}}
-            {% for error in form.hari.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            <br />
+            {{ form.hari(class="form-control")}} {% for error in
+            form.hari.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
         </div>
         <div class="form-group row">
           <div class="col-sm-6 mb-3 mb-sm-0">
-            {{ form.jam.label() }}
-            {{ form.jam(class="form-control")}}
-            {% for error in form.jam.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            {{ form.jam.label() }} {{ form.jam(class="form-control")}} {% for
+            error in form.jam.errors %}
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
           <div class="col-sm-6">
-            {{ form.jam_end.label() }}
-            {{ form.jam_end(class="form-control")}}
+            {{ form.jam_end.label() }} {{ form.jam_end(class="form-control")}}
             {% for error in form.jam_end.errors %}
-            <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+            <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+              {{ error }}
+            </p>
             {% endfor %}
           </div>
         </div>
@@ -95,13 +110,16 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
-  referrerpolicy="origin"></script>
+<script
+  src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
 <script>
   tinymce.init({
-    selector: 'textarea',
-    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-    toolbar_mode: 'floating',
+    selector: "textarea",
+    plugins:
+      "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+    toolbar_mode: "floating",
   });
 </script>
 {% endblock %}

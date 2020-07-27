@@ -92,17 +92,33 @@ def tambah_nilai_murid(id):
     murid = MuridModel.query.get(id)
     form = TambahNilaiMuridForm()
     if form.validate_on_submit():
-        tambah_nilai_murid = NilaiModel(
-            deskripsi=form.deskripsi.data,
-            semester=form.semester.data,
-            aspek_penilaian=form.aspek_penilaian.data,
-            tahun_pelajaran=form.tahun_pelajaran.data,
-            murid_id=murid.id,
+        data = (
+            NilaiModel.query.filter_by(aspek_penilaian=form.aspek_penilaian.data)
+            .filter_by(semester=form.semester.data)
+            .filter_by(tahun_pelajaran=form.tahun_pelajaran.data)
+            .first()
         )
-        db.session.add(tambah_nilai_murid)
-        db.session.commit()
-        flash("Nilai murid telah ditambahkan.", "Berhasil")
-        return redirect(url_for("server.data_nilai_murid", id=id))
+        if data is not None:
+            flash(
+                "Nilai {} pada {} tahun {} sudah ada.".format(
+                    form.aspek_penilaian.data,
+                    form.semester.data,
+                    form.tahun_pelajaran.data,
+                )
+            )
+            return redirect(url_for(".tambah_nilai_murid", id=id))
+        else:
+            tambah_nilai_murid = NilaiModel(
+                deskripsi=form.deskripsi.data,
+                semester=form.semester.data,
+                aspek_penilaian=form.aspek_penilaian.data,
+                tahun_pelajaran=form.tahun_pelajaran.data,
+                murid_id=murid.id,
+            )
+            db.session.add(tambah_nilai_murid)
+            db.session.commit()
+            flash("Nilai murid telah ditambahkan.", "Berhasil")
+            return redirect(url_for("server.data_nilai_murid", id=id))
     return render_template(
         "nilai/tambahUbahNilaiMurid.html",
         title="Tambah Nilai {}".format(murid.nama),

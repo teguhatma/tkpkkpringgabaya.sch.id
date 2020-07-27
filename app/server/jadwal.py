@@ -38,31 +38,53 @@ def tambah_jadwal():
     if current_user.is_administrator():
         form = TambahAdminJadwalForm()
         if form.validate_on_submit():
-            tambah_jadwal = JadwalKelasModel(
-                mata_pelajaran=form.mata_pelajaran.data,
-                jam=form.jam.data,
-                jam_end=form.jam_end.data,
-                hari=form.hari.data,
-                kelas_id=form.kelas.data.id,
+            data = (
+                JadwalKelasModel.query.filter(JadwalKelasModel.jam == form.jam.data)
+                .filter(JadwalKelasModel.jam_end == form.jam_end.data)
+                .filter(JadwalKelasModel.hari == form.hari.data)
+                .filter(JadwalKelasModel.kelas_id == form.kelas.data.id)
+                .first()
             )
-            db.session.add(tambah_jadwal)
-            db.session.commit()
-            flash("Jadwal telah ditambahkan.", "Berhasil")
-            return redirect(url_for("server.data_jadwal"))
+            if data is not None:
+                flash("Jam di hari {} sudah ada.".format(form.hari.data))
+                return redirect(url_for(".tambah_jadwal"))
+            else:
+                tambah_jadwal = JadwalKelasModel(
+                    mata_pelajaran=form.mata_pelajaran.data,
+                    jam=form.jam.data,
+                    jam_end=form.jam_end.data,
+                    hari=form.hari.data,
+                    kelas_id=form.kelas.data.id,
+                )
+                db.session.add(tambah_jadwal)
+                db.session.commit()
+                flash("Jadwal telah ditambahkan.", "Berhasil")
+                return redirect(url_for("server.data_jadwal"))
     else:
         form = TambahJadwalForm()
         if form.validate_on_submit():
-            tambah_jadwal = JadwalKelasModel(
-                mata_pelajaran=form.mata_pelajaran.data,
-                jam=form.jam.data,
-                jam_end=form.jam_end.data,
-                hari=form.hari.data,
-                kelas_id=current_user.guru.kelas.id,
+            data = (
+                JadwalKelasModel.query.filter(JadwalKelasModel.jam == form.jam.data)
+                .filter(JadwalKelasModel.jam_end == form.jam_end.data)
+                .filter(JadwalKelasModel.hari == form.hari.data)
+                .filter(JadwalKelasModel.kelas_id == current_user.guru.kelas.id)
+                .first()
             )
-            db.session.add(tambah_jadwal)
-            db.session.commit()
-            flash("Jadwal telah ditambahkan.", "Berhasil")
-            return redirect(url_for("server.data_jadwal"))
+            if data is not None:
+                flash("Jam di hari {} sudah ada.".format(form.hari.data))
+                return redirect(url_for(".tambah_jadwal"))
+            else:
+                tambah_jadwal = JadwalKelasModel(
+                    mata_pelajaran=form.mata_pelajaran.data,
+                    jam=form.jam.data,
+                    jam_end=form.jam_end.data,
+                    hari=form.hari.data,
+                    kelas_id=current_user.guru.kelas.id,
+                )
+                db.session.add(tambah_jadwal)
+                db.session.commit()
+                flash("Jadwal telah ditambahkan.", "Berhasil")
+                return redirect(url_for("server.data_jadwal"))
 
     return render_template(
         "jadwal/tambahUbahJadwal.html", title="Tambah Jadwal", form=form
@@ -86,7 +108,7 @@ def hapus_jadwal(id):
 def ubah_jadwal(id):
     ubah_jadwal = JadwalKelasModel.query.get(id)
     if current_user.is_administrator():
-        form=TambahAdminJadwalForm()
+        form = TambahAdminJadwalForm()
         if form.validate_on_submit():
             ubah_jadwal.mata_pelajaran = form.mata_pelajaran.data
             ubah_jadwal.jam = form.jam.data

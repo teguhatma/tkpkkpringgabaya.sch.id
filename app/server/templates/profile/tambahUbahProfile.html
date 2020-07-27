@@ -1,6 +1,6 @@
-{% extends 'components/back_office.html' %}
-{% block content_app %}
+{% extends 'components/back_office.html' %} {% block content_app %}
 <div class="container-fluid">
+  {% include "components/flash.html" %}
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
@@ -9,157 +9,187 @@
       <form class="user" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token() }}
         <div class="form-group">
-          {{ form.nama_lembaga.label() }}
-          {{ form.nama_lembaga(class="form-control")}}
-          {% for error in form.nama_lembaga.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.nama_lembaga.label() }} {{
+          form.nama_lembaga(class="form-control")}} {% for error in
+          form.nama_lembaga.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.no_statistik.label() }}
-          {{ form.no_statistik(class="form-control")}}
-          {% for error in form.no_statistik.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.no_statistik.label() }} {{
+          form.no_statistik(class="form-control")}} {% for error in
+          form.no_statistik.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.akte_notaris.label() }}
-          {{ form.akte_notaris(class="form-control")}}
-          {% for error in form.akte_notaris.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.akte_notaris.label() }} {{
+          form.akte_notaris(class="form-control")}} {% for error in
+          form.akte_notaris.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.no_izin_pendirian.label() }}
-          {{ form.no_izin_pendirian(class="form-control")}}
-          {% for error in form.no_izin_pendirian.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.no_izin_pendirian.label() }} {{
+          form.no_izin_pendirian(class="form-control")}} {% for error in
+          form.no_izin_pendirian.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.no_izin_operasional.label() }}
-          {{ form.no_izin_operasional(class="form-control")}}
-          {% for error in form.no_izin_operasional.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.no_izin_operasional.label() }} {{
+          form.no_izin_operasional(class="form-control")}} {% for error in
+          form.no_izin_operasional.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.tahun_berdiri.label() }}
-          {{ form.tahun_berdiri(class="form-control")}}
-          {% for error in form.tahun_berdiri.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.tahun_berdiri.label() }} {{
+          form.tahun_berdiri(class="form-control")}} {% for error in
+          form.tahun_berdiri.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.status_tk.label() }}
-          {{ form.status_tk(class="form-control")}}
+          {{ form.status_tk.label() }} {{ form.status_tk(class="form-control")}}
           {% for error in form.status_tk.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kurikulum.label() }}
-          {{ form.kurikulum(class="form-control")}}
+          {{ form.kurikulum.label() }} {{ form.kurikulum(class="form-control")}}
           {% for error in form.kurikulum.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kegiatan_belajar.label() }}
-          {{ form.kegiatan_belajar(class="form-control")}}
-          {% for error in form.kegiatan_belajar.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.kegiatan_belajar.label() }} {{
+          form.kegiatan_belajar(class="form-control")}} {% for error in
+          form.kegiatan_belajar.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.email.label() }}
-          {{ form.email(class="form-control")}}
-          {% for error in form.email.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.email.label() }} {{ form.email(class="form-control")}} {% for
+          error in form.email.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.no_telepon.label() }}
-          {{ form.no_telepon(class="form-control")}}
-          {% for error in form.no_telepon.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.no_telepon.label() }} {{
+          form.no_telepon(class="form-control")}} {% for error in
+          form.no_telepon.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kode_pos.label() }}
-          {{ form.kode_pos(class="form-control")}}
+          {{ form.kode_pos.label() }} {{ form.kode_pos(class="form-control")}}
           {% for error in form.kode_pos.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kelurahan.label() }}
-          {{ form.kelurahan(class="form-control")}}
+          {{ form.kelurahan.label() }} {{ form.kelurahan(class="form-control")}}
           {% for error in form.kelurahan.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kecamatan.label() }}
-          {{ form.kecamatan(class="form-control")}}
+          {{ form.kecamatan.label() }} {{ form.kecamatan(class="form-control")}}
           {% for error in form.kecamatan.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.kabupaten.label() }}
-          {{ form.kabupaten(class="form-control")}}
+          {{ form.kabupaten.label() }} {{ form.kabupaten(class="form-control")}}
           {% for error in form.kabupaten.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.provinsi.label() }}
-          {{ form.provinsi(class="form-control")}}
+          {{ form.provinsi.label() }} {{ form.provinsi(class="form-control")}}
           {% for error in form.provinsi.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.website.label() }}
-          {{ form.website(class="form-control")}}
-          {% for error in form.website.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.website.label() }} {{ form.website(class="form-control")}} {%
+          for error in form.website.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.instagram.label() }}
-          {{ form.instagram(class="form-control")}}
+          {{ form.instagram.label() }} {{ form.instagram(class="form-control")}}
           {% for error in form.instagram.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.facebook.label() }}
-          {{ form.facebook(class="form-control")}}
+          {{ form.facebook.label() }} {{ form.facebook(class="form-control")}}
           {% for error in form.facebook.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.twitter.label() }}
-          {{ form.twitter(class="form-control")}}
-          {% for error in form.twitter.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.twitter.label() }} {{ form.twitter(class="form-control")}} {%
+          for error in form.twitter.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.alamat.label() }}
-          {{ form.alamat(class="form-control")}}
-          {% for error in form.alamat.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          {{ form.alamat.label() }} {{ form.alamat(class="form-control")}} {%
+          for error in form.alamat.errors %}
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         <div class="form-group">
-          {{ form.visi_misi.label() }}
-          {{ form.visi_misi(class="form-control")}}
+          {{ form.visi_misi.label() }} {{ form.visi_misi(class="form-control")}}
           {% for error in form.visi_misi.errors %}
-          <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
+          <p style="font-size: 13px; margin: 10px; color: #2653d4;">
+            {{ error }}
+          </p>
           {% endfor %}
         </div>
         {{ form.submit(class='btn btn-primary')}}
@@ -167,13 +197,9 @@
     </div>
   </div>
 </div>
-<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
-  referrerpolicy="origin"></script>
-<script>
-  tinymce.init({
-    selector: 'textarea',
-    plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-    toolbar_mode: 'floating',
-  });
-</script>
+<script
+  src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
+<script></script>
 {% endblock %}
