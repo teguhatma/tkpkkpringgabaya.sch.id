@@ -39,13 +39,28 @@
     </div>
   </div>
 </div>
-<script
-  src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
-  referrerpolicy="origin"
-></script>
+<script src="https://cdn.tiny.cloud/1/6eekx0dabdhkl582c2j6v16ewgjl0xzpp3tclh8r7ns2phki/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"></script>
 <script>
   tinymce.init({
-    selector: "textarea",
+    selector: 'textarea',
+    height: 300,
+    plugins: [
+      'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+      'table emoticons template paste help'
+    ],
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image |' +
+      'forecolor backcolor emoticons',
+    menu: {
+      favs: {
+        title: 'My Favorites',
+        items: 'code visualaid | searchreplace | emoticons'
+      }
+    },
+    menubar: 'favs',
+    content_css: 'css/content.css'
   });
 </script>
 {% endblock %}

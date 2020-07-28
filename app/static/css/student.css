@@ -5,18 +5,22 @@ div.nis.col-md-4.mx-3 {
 }
 
 div.title-biodata {
+  background: #f6c23e;
   padding: 20px;
-  background: #1cc88a;
-  margin-bottom: 20px;
 }
+
 h5 {
   font-size: 15px !important;
 }
 
 div.title-biodata-wali {
   padding: 20px;
-  margin-bottom: 20px;
-  background: #3a3b45;
+  background: #f6c23e;
+}
+
+div.content-biodata-full {
+  padding: 20px;
+  background-color: #eaecf4;
 }
 
 a.nav-link.nav-dashboard,
@@ -24,4 +28,33 @@ a.nav-link.nav-profile,
 a.nav-link.nav-nilai,
 a.nav-link.nav-akun {
   margin-left: 30px;
+}
+
+small.titleJudul {
+  letter-spacing: .1em;
+  font-weight: 500;
+}
+
+h5.titleJawab {
+  font-weight: 800;
+}
+
+div.nilai-murid-column {
+  padding: 0 20px;
+}
+
+div.tahun-pelajaran {
+  padding: 20px;
+  background: #f6c23e;
+}
+
+div.tahun-pelajaran p {
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+div.content-biodata-full {
+  padding: 20px;
+  background: #eaecf485;
 }

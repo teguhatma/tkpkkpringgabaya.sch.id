@@ -66,7 +66,7 @@ class MuridGantiProfileForm(FlaskForm):
         ]
     )
 
-    submit = SubmitField("Tambahkan")
+    submit = SubmitField("Simpan")
 
 
 class MuridGantiProfileWaliForm(FlaskForm):

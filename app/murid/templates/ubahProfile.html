@@ -25,6 +25,13 @@
           </div>
         </div>
         <div class="form-group row">
+          <label for="nomor_induk" class="col-sm-3 col-form-label">Nomor Induk</label>
+          <div class="col-sm-9">
+            <input type="text" name="nomor_induk" id="nomor_induk" value="{{current_user.murid.nomor_induk }}"
+              class="form-control" readonly>
+          </div>
+        </div>
+        <div class="form-group row">
           {{ form.anak_ke.label(class='col-sm-3 col-form-label',
           for='anak_ke')}}
           <div class="col-sm-9">
@@ -36,6 +43,13 @@
           col-form-label')}}
           <div class="col-sm-9">
             {{ form.jenis_kelamin(class='form-control', id='jenis_kelamin')}}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
+          <div class="col-sm-9">
+            <input type="text" name="tahun_pelajaran" id="tahun_pelajaran"
+              value="{{current_user.murid.tahun_pelajaran }}" class="form-control" readonly>
           </div>
         </div>
         <div class="form-group row">

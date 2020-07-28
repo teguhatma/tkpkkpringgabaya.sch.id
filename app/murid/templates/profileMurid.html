@@ -1,7 +1,9 @@
 {% extends 'components/mainMurid.html' %} {% block content %}
 <small class="mx-5">DATA LENGKAP PESERTA DIDIK</small>
-{% include 'components/flash.html' %}
 <div class="container-fluid">
+  <div class="mx-4">
+    {% include 'components/flash.html' %}
+  </div>
   <div class="mx-4 my-4 biodata d-flex justify-content-between">
     <div class="col-md-6 peserta-didik">
       <div class="title-biodata">
@@ -10,131 +12,103 @@
       <div class="content-biodata-full">
         <div class="form-group my-0">
           <div class="group">
-            <small>Nama</small>
-            <h5>{{ murid.nama }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Nama Panggilan</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.nama_panggilan }}</h5>
-            </div>
+            <small class="titleJudul">Nama</small>
+            <h5 class="titleJawab">{{ murid.nama }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Nomor Induk</small>
-            <h5>{{ murid.nomor_induk }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Anak Ke</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.anak_ke }}</h5>
-            </div>
+            <small class="titleJudul">Nama Panggilan</small>
+            <h5 class="titleJawab">{{ murid.nama_panggilan }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Jenis Kelamin</small>
-            <h5>{{ murid.jenis_kelamin }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Tahun Pelajaran</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.tahun_pelajaran }}</h5>
-            </div>
+            <small class="titleJudul">Nomor Induk</small>
+            <h5 class="titleJawab">{{ murid.nomor_induk }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Nama Ibu Kandung</small>
-            <h5>{{ murid.nama_ibu_kandung }}</h5>
+            <small class="titleJudul">Anak Ke</small>
+            <h5 class="titleJawab">{{ murid.anak_ke }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Agama</small>
-            <h5>{{ murid.agama }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Tempat Lahir</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.tempat_lahir }}</h5>
-            </div>
+            <small class="titleJudul">Jenis Kelamin</small>
+            <h5 class="titleJawab">{{ murid.jenis_kelamin }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Tanggal Lahir</small>
-            <h5>{{ murid.tanggal_lahir }}</h5>
+            <small class="titleJudul">Tahun Pelajaran</small>
+            <h5 class="titleJawab">{{ murid.tahun_pelajaran }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Dusun</small>
-            <h5>{{ murid.dusun }}</h5>
+            <small class="titleJudul">Nama Ibu Kandung</small>
+            <h5 class="titleJawab">{{ murid.nama_ibu_kandung }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Kelurahan</small>
-            <h5>{{ murid.kelurahan }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Kecamatan</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.kecamatan }}</h5>
-            </div>
+            <small class="titleJudul">Agama</small>
+            <h5 class="titleJawab">{{ murid.agama }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Kabupaten</small>
-            <h5>{{ murid.kabupaten }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Provinsi</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ murid.provinsi }}</h5>
-            </div>
+            <small class="titleJudul">Tempat Lahir</small>
+            <h5 class="titleJawab">{{ murid.tempat_lahir }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Alamat Lengkap</small>
-            <h5>{{ murid.alamat }}</h5>
+            <small class="titleJudul">Tanggal Lahir</small>
+            <h5 class="titleJawab">{{ murid.tanggal_lahir }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Dusun</small>
+            <h5 class="titleJawab">{{ murid.dusun }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kelurahan</small>
+            <h5 class="titleJawab">{{ murid.kelurahan }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kecamatan</small>
+            <h5 class="titleJawab">{{ murid.kecamatan }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kabupaten</small>
+            <h5 class="titleJawab">{{ murid.kabupaten }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Provinsi</small>
+            <h5 class="titleJawab">{{ murid.provinsi }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Alamat Lengkap</small>
+            <h5 class="titleJawab">{{ murid.alamat }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-4">
           <div class="group d-flex justify-content-between">
-            <a
-              href="{{ url_for('murid.murid_ganti_profile_diri') }}"
-              class="btn btn-sm btn-primary"
-              >Ubah</a
-            >
+            <a href="{{ url_for('murid.murid_ganti_profile_diri') }}" class="btn btn-sm btn-primary">Ubah</a>
           </div>
         </div>
       </div>
@@ -146,105 +120,84 @@
       <div class="content-biodata-full">
         <div class="form-group my-0">
           <div class="group">
-            <small>Nama</small>
-            <h5>{{ wali.nama }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Jenis Kelamin</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ wali.jenis_kelamin }}</h5>
-            </div>
+            <small class="titleJudul">Nama</small>
+            <h5 class="titleJawab">{{ wali.nama }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Agama</small>
-            <h5>{{ wali.agama }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Pekerjaan</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ wali.pekerjaan }}</h5>
-            </div>
+            <small class="titleJudul">Jenis Kelamin</small>
+            <h5 class="titleJawab">{{ wali.jenis_kelamin }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Tempat Lahir</small>
-            <h5>{{ wali.tempat_lahir }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Tanggal Lahir</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ wali.tanggal_lahir }}</h5>
-            </div>
+            <small class="titleJudul">Agama</small>
+            <h5 class="titleJawab">{{ wali.agama }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Nomor Telepon</small>
-            <h5>{{ wali.nomor_telepon }}</h5>
+            <small class="titleJudul">Pekerjaan</small>
+            <h5 class="titleJawab">{{ wali.pekerjaan }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Kelurahan</small>
-            <h5>{{ wali.kelurahan }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Kecamatan</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ wali.kecamatan }}</h5>
-            </div>
+            <small class="titleJudul">Tempat Lahir</small>
+            <h5 class="titleJawab">{{ wali.tempat_lahir }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Kabupaten</small>
-            <h5>{{ wali.kabupaten }}</h5>
-          </div>
-        </div>
-        <div class="form-group my-0">
-          <div class="group group-2">
-            <div class="title-content">
-              <small>Provinsi</small>
-            </div>
-            <div class="content-biodata">
-              <h5>{{ wali.provinsi }}</h5>
-            </div>
+            <small class="titleJudul">Tanggal Lahir</small>
+            <h5 class="titleJawab">{{ wali.tanggal_lahir }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
           <div class="group">
-            <small>Alamat Lengkap</small>
-            <h5>{{ wali.alamat }}</h5>
+            <small class="titleJudul">Nomor Telepon</small>
+            <h5 class="titleJawab">{{ wali.nomor_telepon }}</h5>
           </div>
         </div>
         <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kelurahan</small>
+            <h5 class="titleJawab">{{ wali.kelurahan }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kecamatan</small>
+            <h5 class="titleJawab">{{ wali.kecamatan }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Kabupaten</small>
+            <h5 class="titleJawab">{{ wali.kabupaten }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Provinsi</small>
+            <h5 class="titleJawab">{{ wali.provinsi }}</h5>
+          </div>
+        </div>
+        <div class="form-group my-0">
+          <div class="group">
+            <small class="titleJudul">Alamat Lengkap</small>
+            <h5 class="titleJawab">{{ wali.alamat }}</h5>
+          </div>
+        </div>
+        {% if wali is none %}
+        {% else %}
+        <div class="form-group my-4">
           <div class="group d-flex justify-content-between">
-            <a
-              href="{{ url_for('murid.murid_ganti_profile_wali') }}"
-              class="btn btn-sm btn-primary"
-              >Ubah</a
-            >
+            <a href="{{ url_for('murid.murid_ganti_profile_wali') }}" class="btn btn-sm btn-primary">Ubah</a>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
