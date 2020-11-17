@@ -12,12 +12,17 @@
 
   {% include 'components/flash.html' %}
 
-  <div class="button-select d-flex justify-content-center">
-    {% for kelas in kelas %}
-    <a class="btn btn-sm btn-info my-3 mx-3" href="{{ url_for('server.data_murid_kelas', ruang=kelas.id) }}">Kelompok
-      {{ kelas.ruang }}</a>
-    {% endfor %}
+  <div class="container">
+    <div class="row justify-content-md-center">
+      {% for kelas in kelas %}
+      <div class="col-md-auto col-sm-auto col-xl-auto col-auto">
+        <a class="btn btn-sm btn-info my-3" href="{{ url_for('server.data_murid_kelas', ruang=kelas.id) }}">Kelompok
+          {{ kelas.ruang }}</a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
+
 
   <!-- DataTales Example -->
   <div class="card shadow mb-4">

@@ -37,7 +37,7 @@ def image_berita(filename):
 
 @client.route("/")
 def index():
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get("page", 1, type=int)
     berita = BeritaModel.query.filter(BeritaModel.tampilkan == True).first()
     all_berita = (
         BeritaModel.query.filter(BeritaModel.tampilkan == True)
@@ -45,7 +45,9 @@ def index():
         .paginate(page, 6, False)
     )
 
-    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.asc()).paginate(page, 6, False)
+    learning = ElearningModel.query.order_by(
+        ElearningModel.waktu_upload.asc()
+    ).paginate(page, 6, False)
     profile = ProfileSekolahModel.query.first()
 
     return render_template(
@@ -63,7 +65,7 @@ def lihat_berita(slug):
     arsip_berita = (
         BeritaModel.query.filter(BeritaModel.tampilkan == True)
         .order_by(BeritaModel.waktu_upload.desc())
-        .all()
+        .limit(5)
     )
     berita = BeritaModel.query.filter_by(slug=slug).first_or_404()
     profile = ProfileSekolahModel.query.first()
@@ -130,31 +132,55 @@ def prestasi():
 
 @client.route("/e-learning")
 def learning():
-    page = request.args.get('page', 1, type=int)
-    learning = ElearningModel.query.order_by(ElearningModel.waktu_upload.desc()).paginate(page, 12, False)
-    next_url = url_for('client.learning', page=learning.next_num) \
-        if learning.has_next else None
-    prev_url = url_for('client.learning', page=learning.prev_num) \
-        if learning.has_prev else None
+    page = request.args.get("page", 1, type=int)
+    learning = ElearningModel.query.order_by(
+        ElearningModel.waktu_upload.desc()
+    ).paginate(page, 12, False)
+    next_url = (
+        url_for("client.learning", page=learning.next_num)
+        if learning.has_next
+        else None
+    )
+    prev_url = (
+        url_for("client.learning", page=learning.prev_num)
+        if learning.has_prev
+        else None
+    )
     profile = ProfileSekolahModel.query.first()
     return render_template(
-        "lihatElearning.html", title="E-Learning", learning=learning.items, prev_url=prev_url, next_url=next_url, profile=profile
+        "lihatElearning.html",
+        title="E-Learning",
+        learning=learning.items,
+        prev_url=prev_url,
+        next_url=next_url,
+        profile=profile,
     )
 
 
 @client.route("/berita")
 def berita():
-    page = request.args.get('page', 1, type=int)
+    page = request.args.get("page", 1, type=int)
     all_berita = (
         BeritaModel.query.filter(BeritaModel.tampilkan == True)
         .order_by(BeritaModel.waktu_upload.desc())
         .paginate(page, 9, False)
     )
-    next_url = url_for('client.berita', page=all_berita.next_num) \
-        if all_berita.has_next else None
-    prev_url = url_for('client.berita', page=all_berita.prev_num) \
-        if all_berita.has_prev else None
+    next_url = (
+        url_for("client.berita", page=all_berita.next_num)
+        if all_berita.has_next
+        else None
+    )
+    prev_url = (
+        url_for("client.berita", page=all_berita.prev_num)
+        if all_berita.has_prev
+        else None
+    )
     profile = ProfileSekolahModel.query.first()
     return render_template(
-        "berita.html", title="Berita Sekolah", berita=all_berita.items, profile=profile, next_url=next_url, prev_url=prev_url
+        "berita.html",
+        title="Berita Sekolah",
+        berita=all_berita.items,
+        profile=profile,
+        next_url=next_url,
+        prev_url=prev_url,
     )

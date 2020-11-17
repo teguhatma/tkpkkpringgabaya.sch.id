@@ -6,7 +6,8 @@ html {
 }
 
 .navbar {
-  background-color: #e9ecef;
+  background-color: #fff !important;
+  box-shadow: 0px 0px 3px 0px;
 }
 
 a.item-bawah {
@@ -18,15 +19,19 @@ a.item-bawah {
 .card-img-berita {
   height: 90px;
 }
+
 .card-arsip {
   background-color: transparent !important;
 }
+
 p.card-text {
   font-size: 12px;
 }
+
 h5.card-title {
   font-size: 13px;
 }
+
 a.social-share-icon.icon-weibo,
 a.social-share-icon.icon-wechat,
 a.social-share-icon.icon-douban,
@@ -43,6 +48,7 @@ a.social-share-icon.icon-qzone {
   text-align: center;
   color: #000;
 }
+
 .new-berita {
   position: absolute;
   left: 0;
@@ -51,6 +57,7 @@ a.social-share-icon.icon-qzone {
   text-align: center;
   color: #000;
 }
+
 .new-banget {
   margin: auto;
   width: 350px;
@@ -74,6 +81,7 @@ span.border {
   border-radius: 5px;
   font-weight: bold;
 }
+
 span.bawah {
   background: none;
   font-size: 12px;
@@ -81,6 +89,7 @@ span.bawah {
   font-weight: bold;
   letter-spacing: 5px;
 }
+
 div.card {
   border: none;
 }
@@ -88,7 +97,8 @@ div.card {
 .navbar-image {
   /* The image used */
   background-image: url("../img/background.jpg");
-  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  -webkit-filter: grayscale(100%);
+  /* Safari 6.0 - 9.0 */
   filter: grayscale(100%);
   /* Full height */
   height: 60%;
@@ -98,6 +108,7 @@ div.card {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 a.btn-category {
   background: #4cc499;
   color: #fff;
@@ -121,32 +132,41 @@ p.title-card {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 .card.berita-terbaru img {
   height: 200px;
 }
+
 .berita-title-berita {
   font-size: 16px;
 }
+
 .card.berita-terbaru {
   box-shadow: 0 1px 26px 0 rgba(0, 0, 0, 0.1);
 }
+
 .berita-nama {
   padding: 50px 60px !important;
 }
+
 .berita-data {
   padding: 50px 15px !important;
 }
+
 .foto.foto-navbar img {
   height: 100px;
   width: 100%;
 }
+
 .deskripsi-foto {
   text-align: left;
 }
+
 span.menu {
   color: #fff;
   font-weight: bold;
 }
+
 .kelas-footer {
   font-size: 12px;
   margin-bottom: 2px;
@@ -164,32 +184,39 @@ span.menu {
   margin-bottom: 1px;
   letter-spacing: 1px;
 }
+
 .title-index {
   color: #545b62;
   letter-spacing: 1px;
 }
+
 p.card-text.time {
   margin-bottom: 1px;
 }
+
 .card-elearning {
   background: #f8f9fa;
 }
+
 .nama-guru {
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
   color: #545b62;
 }
+
 span.menu-deskripsi {
   color: #adb5bd;
   font-size: 14px;
 }
+
 .selected a {
   color: #535658;
   font-weight: bold;
   font-size: 14px;
   letter-spacing: 0.8px;
 }
+
 .btn-primary {
   margin: 30px;
   color: #545b62 !important;
@@ -199,26 +226,24 @@ span.menu-deskripsi {
   padding: 10px 30px !important;
   font-weight: bold !important;
 }
+
 .copyright {
   padding-top: 20px;
   padding-bottom: 10px;
 }
+
 .copyright p {
   color: #9a9b9c;
   font-size: 13px;
 }
+
 .btn-primary:hover {
   background: coral !important;
   color: #e9ecef !important;
 }
+
 .category {
   margin: 100px;
-}
-
-.navbar-top {
-  height: 40px;
-  padding: 0 !important;
-  background: #56b6e7;
 }
 
 .nav-login {
@@ -232,47 +257,56 @@ span.menu-deskripsi {
   color: #ffffff;
 }
 
-a.nav-link.home-link{
+a.nav-link.home-link {
   padding: 8px 30px;
 }
-a.nav-link.berita-link{
+
+a.nav-link.berita-link {
 
   background: #36b9cc;
   padding: 8px 30px;
   border-radius: 3px;
 
 }
-a.nav-link.learning-link{
+
+a.nav-link.learning-link {
 
   background: #36b9cc;
   padding: 8px 30px;
   border-radius: 3px;
 
 }
-a.nav-link.profil-link{
+
+a.nav-link.profil-link {
 
   background: #36b9cc;
   padding: 8px 30px;
   border-radius: 3px;
 
 }
-a-nav-link.guru-link{
+
+a-nav-link.guru-link {
 
   background: #36b9cc;
   padding: 8px 30px;
   border-radius: 3px;
 
 }
-.topbar .nav-item .nav-link{
+
+.topbar .nav-item .nav-link {
   height: 0;
 }
-footer{
+
+footer {
   background-color: #fff;
   padding: 50px 0;
 }
-footer div.col-md-8.text-center, footer div.col-md-4{
+
+footer div.col-md-8.text-center,
+footer div.col-md-4 {
   padding: 0 100px;
 }
-footer span.menu{
+
+footer span.menu {
   color: #78797f;
 }

@@ -27,7 +27,7 @@
           <div class="col-sm-6">
             {{ form.dokumen.label() }}
             <br>
-            {{ form.dokumen()}}
+            {{ form.dokumen(accept='application/pdf')}}
             {% for error in form.dokumen.errors %}
             <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
             {% endfor %}
@@ -65,7 +65,7 @@
           <div class="col-sm-6">
             {{ form.dokumen.label() }}
             <br>
-            {{ form.dokumen()}}
+            {{ form.dokumen(accept='application/pdf')}}
             {% for error in form.dokumen.errors %}
             <p style="font-size: 13px;margin: 10px;color: #2653d4;">{{ error }}</p>
             {% endfor %}

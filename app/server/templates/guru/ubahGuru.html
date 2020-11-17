@@ -15,7 +15,7 @@
       <form class="user" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token() }}
         <div class="form-group row">
-          <div class="col-sm-12 mb-3 mb-sm-0">
+          <div class="col-sm-12">
             {{ form.nama.label() }} {{ form.nama(class="form-control")}} {% for
             error in form.nama.errors %}
             <p style="font-size: 13px; margin: 10px; color: #2653d4;">
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 mb-3">
             {{ form.email.label() }} {{ form.email(class="form-control")}} {%
             for error in form.email.errors %}
             <p style="font-size: 13px; margin: 10px; color: #2653d4;">
@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.nik.label() }} {{ form.nik(class="form-control")}} {% for
             error in form.nik.errors %}
             <p style="font-size: 13px; margin: 10px; color: #2653d4;">
@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.jenis_kelamin.label() }} {{
             form.jenis_kelamin(class="form-control")}} {% for error in
             form.jenis_kelamin.errors %}
@@ -81,7 +81,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.kelas.label()}} {{ form.kelas(class="form-control")}} {% for
             error in form.kelas.errors %}
             <p style="font-size: 13px; margin: 10px; color: #2653d4;">
@@ -99,7 +99,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.agama.label()}} {{ form.agama(class="form-control")}} {% for
             error in form.agama.errors %}
             <p style="font-size: 13px; margin: 10px; color: #2653d4;">
@@ -118,7 +118,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.tempat_lahir.label() }} {{
             form.tempat_lahir(class="form-control")}} {% for error in
             form.tempat_lahir.errors %}
@@ -138,7 +138,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.foto.label()}}
             <br />
             <div class="row">
@@ -198,7 +198,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.kelurahan.label()}} {{
             form.kelurahan(class="form-control")}} {% for error in
             form.kelurahan.errors %}
@@ -218,7 +218,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6 mb-3 mb-sm-0">
+          <div class="col-sm-6 mb-3">
             {{ form.kabupaten.label()}} {{
             form.kabupaten(class="form-control")}} {% for error in
             form.kabupaten.errors %}

@@ -9,7 +9,7 @@
       <form class="user" method="POST" enctype="multipart/form-data">
         {{ form.csrf_token() }}
         <div class="form-group row">
-          <div class="col-sm-12 mb-3 mb-sm-0">
+          <div class="col-sm-12">
             {{ form.nama.label() }}
             {{ form.nama(class="form-control")}}
             {% for error in form.nama.errors %}
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-6">
+          <div class="col-sm-6 mb-3">
             {{ form.email.label() }}
             {{ form.email(class="form-control")}}
             {% for error in form.email.errors %}

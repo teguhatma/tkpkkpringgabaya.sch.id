@@ -8,8 +8,8 @@
 <div class="container">
   <div class="row d-flex justify-content-start mb-3">
     {% for ber in all_berita %}
-    <div class="col-md-4 mb-5">
-      <div class="card berita-terbaru" style="width: 18rem;">
+    <div class="col-md-6 col-sm-6 col-xl-4 col-12 mb-5">
+      <div class="card berita-terbaru">
         <img
           src="{{ url_for('client.image_berita', filename=ber.nama_gambar) }}"
           class="card-img-top"
@@ -51,7 +51,7 @@
     <div class="col-md-4">
       <div class="card mb-3" style="max-width: 540px;">
         <div class="row no-gutters">
-          <div class="col-md-4">
+          <div class="col-md-4" style="background-color: #f8f9fc;">
             <img
               class="img-thumbnail"
               src="https://source.unsplash.com/100x105/?book"
