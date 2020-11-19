@@ -57,6 +57,3 @@ def drop():
     """ Drop All Table in Database """
     db.session.remove()
     db.drop_all()
-
-if __name__ == "__main__":
-    app.run(debug=True, host='192.168.43.151')
