@@ -1,8 +1,4 @@
 import os
-from dotenv import load_dotenv
-
-basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, ".env"))
 
 
 class Config:
@@ -17,11 +13,7 @@ class Config:
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = (
-        "postgres://vqosmtpcivspjf:164b513ca8b7320784edb19331b0bb029600a44b1c844752af1813ea57add65a@ec2-3-218-75-21.compute-1.amazonaws.com:5432/dco0ag7si7knja"
-        or "sqlite:///" + os.path.join(basedir, "app.db")
-    )
-    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
 
 
 class DevelopmentConfig(Config):
