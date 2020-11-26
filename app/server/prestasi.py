@@ -11,7 +11,7 @@ from ..decorators import admin_required, admin_guru_required
 
 @server.route("/dashboard/prestasi")
 @login_required
-@admin_guru_required
+@admin_required
 def prestasi():
     kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     prestasi = PrestasiModel.query.all()
@@ -25,7 +25,7 @@ def prestasi():
 
 @server.route("/dashboard/prestasi/tambah", methods=["GET", "POST"])
 @login_required
-@admin_guru_required
+@admin_required
 def tambah_prestasi():
     kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahPrestasiForm()
@@ -51,7 +51,7 @@ def tambah_prestasi():
 
 @server.route("/dashboard/prestasi/ubah/<id>", methods=["GET", "POST"])
 @login_required
-@admin_guru_required
+@admin_required
 def ubah_prestasi(id):
     kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahPrestasiForm()
@@ -84,7 +84,7 @@ def ubah_prestasi(id):
 
 @server.route("/dashboard/prestasi/hapus/<id>", methods=["GET", "POST"])
 @login_required
-@admin_guru_required
+@admin_required
 def hapus_prestasi(id):
     hapus = PrestasiModel.query.get(id)
     db.session.delete(hapus)

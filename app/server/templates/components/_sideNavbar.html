@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('server.dashboard') }}">
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-laugh-wink"></i>
     </div>
@@ -79,11 +79,13 @@
       <i class="fas fa-fw fa-file"></i>
       <span>Dokumen Sekolah</span></a>
   </li>
+  {% if current_user.is_administrator() %}
   <li class="nav-item">
     <a class="nav-link" href="{{ url_for('server.prestasi')}}">
       <i class="fas fa-fw fa-trophy"></i>
       <span>Prestasi Sekolah</span></a>
   </li>
+  {% endif %}
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseReport" aria-expanded="true"
@@ -121,7 +123,9 @@
         <a class="collapse-item" href="{{ url_for('server.report_guru')}}" target="_blank">Data Guru</a>
         <a class="collapse-item" href="{{ url_for('server.report_murid')}}" target="_blank">Data Murid</a>
         <a class="collapse-item" href="{{ url_for('server.report_wali')}}" target="_blank">Data Wali Murid</a>
+        {% if current_user.is_administrator() %}
         <a class="collapse-item" href="{{ url_for('server.report_prestasi')}}" target="_blank">Data Prestasi Sekolah</a>
+        {% endif %}
       </div>
     </div>
   </li>
