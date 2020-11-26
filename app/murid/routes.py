@@ -36,7 +36,7 @@ def foto_diri_murid(filename):
 @login_required
 def murid_dashboard():
     jadwal = (
-        JadwalKelasModel.query.filter_by(kelas_id=current_user.murid.id)
+        JadwalKelasModel.query.filter_by(kelas_id=current_user.murid.kelas.id)
         .order_by(JadwalKelasModel.hari.asc())
         .order_by(JadwalKelasModel.jam.asc())
         .all()

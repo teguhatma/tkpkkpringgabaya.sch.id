@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import DataSekolahModel
+from app.models import DataSekolahModel, KelasModel
 from .forms import TambahDataSekolahForm, UbahDataSekolahForm
 from flask_login import login_required
 from ..decorators import admin_guru_required
@@ -25,12 +25,14 @@ def unique_filename(data):
 @admin_guru_required
 @login_required
 def dokumen_data_sekolah(filename):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     dokumen = DataSekolahModel.query.filter_by(nama_dokumen=filename).first()
     return send_file(
         BytesIO(dokumen.dokumen),
         mimetype="file/*",
         as_attachment=True,
         attachment_filename=dokumen.nama_dokumen,
+        kelas=kelas,
     )
 
 
@@ -38,9 +40,13 @@ def dokumen_data_sekolah(filename):
 @admin_guru_required
 @login_required
 def data_sekolah():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data_sekolah = DataSekolahModel.query.all()
     return render_template(
-        "dataSekolah/dataSekolah.html", data_sekolah=data_sekolah, title="Data Sekolah"
+        "dataSekolah/dataSekolah.html",
+        data_sekolah=data_sekolah,
+        title="Data Sekolah",
+        kelas=kelas,
     )
 
 
@@ -48,6 +54,7 @@ def data_sekolah():
 @admin_guru_required
 @login_required
 def tambah_data_sekolah():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahDataSekolahForm()
     if form.validate_on_submit():
         tambah_data_sekolah = DataSekolahModel(
@@ -61,7 +68,10 @@ def tambah_data_sekolah():
         flash("Data sekolah sudah tersimpan", "info")
         return redirect(url_for("server.data_sekolah"))
     return render_template(
-        "dataSekolah/tambahDataSekolah.html", form=form, title="Tambah data sekolah"
+        "dataSekolah/tambahDataSekolah.html",
+        form=form,
+        title="Tambah data sekolah",
+        kelas=kelas,
     )
 
 
@@ -80,6 +90,7 @@ def hapus_data_sekolah(slug):
 @admin_guru_required
 @login_required
 def ubah_data_sekolah(slug):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     ubah_data_sekolah = DataSekolahModel.query.filter_by(slug=slug).first_or_404()
     form = UbahDataSekolahForm()
     if form.validate_on_submit():
@@ -102,5 +113,8 @@ def ubah_data_sekolah(slug):
         form.deskripsi.data = ubah_data_sekolah.deskripsi
 
     return render_template(
-        "dataSekolah/tambahDataSekolah.html", title=ubah_data_sekolah.judul, form=form
+        "dataSekolah/tambahDataSekolah.html",
+        title=ubah_data_sekolah.judul,
+        form=form,
+        kelas=kelas,
     )

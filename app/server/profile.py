@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import ProfileSekolahModel
+from app.models import ProfileSekolahModel, KelasModel
 from .forms import TambahUbahProfileForm
 from flask_login import login_required
 from ..decorators import admin_required, admin_guru_required
@@ -13,6 +13,7 @@ from ..decorators import admin_required, admin_guru_required
 @admin_required
 @login_required
 def profile_sekolah():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahProfileForm()
     profile = ProfileSekolahModel.query.first()
     if profile is None:
@@ -102,5 +103,5 @@ def profile_sekolah():
         form.twitter.data = profile.sosmed["twitter"]
 
     return render_template(
-        "profile/tambahUbahProfile.html", title="Profil Sekolah", form=form
+        "profile/tambahUbahProfile.html", title="Profil Sekolah", form=form, kelas=kelas
     )

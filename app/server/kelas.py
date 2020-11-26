@@ -12,14 +12,18 @@ from ..decorators import admin_required, admin_guru_required
 @admin_guru_required
 @login_required
 def data_kelas():
+    kelas_side = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     kelas = KelasModel.query.all()
-    return render_template("kelas/dataKelas.html", data_kelas=kelas, title="Data Kelas")
+    return render_template(
+        "kelas/dataKelas.html", data_kelas=kelas, title="Data Kelas", kelas=kelas_side
+    )
 
 
 @server.route("/dashboard/kelas/tambah", methods=["GET", "POST"])
 @admin_required
 @login_required
 def tambah_kelas():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahKelasForm()
     if form.validate_on_submit():
         tambah_kelas = KelasModel(ruang=form.ruang.data.upper())
@@ -27,7 +31,9 @@ def tambah_kelas():
         db.session.commit()
         flash("Ruang kelas {} sudah terbuat".format(tambah_kelas.ruang))
         return redirect(url_for("server.data_kelas"))
-    return render_template("kelas/tambahKelas.html", title="Menambah Kelas", form=form)
+    return render_template(
+        "kelas/tambahKelas.html", title="Menambah Kelas", form=form, kelas=kelas
+    )
 
 
 @server.route("/dashboard/kelas/hapus/<id>")

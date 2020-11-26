@@ -3,11 +3,12 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import BeritaModel
+from app.models import BeritaModel, KelasModel
 from .forms import TambahUbahBeritaForm
 from flask_login import login_required
 from ..decorators import admin_guru_required
 from werkzeug.utils import secure_filename
+
 
 def unique_filename(data):
     """
@@ -20,13 +21,18 @@ def unique_filename(data):
     new_name = "%s.%s" % (uuid.uuid4().hex, get_ext)
     return new_name
 
+
 @server.route("/dashboard/berita-sekolah")
 @admin_guru_required
 @login_required
 def berita_sekolah():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     berita_sekolah = BeritaModel.query.all()
     return render_template(
-        "berita/dataBerita.html", title="Berita Sekolah", berita_sekolah=berita_sekolah
+        "berita/dataBerita.html",
+        title="Berita Sekolah",
+        berita_sekolah=berita_sekolah,
+        kelas=kelas,
     )
 
 
@@ -34,6 +40,7 @@ def berita_sekolah():
 @admin_guru_required
 @login_required
 def tambah_berita_sekolah():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahBeritaForm()
 
     # Mendapatkan file gambar
@@ -116,7 +123,11 @@ def tambah_berita_sekolah():
             flash("Data berhasil terbuat", "Berhasil")
             return redirect(url_for("server.berita_sekolah"))
     return render_template(
-        "berita/tambahBerita.html", title="Tambah berita sekolah", form=form, data=[]
+        "berita/tambahBerita.html",
+        title="Tambah berita sekolah",
+        form=form,
+        data=[],
+        kelas=kelas,
     )
 
 
@@ -135,6 +146,7 @@ def hapus_berita_sekolah(slug):
 @admin_guru_required
 @login_required
 def ubah_berita_sekolah(slug):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     ubah = BeritaModel.query.filter_by(slug=slug).first_or_404()
     form = TambahUbahBeritaForm()
     if form.validate_on_submit():
@@ -172,5 +184,9 @@ def ubah_berita_sekolah(slug):
         form.tampilkan.data = ubah.tampilkan
 
     return render_template(
-        "berita/ubahBerita.html", title="Mengubah Berita", form=form, data=ubah
+        "berita/ubahBerita.html",
+        title="Mengubah Berita",
+        form=form,
+        data=ubah,
+        kelas=kelas,
     )

@@ -1,0 +1,126 @@
+2020-11-21 00:34:46,301 ERROR: Exception on / [GET] [in c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "berita" does not exist
+LINE 2: FROM berita 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\teguh\Documents\tkpkkpringgabaya.sch.id\app\client\routes.py", line 41, in index
+    berita = BeritaModel.query.filter(BeritaModel.tampilkan == True).first()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3397, in first
+    ret = list(self[0:1])
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3171, in __getitem__
+    return list(res)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3503, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3528, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1014, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1127, in _execute_clauseelement
+    ret = self._execute_context(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1317, in _execute_context
+    self._handle_dbapi_exception(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1511, in _handle_dbapi_exception
+    util.raise_(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "berita" does not exist
+LINE 2: FROM berita 
+             ^
+
+[SQL: SELECT berita.id AS berita_id, berita.judul AS berita_judul, berita.deskripsi AS berita_deskripsi, berita.slug AS berita_slug, berita.dokumen AS berita_dokumen, berita.nama_dokumen AS berita_nama_dokumen, berita.gambar AS berita_gambar, berita.nama_gambar AS berita_nama_gambar, berita.waktu_upload AS berita_waktu_upload, berita.tampilkan AS berita_tampilkan 
+FROM berita 
+WHERE berita.tampilkan = true 
+ LIMIT %(param_1)s]
+[parameters: {'param_1': 1}]
+(Background on this error at: http://sqlalche.me/e/13/f405)
+2020-11-21 00:34:46,461 ERROR: Exception on /favicon.ico [GET] [in c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UndefinedTable: relation "berita" does not exist
+LINE 2: FROM berita 
+             ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\_compat.py", line 39, in reraise
+    raise value
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask\app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "C:\Users\teguh\Documents\tkpkkpringgabaya.sch.id\app\client\routes.py", line 70, in lihat_berita
+    berita = BeritaModel.query.filter_by(slug=slug).first_or_404()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\flask_sqlalchemy\__init__.py", line 430, in first_or_404
+    rv = self.first()
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3397, in first
+    ret = list(self[0:1])
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3171, in __getitem__
+    return list(res)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3503, in __iter__
+    return self._execute_and_instances(context)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\orm\query.py", line 3528, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1014, in execute
+    return meth(self, multiparams, params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\sql\elements.py", line 298, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1127, in _execute_clauseelement
+    ret = self._execute_context(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1317, in _execute_context
+    self._handle_dbapi_exception(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1511, in _handle_dbapi_exception
+    util.raise_(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\util\compat.py", line 178, in raise_
+    raise exception
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\base.py", line 1277, in _execute_context
+    self.dialect.do_execute(
+  File "c:\users\teguh\documents\tkpkkpringgabaya.sch.id\env\lib\site-packages\sqlalchemy\engine\default.py", line 593, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation "berita" does not exist
+LINE 2: FROM berita 
+             ^
+
+[SQL: SELECT berita.id AS berita_id, berita.judul AS berita_judul, berita.deskripsi AS berita_deskripsi, berita.slug AS berita_slug, berita.dokumen AS berita_dokumen, berita.nama_dokumen AS berita_nama_dokumen, berita.gambar AS berita_gambar, berita.nama_gambar AS berita_nama_gambar, berita.waktu_upload AS berita_waktu_upload, berita.tampilkan AS berita_tampilkan 
+FROM berita 
+WHERE berita.slug = %(slug_1)s 
+ LIMIT %(param_1)s]
+[parameters: {'slug_1': 'favicon.ico', 'param_1': 1}]
+(Background on this error at: http://sqlalche.me/e/13/f405)

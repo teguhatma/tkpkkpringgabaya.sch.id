@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import PrestasiModel
+from app.models import PrestasiModel, KelasModel
 from .forms import TambahUbahPrestasiForm
 from flask_login import login_required
 from ..decorators import admin_required, admin_guru_required
@@ -13,9 +13,13 @@ from ..decorators import admin_required, admin_guru_required
 @login_required
 @admin_guru_required
 def prestasi():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     prestasi = PrestasiModel.query.all()
     return render_template(
-        "prestasi/dataPrestasi.html", prestasi=prestasi, title="Data Prestasi"
+        "prestasi/dataPrestasi.html",
+        prestasi=prestasi,
+        title="Data Prestasi",
+        kelas=kelas,
     )
 
 
@@ -23,6 +27,7 @@ def prestasi():
 @login_required
 @admin_guru_required
 def tambah_prestasi():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahPrestasiForm()
     if form.validate_on_submit():
         tambah = PrestasiModel(
@@ -37,7 +42,10 @@ def tambah_prestasi():
         flash("Data berhasil ditambahkan.", "info")
         return redirect(url_for(".prestasi"))
     return render_template(
-        "prestasi/tambahUbahPrestasi.html", title="Tambah Prestasi", form=form
+        "prestasi/tambahUbahPrestasi.html",
+        title="Tambah Prestasi",
+        form=form,
+        kelas=kelas,
     )
 
 
@@ -45,6 +53,7 @@ def tambah_prestasi():
 @login_required
 @admin_guru_required
 def ubah_prestasi(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahPrestasiForm()
     ubah = PrestasiModel.query.get(id)
     if form.validate_on_submit():
@@ -66,7 +75,10 @@ def ubah_prestasi(id):
         form.juara.data = ubah.juara
 
     return render_template(
-        "prestasi/tambahUbahPrestasi.html", title="Tambah Prestasi", form=form
+        "prestasi/tambahUbahPrestasi.html",
+        title="Tambah Prestasi",
+        form=form,
+        kelas=kelas,
     )
 
 

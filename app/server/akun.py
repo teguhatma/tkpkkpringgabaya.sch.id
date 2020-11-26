@@ -2,7 +2,7 @@ from . import server
 from flask import render_template, flash, redirect, url_for, request
 from .forms import AkunForm
 from app import db
-from app.models import MuridModel, GuruModel
+from app.models import MuridModel, GuruModel, KelasModel
 from flask_login import login_required
 from ..decorators import admin_guru_required
 
@@ -11,6 +11,7 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def akun_guru(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     akun = GuruModel.query.get(id)
     form = AkunForm()
     if form.validate_on_submit():
@@ -23,7 +24,7 @@ def akun_guru(id):
     elif request.method == "GET":
         form.email.data = akun.user.email
     return render_template(
-        "akun/password.html", form=form, title="Password", akun_guru=akun
+        "akun/password.html", form=form, title="Password", akun_guru=akun, kelas=kelas
     )
 
 
@@ -31,6 +32,7 @@ def akun_guru(id):
 @admin_guru_required
 @login_required
 def akun_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     akun_murid = MuridModel.query.get(id)
     form = AkunForm()
     if form.validate_on_submit():
@@ -42,10 +44,11 @@ def akun_murid(id):
         return redirect(url_for("server.lihat_murid", id=id))
     elif request.method == "GET":
         form.email.data = akun_murid.user.email
-    return render_template("akun/password.html", form=form, title=akun_murid.nama)
+    return render_template(
+        "akun/password.html", form=form, title=akun_murid.nama, kelas=kelas
+    )
 
 
 @server.route("/back_office")
 def back():
     return render_template("dashboard.html")
-

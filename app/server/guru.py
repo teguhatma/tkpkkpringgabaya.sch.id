@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import GuruModel, UserModel, Role
+from app.models import GuruModel, UserModel, Role, KelasModel
 from .forms import (
     TambahGuruForm,
     RubahGuruForm,
@@ -58,14 +58,18 @@ def ijazah_guru(filename):
 @admin_guru_required
 @login_required
 def data_guru():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data_guru = GuruModel.query.order_by(GuruModel.jabatan.asc()).all()
-    return render_template("guru/dataGuru.html", title="Data Guru", data_guru=data_guru)
+    return render_template(
+        "guru/dataGuru.html", title="Data Guru", data_guru=data_guru, kelas=kelas
+    )
 
 
 @server.route("/dashboard/guru/tambah", methods=["GET", "POST"])
 @admin_required
 @login_required
 def tambah_guru():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahGuruForm()
     if form.validate_on_submit():
         tambah_email = UserModel(email=form.email.data)
@@ -101,7 +105,7 @@ def tambah_guru():
         flash("Data guru berhasil ditambahkan.", "info")
         return redirect(url_for("server.data_guru"))
     return render_template(
-        "guru/tambahGuru.html", title="Menambah Data Guru", form=form
+        "guru/tambahGuru.html", title="Menambah Data Guru", form=form, kelas=kelas
     )
 
 
@@ -109,6 +113,7 @@ def tambah_guru():
 @admin_required
 @login_required
 def ubah_guru(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     ubah = GuruModel.query.get(id)
     if current_user.guru.nama == ubah.nama:
         return redirect(url_for(".ubah_profile_guru"))
@@ -180,7 +185,11 @@ def ubah_guru(id):
         form.email.data = ubah.user.email
 
     return render_template(
-        "guru/ubahGuru.html", title="Mengubah Data Guru", form=form, data=ubah,
+        "guru/ubahGuru.html",
+        title="Mengubah Data Guru",
+        form=form,
+        data=ubah,
+        kelas=kelas,
     )
 
 
@@ -188,6 +197,7 @@ def ubah_guru(id):
 @login_required
 @admin_required
 def ubah_password_guru(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data = GuruModel.query.filter_by(id=id).first_or_404()
     pwd = UserModel.query.filter_by(id=data.user_id).first_or_404()
     form = AddPassword()
@@ -198,13 +208,14 @@ def ubah_password_guru(id):
         flash("Kata sandi berhasil ditambahkan.", "info")
         return redirect(url_for("server.ubah_password_guru", id=id))
     return render_template(
-        "guru/ubahPasswordGuru.html", form=form, title="Password Guru"
+        "guru/ubahPasswordGuru.html", form=form, title="Password Guru", kelas=kelas
     )
 
 
 @server.route("/dashboard/ubah/kata-sandi", methods=["GET", "POST"])
 @login_required
 def ubah_password_diri():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data = UserModel.query.filter_by(id=current_user.id).first_or_404()
     form = UbahPasswordDiriForm()
     if form.validate_on_submit():
@@ -213,13 +224,16 @@ def ubah_password_diri():
         db.session.commit()
         flash("Password berhasil dirubah.", "info")
         return redirect(url_for(".ubah_password_diri"))
-    return render_template("guru/ubahPasswordDiri.html", title="Password", form=form)
+    return render_template(
+        "guru/ubahPasswordDiri.html", title="Password", form=form, kelas=kelas
+    )
 
 
 @server.route("/dashboard/guru/profile-diri", methods=["GET", "POST"])
 @admin_guru_required
 @login_required
 def ubah_profile_guru():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = RubahProfileGuruForm()
     ubah = GuruModel.query.get(current_user.guru.id)
     if form.validate_on_submit():
@@ -285,7 +299,11 @@ def ubah_profile_guru():
         form.email.data = ubah.user.email
 
     return render_template(
-        "guru/ubahProfileGuru.html", title="Profil Diri", form=form, data=ubah
+        "guru/ubahProfileGuru.html",
+        title="Profil Diri",
+        form=form,
+        data=ubah,
+        kelas=kelas,
     )
 
 

@@ -38,8 +38,8 @@ def foto_murid(filename):
 @admin_guru_required
 @login_required
 def data_murid():
-    data_murid = MuridModel.query.all()
     kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
+    data_murid = MuridModel.query.all()
     return render_template(
         "murid/dataMurid.html", title="Data Murid", data_murid=data_murid, kelas=kelas
     )
@@ -73,6 +73,7 @@ def hapus_murid(id):
 @admin_guru_required
 @login_required
 def tambah_murid():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahMuridForm()
     if form.validate_on_submit():
         tambah_murid = MuridModel(
@@ -106,7 +107,7 @@ def tambah_murid():
         flash("Data berhasil ditambahkan", "info")
         return redirect(url_for("server.data_murid"))
     return render_template(
-        "murid/tambahMurid.html", form=form, title="Menambah data murid"
+        "murid/tambahMurid.html", form=form, title="Menambah data murid", kelas=kelas
     )
 
 
@@ -114,6 +115,7 @@ def tambah_murid():
 @admin_guru_required
 @login_required
 def ubah_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = RubahMuridForm()
     murid = MuridModel.query.get(id)
     if form.validate_on_submit():
@@ -170,7 +172,11 @@ def ubah_murid(id):
     form.kelas.data = murid.kelas
 
     return render_template(
-        "murid/ubahMurid.html", form=form, title="Merubah Data Murid", data=murid
+        "murid/ubahMurid.html",
+        form=form,
+        title="Merubah Data Murid",
+        data=murid,
+        kelas=kelas,
     )
 
 
@@ -178,6 +184,7 @@ def ubah_murid(id):
 @login_required
 @admin_guru_required
 def ubah_password_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data = MuridModel.query.filter_by(id=id).first_or_404()
     pwd = UserModel.query.filter_by(id=data.user_id).first_or_404()
     form = AddPassword()
@@ -188,7 +195,7 @@ def ubah_password_murid(id):
         flash("Data sudah dirubah", "info")
         return redirect(url_for("server.data_guru"))
     return render_template(
-        "guru/ubahPasswordGuru.html", form=form, title="Password Murid"
+        "guru/ubahPasswordGuru.html", form=form, title="Password Murid", kelas=kelas
     )
 
 

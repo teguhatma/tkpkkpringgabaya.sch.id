@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import JadwalKelasModel
+from app.models import JadwalKelasModel, KelasModel
 from .forms import TambahJadwalForm, TambahAdminJadwalForm
 from flask_login import login_required, current_user
 from ..decorators import admin_guru_required
@@ -13,6 +13,7 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def data_jadwal():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     if current_user.is_administrator():
         data_jadwal = (
             JadwalKelasModel.query.order_by(JadwalKelasModel.hari.asc())
@@ -27,7 +28,10 @@ def data_jadwal():
             .all()
         )
     return render_template(
-        "jadwal/dataJadwal.html", title="Jadwal Kelompok", data_jadwal=data_jadwal
+        "jadwal/dataJadwal.html",
+        title="Jadwal Kelompok",
+        data_jadwal=data_jadwal,
+        kelas=kelas,
     )
 
 
@@ -35,6 +39,7 @@ def data_jadwal():
 @admin_guru_required
 @login_required
 def tambah_jadwal():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     if current_user.is_administrator():
         form = TambahAdminJadwalForm()
         if form.validate_on_submit():
@@ -106,6 +111,7 @@ def hapus_jadwal(id):
 @admin_guru_required
 @login_required
 def ubah_jadwal(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     ubah_jadwal = JadwalKelasModel.query.get(id)
     if current_user.is_administrator():
         form = TambahAdminJadwalForm()
@@ -146,5 +152,5 @@ def ubah_jadwal(id):
         form.hari.data = ubah_jadwal.hari
 
     return render_template(
-        "jadwal/tambahUbahJadwal.html", title=ubah_jadwal.mata_pelajaran, form=form
+        "jadwal/tambahUbahJadwal.html", title=ubah_jadwal.mata_pelajaran, form=form, kelas=kelas
     )

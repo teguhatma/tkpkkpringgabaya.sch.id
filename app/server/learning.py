@@ -3,7 +3,7 @@ from io import BytesIO
 import uuid
 from app import db
 from . import server
-from app.models import ElearningModel
+from app.models import ElearningModel, KelasModel
 from .forms import (
     TambahElearningForm,
     UbahElearningForm,
@@ -45,16 +45,22 @@ def dokumen_elearning(filename):
 @admin_guru_required
 @login_required
 def data_elearning():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     if current_user.is_administrator():
-        data_elearning = ElearningModel.query.order_by(ElearningModel.waktu_upload.desc()).all()
+        data_elearning = ElearningModel.query.order_by(
+            ElearningModel.waktu_upload.desc()
+        ).all()
     else:
-        data_elearning = ElearningModel.query.filter_by(
-            kelas_id=current_user.guru.kelas_id
-        ).order_by(ElearningModel.waktu_upload.desc()).all()
+        data_elearning = (
+            ElearningModel.query.filter_by(kelas_id=current_user.guru.kelas_id)
+            .order_by(ElearningModel.waktu_upload.desc())
+            .all()
+        )
     return render_template(
         "elearning/dataLearning.html",
         title="E-Learning",
         data_elearning=data_elearning,
+        kelas=kelas,
     )
 
 
@@ -62,6 +68,7 @@ def data_elearning():
 @admin_guru_required
 @login_required
 def tambah_elearning():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     if current_user.is_administrator():
         form = TambahElearningForm()
         if form.validate_on_submit():
@@ -91,7 +98,10 @@ def tambah_elearning():
             flash("Elearning sudah dibuat", "Berhasil")
             return redirect(url_for("server.data_elearning"))
     return render_template(
-        "elearning/tambahUbahLearning.html", title="Tambah Elearning", form=form
+        "elearning/tambahUbahLearning.html",
+        title="Tambah Elearning",
+        form=form,
+        kelas=kelas,
     )
 
 
@@ -110,6 +120,7 @@ def hapus_elearning(slug):
 @admin_guru_required
 @login_required
 def ubah_elearning(slug):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     ubah_elearning = ElearningModel.query.filter_by(slug=slug).first_or_404()
     if current_user.is_administrator():
         form = UbahElearningForm()
@@ -156,5 +167,8 @@ def ubah_elearning(slug):
             form.deskripsi.data = ubah_elearning.deskripsi
             form.kelas.data = ubah_elearning.kelas
     return render_template(
-        "elearning/tambahUbahLearning.html", title=ubah_elearning.judul, form=form
+        "elearning/tambahUbahLearning.html",
+        title=ubah_elearning.judul,
+        form=form,
+        kelas=kelas,
     )

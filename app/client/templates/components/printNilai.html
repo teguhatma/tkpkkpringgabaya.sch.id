@@ -152,7 +152,10 @@
             LAPORAN PERKEMBANGAN ANAK
           </h3>
           <h3 class="kop" style="text-align: center;">
-            TAHUN PELAJARAN {{ nilai_murid[0].tahun_pelajaran }}
+            {{ semester.upper() }}
+          </h3>
+          <h3 class="kop" style="text-align: center;">
+            TAHUN PELAJARAN {{ tahun }}
           </h3>
           <h3 class="kop" style="text-align: center;">
             TK PKK PRINGGABAYA
@@ -181,7 +184,7 @@
                 <li>: {{ murid.nama_panggilan }}</li>
                 <li>: {{ murid.kelas.ruang }}</li>
                 <li>: {{ murid.nomor_induk }}</li>
-                <li>: I (Satu)</li>
+                <li>: {% if semester == 'Semester I' %} I (Satu) {% else %} II (Dua) {% endif %}</li>
                 <li>: {{ murid.jenis_kelamin }}</li>
                 <li>: {{ murid.tempat_lahir }}, {{murid.tanggal_lahir}}</li>
                 <li>: {{ murid.agama }}</li>
@@ -238,10 +241,10 @@
             </div>
           </div>
           <div class="tanda-tangan">
-            <p>
+            <p style="margin-bottom: 0;">
               Pringgabaya, {{ moment(date).format('Do MMMM YYYY')}}
             </p>
-            <p>Kepala Sekolah</p>
+            <p style="margin-top: 3px;">Kepala Sekolah</p>
             <br /><br /><br />
             <p style="margin: 0;"><b>{{ kepala_sekolah.nama}}</b></p>
             <p style="margin: 5px;"><b>NIP. {{ kepala_sekolah.nip }}</b></p>

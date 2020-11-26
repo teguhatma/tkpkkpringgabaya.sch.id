@@ -37,7 +37,10 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             "Admin": [Permission.ADMIN, Permission.ADMIN_GURU],
-            "Guru": [Permission.ADMIN_GURU, Permission.GURU,],
+            "Guru": [
+                Permission.ADMIN_GURU,
+                Permission.GURU,
+            ],
             "Murid": [Permission.MURID],
         }
 
@@ -442,7 +445,7 @@ class NilaiModel(db.Model):
     murid_id = db.Column(db.Integer, db.ForeignKey("murid.id"))
 
     def __repr__(self):
-        return "Nilai {}".format(self.nama)
+        return "Nilai {}".format(self.aspek_penilaian)
 
 
 class JadwalKelasModel(db.Model):

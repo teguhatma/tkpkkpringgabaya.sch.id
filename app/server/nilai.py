@@ -2,7 +2,14 @@ from . import server
 from app import db
 from flask import render_template, request, flash, url_for, redirect, send_file
 from io import BytesIO
-from app.models import MuridModel, NilaiModel, GuruModel, WaliMuridModel, GuruModel
+from app.models import (
+    MuridModel,
+    NilaiModel,
+    GuruModel,
+    WaliMuridModel,
+    GuruModel,
+    KelasModel,
+)
 from .forms import TambahNilaiMuridForm
 import uuid
 from datetime import datetime
@@ -14,6 +21,7 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def nilai_murid():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     if current_user.is_administrator():
         nilai_murid = MuridModel.query.all()
     else:
@@ -21,7 +29,10 @@ def nilai_murid():
             kelas_id=current_user.guru.kelas.id
         ).all()
     return render_template(
-        "nilai/dataNilaiMurid.html", title="Data Nilai Murid", nilai_murid=nilai_murid
+        "nilai/dataNilaiMurid.html",
+        title="Data Nilai Murid",
+        nilai_murid=nilai_murid,
+        kelas=kelas,
     )
 
 
@@ -29,6 +40,7 @@ def nilai_murid():
 @admin_guru_required
 @login_required
 def data_nilai_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     murid = MuridModel.query.get(id)
     nilai = NilaiModel.query.filter_by(murid_id=murid.id).all()
     number = []
@@ -51,6 +63,7 @@ def data_nilai_murid(id):
         title="Nilai {}".format(murid.nama),
         daftar_tahun_nilai=daftar_tahun_nilai,
         murid=murid,
+        kelas=kelas,
     )
 
 
@@ -58,6 +71,7 @@ def data_nilai_murid(id):
 @admin_guru_required
 @login_required
 def data_nilai_murid_select(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     murid = MuridModel.query.get(id)
     nilai = NilaiModel.query.filter_by(murid_id=murid.id).all()
     number = []
@@ -82,6 +96,7 @@ def data_nilai_murid_select(id):
         daftar_tahun_nilai=daftar_tahun_nilai,
         murid=murid,
         nilai=nilai,
+        kelas=kelas,
     )
 
 
@@ -89,6 +104,7 @@ def data_nilai_murid_select(id):
 @admin_guru_required
 @login_required
 def tambah_nilai_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     murid = MuridModel.query.get(id)
     form = TambahNilaiMuridForm()
     if form.validate_on_submit():
@@ -124,6 +140,7 @@ def tambah_nilai_murid(id):
         title="Tambah Nilai {}".format(murid.nama),
         form=form,
         murid=murid,
+        kelas=kelas,
     )
 
 
@@ -131,6 +148,7 @@ def tambah_nilai_murid(id):
 @admin_guru_required
 @login_required
 def ubah_nilai_murid(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     nilai = NilaiModel.query.get(id)
     form = TambahNilaiMuridForm()
     if form.validate_on_submit():
@@ -151,7 +169,10 @@ def ubah_nilai_murid(id):
         form.semester.data = nilai.semester
         form.aspek_penilaian.data = nilai.aspek_penilaian
     return render_template(
-        "nilai/tambahUbahNilaiMurid.html", title=nilai.aspek_penilaian, form=form
+        "nilai/tambahUbahNilaiMurid.html",
+        title=nilai.aspek_penilaian,
+        form=form,
+        kelas=kelas,
     )
 
 
@@ -164,30 +185,6 @@ def hapus_nilai_murid(id):
     db.session.commit()
     flash("Nilai telah dihapus.", "Berhasil")
     return redirect(url_for("server.data_nilai_murid", id=nilai.murid_id))
-
-
-@server.route("/dashboard/nilai/murid/print/<id>")
-@admin_guru_required
-@login_required
-def print_nilai(id):
-    murid = MuridModel.query.get(id)
-    nilai_murid = NilaiModel.query.filter_by(murid_id=murid.id).all()
-    wali_murid = WaliMuridModel.query.filter_by(murid_id=murid.id).first()
-    guru = (
-        GuruModel.query.filter_by(kelas_id=murid.kelas.id)
-        .filter(GuruModel.jabatan != "Kepala Sekolah")
-        .first()
-    )
-    kepala_sekolah = GuruModel.query.filter_by(jabatan="Kepala Sekolah").first()
-    return render_template(
-        "components/printNilai.html",
-        nilai_murid=nilai_murid,
-        murid=murid,
-        guru=guru,
-        date=datetime.utcnow(),
-        wali_murid=wali_murid,
-        kepala_sekolah=kepala_sekolah,
-    )
 
 
 # @server.route("/dashboard/nilai/murid/print/<id>/<nama>.pdf")

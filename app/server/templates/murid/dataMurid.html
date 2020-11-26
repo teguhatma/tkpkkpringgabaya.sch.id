@@ -3,6 +3,13 @@
 <!-- Custom styles for this page -->
 <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
 
+<script>
+  function cari(){
+    var el = document.getElementById("cariBerdasarkanKelas").selectedIndex;
+    var id = (document.getElementsByTagName("option")[el].value);
+    location.replace(id)
+  }
+</script>
 
 <div class="container-fluid">
 
@@ -12,14 +19,23 @@
 
   {% include 'components/flash.html' %}
 
-  <div class="container">
-    <div class="row justify-content-md-center">
-      {% for kelas in kelas %}
-      <div class="col-md-auto col-sm-auto col-xl-auto col-auto">
-        <a class="btn btn-sm btn-info my-3" href="{{ url_for('server.data_murid_kelas', ruang=kelas.id) }}">Kelompok
-          {{ kelas.ruang }}</a>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Cari berdasarkan kelompok</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div class="input-group">
+          <select class="custom-select" id="cariBerdasarkanKelas">
+            {% for kelas in kelas %}
+            <option value="{{ url_for('server.data_murid_kelas', ruang=kelas.id ) }}">Kelompok {{ kelas.ruang }}</option>
+            {% endfor %}
+          </select>
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="button" onclick="cari()">Cari</button>
+          </div>
+        </div>
       </div>
-      {% endfor %}
     </div>
   </div>
 

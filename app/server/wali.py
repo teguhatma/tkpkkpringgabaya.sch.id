@@ -2,7 +2,7 @@ from . import server
 from flask import request, redirect, url_for, send_file, flash, render_template
 from uuid import uuid4
 from app import db
-from app.models import WaliMuridModel
+from app.models import WaliMuridModel, KelasModel
 from .forms import TambahUbahWaliForm
 from flask_login import login_required
 from ..decorators import admin_guru_required
@@ -12,9 +12,13 @@ from ..decorators import admin_guru_required
 @admin_guru_required
 @login_required
 def data_wali():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     data_wali_murid = WaliMuridModel.query.all()
     return render_template(
-        "wali/dataWali.html", title="Data Wali Murid", data_wali=data_wali_murid
+        "wali/dataWali.html",
+        title="Data Wali Murid",
+        data_wali=data_wali_murid,
+        kelas=kelas,
     )
 
 
@@ -33,6 +37,7 @@ def hapus_wali(id):
 @admin_guru_required
 @login_required
 def tambah_wali():
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahWaliForm()
     if form.validate_on_submit():
         tambah_wali = WaliMuridModel(
@@ -55,7 +60,7 @@ def tambah_wali():
         flash("Data berhasil dibuat", "Berhasil")
         return redirect(url_for("server.data_wali"))
     return render_template(
-        "wali/tambahUbahWali.html", title="Menambah data wali", form=form
+        "wali/tambahUbahWali.html", title="Menambah data wali", form=form, kelas=kelas
     )
 
 
@@ -63,6 +68,7 @@ def tambah_wali():
 @admin_guru_required
 @login_required
 def ubah_wali(id):
+    kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
     form = TambahUbahWaliForm()
     wali = WaliMuridModel.query.get(id)
     if form.validate_on_submit():
@@ -100,4 +106,6 @@ def ubah_wali(id):
         form.nomor_telepon.data = wali.nomor_telepon
         form.murid.data = wali.murid
 
-    return render_template("wali/tambahUbahWali.html", title=wali.nama, form=form)
+    return render_template(
+        "wali/tambahUbahWali.html", title=wali.nama, form=form, kelas=kelas
+    )
