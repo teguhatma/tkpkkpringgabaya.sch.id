@@ -2,42 +2,41 @@
 <small class="mx-5">NILAI PESERTA DIDIK</small>
 
 <div class="mx-5 my-4">
-  <form method="POST">
-    <div class="form-row">
-      <div class="col-md-5 mb-3">
-        <select name="tahun" class="custom-select custom-select-sm">
-          {% for tahun in daftar_tahun_nilai %}
-          <option value="{{ tahun }}">{{ tahun }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-5 mb-3">
-        <select name="semester" class="custom-select custom-select-sm">
-          <option value="Semester I">Semester I</option>
-          <option value="Semester II">Semester II</option>
-        </select>
-      </div>
-      <div class="col-md-2 mb-3">
-        <button class="btn btn-sm btn-primary btn-block">Button</button>
-      </div>
-    </div>
-  </form>
-</div>
+  <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css' ) }}" rel="stylesheet">
 
-<div class="mx-5 nilai-murid">
-  <div class="row">
-    {% if nilai is not none %} {% for nilai in nilai %}
-    <div class="col-md-6 nilai-murid-column my-3">
-      <div class="tahun-pelajaran">
-        <p>{{ nilai.aspek_penilaian}}</p>
+
+  <div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">{{ title.title() }}</h6>
       </div>
-      <div class="content-biodata">
-        <div class="form-group content-biodata-full my-0">
-          {{nilai.deskripsi | safe}}
-        </div>
+      <div class="card-body">
+        <form target="_blank" action="{{ url_for('murid.print_murid_murid') }}" method="post">
+          <select name="tahun" class="custom-select">
+            {% for tahun in tahun_pelajaran %}
+            <option value="{{ tahun }}">{{ tahun }}</option>
+            {% endfor %}
+          </select>
+          <select name="semester" class="custom-select">
+            {% for semester in semester %}
+            <option value="{{ semester }}">{{ semester }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-primary">Print</button>
+        </form>
       </div>
     </div>
-    {% endfor %} {% else %} {% endif %}
+
   </div>
+
 </div>
+<!-- Page level plugins -->
+<script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js' )}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{ url_for('static', filename='js/demo/datatables-demo.js') }}"></script>
+
 {% endblock %}

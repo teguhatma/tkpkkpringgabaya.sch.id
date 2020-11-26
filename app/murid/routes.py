@@ -6,6 +6,7 @@ from app.models import (
     WaliMuridModel,
     NilaiModel,
     UserModel,
+    GuruModel,
 )
 from flask import render_template, send_file, flash, redirect, url_for, request
 from flask_login import login_required, current_user
@@ -16,6 +17,7 @@ from .forms import (
     MuridGantiProfileWaliForm,
 )
 from ..decorators import murid_required
+from datetime import datetime
 
 
 @murid.route("/image/murid/<filename>")
@@ -59,52 +61,14 @@ def murid_profile():
 @murid_required
 @login_required
 def murid_nilai():
-    number = []
-    for a in NilaiModel.query.order_by(NilaiModel.tahun_pelajaran.asc()).all():
-        number.append(a.tahun_pelajaran)
-    daftar_tahun_nilai = set(number)
-    nilai = []
-    global nilai_selected
-    if request.method == "POST":
+    semester = {semester.semester for semester in NilaiModel.query.all()}
 
-        nilai_selected = (
-            NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
-            .filter_by(semester=request.form.get("semester"))
-            .filter_by(murid_id=current_user.murid.id)
-            .all()
-        )
-        return redirect(url_for("murid.murid_nilai_select"))
+    tahun_pelajaran = {tahun.tahun_pelajaran for tahun in NilaiModel.query.all()}
     return render_template(
         "nilaiMurid.html",
-        nilai=[],
+        semester=semester,
+        tahun_pelajaran=tahun_pelajaran,
         title="Nilai Peserta Didik",
-        daftar_tahun_nilai=daftar_tahun_nilai,
-    )
-
-
-@murid.route("/murid/nilai/select", methods=["GET", "POST"])
-@murid_required
-@login_required
-def murid_nilai_select():
-    number = []
-    for a in NilaiModel.query.order_by(NilaiModel.tahun_pelajaran.asc()).all():
-        number.append(a.tahun_pelajaran)
-    daftar_tahun_nilai = set(number)
-    global nilai_selected
-    if request.method == "POST":
-
-        nilai_selected = (
-            NilaiModel.query.filter_by(tahun_pelajaran=request.form.get("tahun"))
-            .filter_by(semester=request.form.get("semester"))
-            .filter_by(murid_id=current_user.murid.id)
-            .all()
-        )
-        return redirect(url_for("murid.murid_nilai_select"))
-    return render_template(
-        "nilaiMurid.html",
-        nilai=nilai_selected,
-        title="Nilai Peserta Didik",
-        daftar_tahun_nilai=daftar_tahun_nilai,
     )
 
 
@@ -213,4 +177,42 @@ def murid_ganti_profile_wali():
 
     return render_template(
         "ubahWali.html", title="Profile Wali Peserta Didik", form=form
+    )
+
+
+@murid.route("/print", methods=["POST"])
+@murid_required
+@login_required
+def print_murid_murid():
+    semester = request.form.get("semester")
+    tahun = request.form.get("tahun")
+
+    murid = MuridModel.query.get(current_user.murid.id)
+
+    nilai_murid = (
+        NilaiModel.query.filter_by(murid_id=murid.id)
+        .filter_by(semester=semester)
+        .filter_by(tahun_pelajaran=tahun)
+        .all()
+    )
+
+    wali_murid = WaliMuridModel.query.filter_by(murid_id=murid.id).first()
+
+    guru = (
+        GuruModel.query.filter_by(kelas_id=murid.kelas.id)
+        .filter(GuruModel.jabatan != "Kepala Sekolah")
+        .first()
+    )
+    kepala_sekolah = GuruModel.query.filter_by(jabatan="Kepala Sekolah").first()
+
+    return render_template(
+        "components/printNilai.html",
+        nilai_murid=nilai_murid,
+        murid=murid,
+        guru=guru,
+        semester=semester,
+        tahun=tahun,
+        date=datetime.utcnow(),
+        wali_murid=wali_murid,
+        kepala_sekolah=kepala_sekolah,
     )

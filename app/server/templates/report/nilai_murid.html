@@ -62,7 +62,8 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form target="_blank" action="{{ url_for('server.print_murid', id=murid.id ) }}"
+                                                <form target="_blank"
+                                                    action="{{ url_for('server.print_murid', id=murid.id ) }}"
                                                     method="post">
                                                     <select name="tahun" class="custom-select">
                                                         {% for tahun in tahun_pelajaran %}
