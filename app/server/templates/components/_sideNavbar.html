@@ -116,7 +116,7 @@
           </div>
         </div>
         {% else %}
-        <a class="collapse-item" href="{{ url_for('server.report_nilai', id=current_user.guru.kelas_id )}}" target="_blank">Nilai</a>
+        <a class="collapse-item" href="{{ url_for('server.report_nilai', ruang_id=current_user.guru.kelas_id )}}">Nilai</a>
         {% endif %}
         <a class="collapse-item" href="{{ url_for('server.report_guru')}}" target="_blank">Data Guru</a>
         <a class="collapse-item" href="{{ url_for('server.report_murid')}}" target="_blank">Data Murid</a>

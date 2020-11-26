@@ -166,7 +166,10 @@ class UbahPasswordDiriForm(FlaskForm):
 
 
 class TambahKelasForm(FlaskForm):
-    ruang = StringField("Kelompok *", validators=[DataRequired(), Length(1, 4)],)
+    ruang = StringField(
+        "Kelompok *",
+        validators=[DataRequired(), Length(1, 4)],
+    )
     submit = SubmitField("Simpan")
 
     def validate_ruang(self, ruang):
@@ -272,7 +275,7 @@ class RubahMuridForm(MuridForm):
     foto_diri = FileField("Foto Diri *")
 
 
-class TambahUbahWaliForm(FlaskForm):
+class WaliMurid(FlaskForm):
     nama = StringField("Nama *", validators=[DataRequired(), Length(1, 64)])
     alamat = TextAreaField("Alamat *", validators=[DataRequired()])
     kelurahan = StringField("Kelurahan *", validators=[Length(1, 24)])
@@ -299,8 +302,14 @@ class TambahUbahWaliForm(FlaskForm):
         ],
     )
     nomor_telepon = StringField(
-        "Nomor Telepon *", validators=[DataRequired()], render_kw={"type": "number"},
+        "Nomor Telepon *",
+        validators=[DataRequired()],
+        render_kw={"type": "number"},
     )
+    submit = SubmitField("Simpan")
+
+
+class TambahUbahWaliMurid(WaliMurid):
     murid = QuerySelectField(
         "Nama Anak *",
         query_factory=daftar_murid,
@@ -310,7 +319,18 @@ class TambahUbahWaliForm(FlaskForm):
         allow_blank=True,
         validators=[DataRequired()],
     )
-    submit = SubmitField("Simpan")
+
+
+class TambahUbahWaliMuridUser(WaliMurid):
+    murid = QuerySelectField(
+        "Nama Anak *",
+        query_factory=daftar_murid_user,
+        get_label="nama",
+        get_pk=lambda a: a.id,
+        blank_text="Nama Anak",
+        allow_blank=True,
+        validators=[DataRequired()],
+    )
 
 
 class TambahUbahProfileForm(FlaskForm):
@@ -483,7 +503,8 @@ class TambahNilaiMuridForm(FlaskForm):
         choices=[(g, g) for g in NilaiModel.semester.property.columns[0].type.enums],
     )
     tahun_pelajaran = StringField(
-        "Tahun Pelajaran *", validators=[DataRequired(), Length(5, 10)],
+        "Tahun Pelajaran *",
+        validators=[DataRequired(), Length(5, 10)],
     )
     submit = SubmitField("Simpan")
 

@@ -5,7 +5,7 @@ from io import BytesIO
 from app.models import MuridModel, Permission
 from .forms import TambahMuridForm, RubahMuridForm, KelasModel, UserModel, AddPassword
 import uuid
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..decorators import admin_guru_required
 
 
@@ -39,7 +39,12 @@ def foto_murid(filename):
 @login_required
 def data_murid():
     kelas = KelasModel.query.order_by(KelasModel.ruang.asc()).all()
-    data_murid = MuridModel.query.all()
+    if current_user.is_administrator():
+        data_murid = MuridModel.query.all()
+    else:
+        data_murid = MuridModel.query.filter_by(
+            kelas_id=current_user.guru.kelas_id
+        ).all()
     return render_template(
         "murid/dataMurid.html", title="Data Murid", data_murid=data_murid, kelas=kelas
     )

@@ -527,6 +527,12 @@ def daftar_murid():
     return MuridModel.query.order_by(MuridModel.nama.asc())
 
 
+def daftar_murid_user():
+    return MuridModel.query.order_by(MuridModel.nama.asc()).filter_by(
+        kelas_id=current_user.guru.kelas_id
+    )
+
+
 @login_manager.user_loader
 def load_user(id):
     return UserModel.query.get(id)
