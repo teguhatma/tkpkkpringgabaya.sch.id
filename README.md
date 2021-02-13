@@ -13,13 +13,13 @@
 5. Change DATABASE_URI in `config.py`, example:
 > `DATABASE_URI='postgresql://username:password@hostname/database'`
 6. Change value `insert_admin` and `insert_guru` in `app/models.py`
-6. Initilization your database
+7. Initilization your database
 > `flask db init`
-7. Migrate your database
+8. Migrate your database
 > `flask db migrate`
-8. Upgrade your database
+9. Upgrade your database
 > `flask db upgrade`
-9. Insert role and user (_user can be change in `app/models.py`_)
+10. Insert role and user (_user can be change in `app/models.py`_)
 > `flask deploy`
 
 ### Running the app
