@@ -25,6 +25,9 @@
 ### Running the app
 > `flask run`
 
+### Tools
+- [Flask](https://flask.palletsprojects.com/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ### Author
 - [Teguh Atma Yudha](https://github.com/teguhatma)
