@@ -12,6 +12,7 @@
 4. Create file `.env` in root folder
 5. Change DATABASE_URI in `config.py`, example:
 > `DATABASE_URI='postgresql://username:password@hostname/database'`
+6. Change value `insert_admin` and `insert_guru` in `app/models.py`
 6. Initilization your database
 > `flask db init`
 7. Migrate your database
