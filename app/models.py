@@ -108,10 +108,10 @@ class UserModel(UserMixin, db.Model):
     @staticmethod
     def insert_admin():
         insert_admin = UserModel(
-            email="baiqiriantini@gmail.com",
+            email="your-email",
             role=Role.query.filter_by(name="Admin").first(),
         )
-        insert_admin.password("tkadminadmin")
+        insert_admin.password("your-password")
         db.session.add(insert_admin)
         db.session.commit()
 
@@ -195,23 +195,23 @@ class GuruModel(db.Model):
     @staticmethod
     def insert_guru():
         insert_admin = GuruModel(
-            nama="Baiq Iriantini, S.Pd.",
+            nama="your-name",
             user=UserModel.query.first(),
-            nik="196512311985023321",
-            jabatan="Kepala Sekolah",
-            alamat="Dasan Bantek",
-            nip="1912341234514",
-            kelurahan="Pringgabaya",
-            kecamatan="Pringgabaya",
-            kabupaten="Lombok Timur",
-            provinsi="Nusa Tenggara Barat",
-            agama="Islam",
-            tempat_lahir="Pringgabaya",
-            tanggal_lahir="15 September 1965",
-            golongan="IV/e",
-            pendidikan_terakhir="S1 PGPAUD",
-            jenis_kelamin="Perempuan",
-            tahun_masuk="2010",
+            nik="your-nik",
+            jabatan="your-jabatan (lihat kolom jabatan)",
+            alamat="your-address",
+            nip="your-nip",
+            kelurahan="your-kelurahan",
+            kecamatan="your-kecamatan",
+            kabupaten="your-kabupaten",
+            provinsi="your-provinsi",
+            agama="your-agama (lihat kolom agama)",
+            tempat_lahir="your-tempat-lahir",
+            tanggal_lahir="your-tanggal-lahir",
+            golongan="your-golongan (lihat kolom golongan)",
+            pendidikan_terakhir="your-pendidikan-terakhir",
+            jenis_kelamin="your-jenis-kelamin (lihat kolom jenis_kelamin)",
+            tahun_masuk="your-tahun-masuk",
         )
         db.session.add(insert_admin)
         db.session.commit()
